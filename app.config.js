@@ -1,14 +1,14 @@
 // Update this value to something unique in order to be able to build for a
 // physical iOS device.
-const APP_ID_PREFIX = "com.reactconf";
+const APP_ID_PREFIX = "com.purplecon";
 
 // These values are tied to EAS. If you would like to use EAS Build or Update
 // on this project while playing with it, then remove these values and run
 // `eas init` and `eas update:configure` to get new values for your account.
 const EAS_UPDATE_URL =
-  "https://u.expo.dev/66251e1b-0290-4ef8-87a4-e533cac914dd";
-const EAS_PROJECT_ID = "66251e1b-0290-4ef8-87a4-e533cac914dd";
-const EAS_APP_OWNER = "expo";
+  "https://u.expo.dev/5c333e9f-c62e-4a57-bd8c-8e4b5268e62e";
+const EAS_PROJECT_ID = "5c333e9f-c62e-4a57-bd8c-8e4b5268e62e";
+const EAS_APP_OWNER = "jorel";
 
 // If you change this value, run `npx expo prebuild --clean` afterwards if you
 // are building the project locally.
@@ -19,14 +19,14 @@ const IS_PREVIEW = process.env.APP_VARIANT === "preview";
 
 const getName = () => {
   if (IS_DEV) {
-    return "React Conf (Dev)";
+    return "Purplecon (Dev)";
   }
 
   if (IS_PREVIEW) {
-    return "React Conf (Prev)";
+    return "Purplecon (Prev)";
   }
 
-  return "React Conf";
+  return "Purplecon";
 };
 
 const getAppId = () => {
@@ -44,12 +44,12 @@ const getAppId = () => {
 export default {
   expo: {
     name: getName(),
-    slug: "react-conf-app",
+    slug: "purplecon-app",
     version: "1.1.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "automatic",
-    scheme: "reactconfapp",
+    scheme: "purpleconapp",
     assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true,

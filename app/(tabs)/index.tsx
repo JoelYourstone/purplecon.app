@@ -19,7 +19,6 @@ import { NotFound } from "@/components/NotFound";
 import { ReactConfHeader } from "@/components/ReactConfHeader";
 import { TalkCard } from "@/components/TalkCard";
 import { ThemedText, ThemedView, useThemeColor } from "@/components/Themed";
-import { TimeZoneSwitch } from "@/components/TimeZoneSwitch";
 import { COLLAPSED_HEADER, EXPANDED_HEADER, ROW_HEIGHT } from "@/consts";
 import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
@@ -37,7 +36,7 @@ type SessionItem =
     };
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList<SessionItem>,
+  FlatList<SessionItem>
 );
 
 export default function Schedule() {
@@ -54,9 +53,9 @@ export default function Schedule() {
   const paddingTopStyle = useAnimatedStyle(() => ({
     paddingTop: interpolate(
       scrollOffset.value,
-      [COLLAPSED_HEADER, EXPANDED_HEADER],
+      [COLLAPSED_HEADER, EXPANDED_HEADER - 55],
       [0, ROW_HEIGHT],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     ),
   }));
 
@@ -72,9 +71,12 @@ export default function Schedule() {
   const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
   const refreshSchedule = useReactConfStore((state) => state.refreshData);
   const isRefreshing = useReactConfStore((state) => !!state.isRefreshing);
-  const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
 
-  const scrollToSection = ({ isDayOne }: { isDayOne: boolean }) => {
+  const scrollToSection = ({
+    isSchedule: isDayOne,
+  }: {
+    isSchedule: boolean;
+  }) => {
     scrollRef.current?.scrollToIndex({
       index: isDayOne ? 0 : dayOne.length,
       animated: true,
@@ -121,7 +123,7 @@ export default function Schedule() {
           onScroll={scrollHandler}
           style={{ backgroundColor: sectionListBackgroundColor }}
           contentContainerStyle={{
-            paddingTop: EXPANDED_HEADER,
+            paddingTop: EXPANDED_HEADER - 55,
           }}
           scrollEventThrottle={8}
           data={data}
@@ -141,16 +143,14 @@ export default function Schedule() {
                 darkColor={theme.colorDarkBlue}
               >
                 <SectionListButton
-                  title="Day 1"
-                  subtitle={!shouldUseLocalTz ? "(May 15)" : null}
+                  title="Spelschema"
                   isBold={shouldShowDayOneHeader}
-                  onPress={() => scrollToSection({ isDayOne: true })}
+                  onPress={() => scrollToSection({ isSchedule: true })}
                 />
                 <SectionListButton
-                  title="Day 2"
-                  subtitle={!shouldUseLocalTz ? "(May 16)" : null}
+                  title="Spelbiblioteket"
                   isBold={!shouldShowDayOneHeader}
-                  onPress={() => scrollToSection({ isDayOne: false })}
+                  onPress={() => scrollToSection({ isSchedule: false })}
                 />
               </ThemedView>
             );
@@ -173,15 +173,13 @@ export default function Schedule() {
                 >
                   <SectionListButton
                     title="Day 1"
-                    subtitle={!shouldUseLocalTz ? "(May 15)" : null}
                     isBold={isDayOne}
-                    onPress={() => scrollToSection({ isDayOne: true })}
+                    onPress={() => scrollToSection({ isSchedule: true })}
                   />
                   <SectionListButton
                     title="Day 2"
-                    subtitle={!shouldUseLocalTz ? "(May 16)" : null}
                     isBold={!isDayOne}
-                    onPress={() => scrollToSection({ isDayOne: false })}
+                    onPress={() => scrollToSection({ isSchedule: false })}
                   />
                 </ThemedView>
               );
@@ -210,12 +208,10 @@ const SectionListButton = ({
   onPress,
   isBold,
   title,
-  subtitle,
 }: {
   onPress: () => void;
   isBold: boolean;
   title: string;
-  subtitle: string | null;
 }) => {
   const opacity = { opacity: isBold ? 1 : 0.5 };
 
@@ -229,9 +225,6 @@ const SectionListButton = ({
         style={opacity}
       >
         {title}
-        {subtitle ? (
-          <ThemedText fontWeight="medium"> {subtitle} </ThemedText>
-        ) : null}
       </ThemedText>
     </TouchableOpacity>
   );
@@ -243,42 +236,18 @@ interface HeaderProps {
 }
 
 function Header({ scrollOffset, refreshing }: HeaderProps) {
-  const settingsBgColor = useThemeColor({
-    light: theme.colorThemeGrey,
-    dark: "rgba(255, 255, 255, 0.2)",
-  });
-
+  console.log(scrollOffset.value);
   const animatedHeader = useAnimatedStyle(() => ({
     height: interpolate(
       scrollOffset.value,
       [0, EXPANDED_HEADER],
-      [EXPANDED_HEADER, 0],
-    ),
-  }));
-
-  const animatedRow = useAnimatedStyle(() => ({
-    height: interpolate(
-      scrollOffset.value,
-      [0, ROW_HEIGHT],
-      [ROW_HEIGHT, 0],
-      Extrapolation.CLAMP,
-    ),
-    paddingVertical: interpolate(
-      scrollOffset.value,
-      [0, ROW_HEIGHT],
-      [theme.space8, 0],
-      Extrapolation.CLAMP,
+      [EXPANDED_HEADER, 0]
     ),
   }));
 
   return (
     <Animated.View style={[styles.header, animatedHeader]}>
       <ReactConfHeader scrollOffset={scrollOffset} />
-      <Animated.View
-        style={[styles.row, { backgroundColor: settingsBgColor }, animatedRow]}
-      >
-        <TimeZoneSwitch />
-      </Animated.View>
       <View style={{ position: "absolute", right: 20, top: 15 }}>
         <ActivityIndicator
           size="small"

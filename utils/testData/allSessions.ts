@@ -1109,7 +1109,7 @@ export const allSessions = {
       id: "e94ccfb3-fbd7-4917-897a-9ecefb90ac20",
       firstName: "Jamon",
       lastName: "Holmgren",
-      bio: "CTO/cofounder of Infinite Red, React Native consultancy. Started coding in QBasic at 12 years old. Host of React Native Radio, Chain React Conf, React Native Live (streaming), Jamon’s Code Quests (YouTube). Dad of 4.",
+      bio: "CTO/cofounder of Infinite Red, React Native consultancy. Started coding in QBasic at 12 years old. Host of React Native Radio, Chain Purplecon, React Native Live (streaming), Jamon’s Code Quests (YouTube). Dad of 4.",
       tagLine: "Cofounder @ Infinite Red",
       profilePicture:
         "https://sessionize.com/image/601f-400o400o1-84a0f5fe-4b0b-467c-84f3-9fb9d220b488.jpg",

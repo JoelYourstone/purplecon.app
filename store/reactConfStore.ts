@@ -67,7 +67,7 @@ export const useReactConfStore = create(
           set({ isRefreshing: true });
 
           const allSessions = await doFetch(
-            "https://sessionize.com/api/v2/ctta9bhe/view/All",
+            "https://sessionize.com/api/v2/ctta9bhe/view/All"
           );
 
           if (allSessions) {
@@ -92,12 +92,12 @@ export const useReactConfStore = create(
       },
     }),
     {
-      name: "react-conf-2024-store",
+      name: "purplecon-2024-store",
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => {
         const { isRefreshing: _, ...dataToPersist } = state;
         return dataToPersist;
       },
-    },
-  ),
+    }
+  )
 );

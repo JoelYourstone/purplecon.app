@@ -108,9 +108,7 @@
       "endsAt": "2024-05-15T17:35:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "e3e97117-b273-4cff-9c59-388b21a4b5b7"
-      ],
+      "speakers": ["e3e97117-b273-4cff-9c59-388b21a4b5b7"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -146,9 +144,7 @@
       "endsAt": "2024-05-15T18:35:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "fadfd85e-df5f-4dd5-af66-6c36514d3ac7"
-      ],
+      "speakers": ["fadfd85e-df5f-4dd5-af66-6c36514d3ac7"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -166,9 +162,7 @@
       "endsAt": "2024-05-15T19:00:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "66da0cae-a3e9-49b3-ac99-4e11f62d1611"
-      ],
+      "speakers": ["66da0cae-a3e9-49b3-ac99-4e11f62d1611"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -186,9 +180,7 @@
       "endsAt": "2024-05-15T19:30:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "58970fb3-d2e7-419c-944d-14d7d6335c92"
-      ],
+      "speakers": ["58970fb3-d2e7-419c-944d-14d7d6335c92"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -224,9 +216,7 @@
       "endsAt": "2024-05-15T21:25:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "bde28e4c-d73d-4221-ad92-24853c910ab0"
-      ],
+      "speakers": ["bde28e4c-d73d-4221-ad92-24853c910ab0"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -244,9 +234,7 @@
       "endsAt": "2024-05-15T21:45:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "18f91aa7-3667-42ba-9019-9c0f468f34d7"
-      ],
+      "speakers": ["18f91aa7-3667-42ba-9019-9c0f468f34d7"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -282,9 +270,7 @@
       "endsAt": "2024-05-15T22:30:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "f66632a5-1cf3-40e4-b2d5-fe5186cf87a1"
-      ],
+      "speakers": ["f66632a5-1cf3-40e4-b2d5-fe5186cf87a1"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -302,9 +288,7 @@
       "endsAt": "2024-05-15T22:45:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "7a07f191-dd57-4fb5-a3fe-494f4bd6e91b"
-      ],
+      "speakers": ["7a07f191-dd57-4fb5-a3fe-494f4bd6e91b"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -322,9 +306,7 @@
       "endsAt": "2024-05-15T23:00:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "f46e79f7-7573-4ce6-9eb2-2eef9448c202"
-      ],
+      "speakers": ["f46e79f7-7573-4ce6-9eb2-2eef9448c202"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -342,9 +324,7 @@
       "endsAt": "2024-05-15T23:15:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "0c7f0830-bd0f-40b3-81c9-2441db2461dd"
-      ],
+      "speakers": ["0c7f0830-bd0f-40b3-81c9-2441db2461dd"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -506,9 +486,7 @@
       "endsAt": "2024-05-16T18:35:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "fd5447af-f5ce-47f0-8b2f-ee402233cf9f"
-      ],
+      "speakers": ["fd5447af-f5ce-47f0-8b2f-ee402233cf9f"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -526,9 +504,7 @@
       "endsAt": "2024-05-16T18:55:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "75da261e-612c-4869-a111-3475bffb99f0"
-      ],
+      "speakers": ["75da261e-612c-4869-a111-3475bffb99f0"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -546,9 +522,7 @@
       "endsAt": "2024-05-16T19:20:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "d8b2a235-8716-4966-9f5f-3f2b647dc53c"
-      ],
+      "speakers": ["d8b2a235-8716-4966-9f5f-3f2b647dc53c"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -584,9 +558,7 @@
       "endsAt": "2024-05-16T21:15:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "c809907b-6f5f-46d9-b8ec-54d2f061fa7a"
-      ],
+      "speakers": ["c809907b-6f5f-46d9-b8ec-54d2f061fa7a"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -604,9 +576,7 @@
       "endsAt": "2024-05-16T21:30:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "69d33791-b418-4817-9329-977c347640b5"
-      ],
+      "speakers": ["69d33791-b418-4817-9329-977c347640b5"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -624,9 +594,7 @@
       "endsAt": "2024-05-16T21:45:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "dd07cab5-503a-4555-8b23-3a4a9294fe8e"
-      ],
+      "speakers": ["dd07cab5-503a-4555-8b23-3a4a9294fe8e"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -644,9 +612,7 @@
       "endsAt": "2024-05-16T22:00:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "b1a79d71-f37a-4a6f-b403-00608c2a2a20"
-      ],
+      "speakers": ["b1a79d71-f37a-4a6f-b403-00608c2a2a20"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -682,9 +648,7 @@
       "endsAt": "2024-05-16T22:55:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "20c73cd8-a317-40a4-833d-a9fe5d44cb62"
-      ],
+      "speakers": ["20c73cd8-a317-40a4-833d-a9fe5d44cb62"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -747,9 +711,7 @@
       "endsAt": "2024-05-16T23:55:00Z",
       "isServiceSession": false,
       "isPlenumSession": false,
-      "speakers": [
-        "baa76358-d656-4307-8f9c-a98672c66035"
-      ],
+      "speakers": ["baa76358-d656-4307-8f9c-a98672c66035"],
       "categoryItems": [],
       "questionAnswers": [],
       "roomId": 45056,
@@ -796,9 +758,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        640474
-      ],
+      "sessions": [640474],
       "fullName": "Amy Dutton",
       "categoryItems": [],
       "questionAnswers": [
@@ -825,9 +785,7 @@
       "profilePicture": null,
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665489
-      ],
+      "sessions": [665489],
       "fullName": "An Amazing Speaker",
       "categoryItems": [],
       "questionAnswers": []
@@ -841,9 +799,7 @@
       "profilePicture": null,
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665488
-      ],
+      "sessions": [665488],
       "fullName": "An Amazing Speaker",
       "categoryItems": [],
       "questionAnswers": []
@@ -857,10 +813,7 @@
       "profilePicture": "https://sessionize.com/image/d070-400o400o1-fTobh1CukA4o11HSuXi4ae.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675243,
-        675251
-      ],
+      "sessions": [675243, 675251],
       "fullName": "Andrew Clark",
       "categoryItems": [],
       "questionAnswers": [
@@ -887,9 +840,7 @@
       "profilePicture": "https://sessionize.com/image/e3c9-400o400o1-wGuApCAfAHMhpLsZiM5J9.png",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675257
-      ],
+      "sessions": [675257],
       "fullName": "Anisha Malde",
       "categoryItems": [],
       "questionAnswers": [
@@ -908,7 +859,7 @@
       "firstName": "Ashley",
       "lastName": "Narcisse",
       "bio": "Engineer @ Ultimate Software, passionate about Obserbaility and Developer Experience. Working on /dev/haiti to help empower the next generations of technologists from Haiti.",
-      "tagLine": "React Conf Emcee",
+      "tagLine": "Purplecon Emcee",
       "profilePicture": "https://sessionize.com/image/15f0-400o400o1-6c89518c-7186-4775-beb2-cc186df88bbb.jpg",
       "isTopSpeaker": false,
       "links": [
@@ -933,10 +884,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        675244,
-        675245
-      ],
+      "sessions": [675244, 675245],
       "fullName": "Ashley Narcisse",
       "categoryItems": [],
       "questionAnswers": [
@@ -994,9 +942,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        635027
-      ],
+      "sessions": [635027],
       "fullName": "Aurora Walberg Scharff",
       "categoryItems": [],
       "questionAnswers": [
@@ -1029,9 +975,7 @@
           "linkType": "Twitter"
         }
       ],
-      "sessions": [
-        638283
-      ],
+      "sessions": [638283],
       "fullName": "Charlotte Isambert",
       "categoryItems": [],
       "questionAnswers": [
@@ -1075,9 +1019,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        675257
-      ],
+      "sessions": [675257],
       "fullName": "Chris Trag",
       "categoryItems": [],
       "questionAnswers": [
@@ -1104,10 +1046,7 @@
       "profilePicture": "https://sessionize.com/image/3a17-400o400o1-ne791HUhauRX1dgmqYJ5rE.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665491,
-        675251
-      ],
+      "sessions": [665491, 675251],
       "fullName": "Dan Abramov",
       "categoryItems": [],
       "questionAnswers": []
@@ -1121,9 +1060,7 @@
       "profilePicture": "https://sessionize.com/image/fd4c-400o400o1-wxBDQgKZDNFCLsRV6bGB9P.png",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665517
-      ],
+      "sessions": [665517],
       "fullName": "Evan Bacon",
       "categoryItems": [],
       "questionAnswers": [
@@ -1145,14 +1082,12 @@
       "id": "e94ccfb3-fbd7-4917-897a-9ecefb90ac20",
       "firstName": "Jamon",
       "lastName": "Holmgren",
-      "bio": "Jamon is CTO/cofounder of Infinite Red, React Native consultancy. Started coding in QBasic at 12 years old. Host of React Native Radio, Chain React Conf, React Native Live (streaming), Jamon’s Code Quests (YouTube). Dad of 4.",
+      "bio": "Jamon is CTO/cofounder of Infinite Red, React Native consultancy. Started coding in QBasic at 12 years old. Host of React Native Radio, Chain Purplecon, React Native Live (streaming), Jamon’s Code Quests (YouTube). Dad of 4.",
       "tagLine": "Cofounder @ Infinite Red",
       "profilePicture": "https://sessionize.com/image/3ef5-400o400o1-wYaQerhSXLPABozshuGHPu.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665518
-      ],
+      "sessions": [665518],
       "fullName": "Jamon Holmgren",
       "categoryItems": [],
       "questionAnswers": [
@@ -1179,9 +1114,7 @@
       "profilePicture": null,
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675251
-      ],
+      "sessions": [675251],
       "fullName": "Jason Bonta",
       "categoryItems": [],
       "questionAnswers": []
@@ -1206,10 +1139,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        675243,
-        675251
-      ],
+      "sessions": [675243, 675251],
       "fullName": "Joe Savona",
       "categoryItems": [],
       "questionAnswers": [
@@ -1236,11 +1166,7 @@
       "profilePicture": "https://sessionize.com/image/09e4-400o400o1-3QCFdq53WEWgNXnrEmtEw6.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675243,
-        665493,
-        675251
-      ],
+      "sessions": [675243, 665493, 675251],
       "fullName": "Josh Story",
       "categoryItems": [],
       "questionAnswers": [
@@ -1278,9 +1204,7 @@
           "linkType": "LinkedIn"
         }
       ],
-      "sessions": [
-        665494
-      ],
+      "sessions": [665494],
       "fullName": "Kadi Kraman",
       "categoryItems": [],
       "questionAnswers": [
@@ -1323,9 +1247,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        640627
-      ],
+      "sessions": [640627],
       "fullName": "Kateryna Porshnieva",
       "categoryItems": [],
       "questionAnswers": [
@@ -1383,9 +1305,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        629684
-      ],
+      "sessions": [629684],
       "fullName": "Kent C. Dodds",
       "categoryItems": [],
       "questionAnswers": [
@@ -1412,9 +1332,7 @@
       "profilePicture": "https://sessionize.com/image/bf13-400o400o1-JqnYQPbuwzq589aA2AxXaW.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665518
-      ],
+      "sessions": [665518],
       "fullName": "Kevin Gozali",
       "categoryItems": [],
       "questionAnswers": [
@@ -1462,10 +1380,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        675243,
-        675251
-      ],
+      "sessions": [675243, 675251],
       "fullName": "Lauren Tan",
       "categoryItems": [],
       "questionAnswers": [
@@ -1492,9 +1407,7 @@
       "profilePicture": "https://sessionize.com/image/e021-400o400o1-LKtnEQG1YGXjz3ftWcWu5b.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665508
-      ],
+      "sessions": [665508],
       "fullName": "Lee Robinson",
       "categoryItems": [],
       "questionAnswers": [
@@ -1521,9 +1434,7 @@
       "profilePicture": "https://sessionize.com/image/16b9-400o400o1-Jbo4NRthhJLHaJVWrTriJ4.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        648660
-      ],
+      "sessions": [648660],
       "fullName": "Lydia Hallie",
       "categoryItems": [],
       "questionAnswers": [
@@ -1572,9 +1483,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        675251
-      ],
+      "sessions": [675251],
       "fullName": "Michael Chan",
       "categoryItems": [],
       "questionAnswers": [
@@ -1601,9 +1510,7 @@
       "profilePicture": "https://sessionize.com/image/7662-400o400o1-ioiqeMNwZWFZZLNMm3n4g.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        671947
-      ],
+      "sessions": [671947],
       "fullName": "Michał Pierzchała",
       "categoryItems": [],
       "questionAnswers": [
@@ -1630,10 +1537,7 @@
       "profilePicture": "https://sessionize.com/image/0e5a-400o400o1-NrcCRyStdQzX3Vi225ApN1.png",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675243,
-        675251
-      ],
+      "sessions": [675243, 675251],
       "fullName": "Mofei Zhang",
       "categoryItems": [],
       "questionAnswers": []
@@ -1647,9 +1551,7 @@
       "profilePicture": "https://sessionize.com/image/ccce-400o400o1-139aff51-51d8-4ba9-a0bd-ddbcfd41dbf3.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665500
-      ],
+      "sessions": [665500],
       "fullName": "Naman Goel",
       "categoryItems": [],
       "questionAnswers": [
@@ -1702,10 +1604,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        665494,
-        665518
-      ],
+      "sessions": [665494, 665518],
       "fullName": "Nicola Corti",
       "categoryItems": [],
       "questionAnswers": [
@@ -1732,10 +1631,7 @@
       "profilePicture": "https://sessionize.com/image/8fea-400o400o1-XXpYCNgckRtmNxSqwXuTmE.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        665500,
-        665518
-      ],
+      "sessions": [665500, 665518],
       "fullName": "Olga Zinoveva",
       "categoryItems": [],
       "questionAnswers": []
@@ -1770,9 +1666,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        675277
-      ],
+      "sessions": [675277],
       "fullName": "Olivier Tassinari",
       "categoryItems": [],
       "questionAnswers": [
@@ -1820,10 +1714,7 @@
           "linkType": "Sessionize"
         }
       ],
-      "sessions": [
-        665494,
-        665518
-      ],
+      "sessions": [665494, 665518],
       "fullName": "Riccardo Cipolleschi",
       "categoryItems": [],
       "questionAnswers": [
@@ -1866,9 +1757,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        675251
-      ],
+      "sessions": [675251],
       "fullName": "Ricky Hanlon",
       "categoryItems": [],
       "questionAnswers": []
@@ -1882,9 +1771,7 @@
       "profilePicture": "https://sessionize.com/image/70e5-400o400o1-QP3giBWfApyezf7Waqi6XS.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        629830
-      ],
+      "sessions": [629830],
       "fullName": "Ryan Albrecht",
       "categoryItems": [],
       "questionAnswers": [
@@ -1923,9 +1810,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        665505
-      ],
+      "sessions": [665505],
       "fullName": "Ryan Florence",
       "categoryItems": [],
       "questionAnswers": [
@@ -1960,9 +1845,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        639496
-      ],
+      "sessions": [639496],
       "fullName": "Sam Selikoff",
       "categoryItems": [],
       "questionAnswers": [
@@ -1989,10 +1872,7 @@
       "profilePicture": "https://sessionize.com/image/3ce0-400o400o1-piEh2tPeq5hjjpawZ1HVPu.png",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675243,
-        675251
-      ],
+      "sessions": [675243, 675251],
       "fullName": "Sathya Gunasekaran",
       "categoryItems": [],
       "questionAnswers": []
@@ -2006,9 +1886,7 @@
       "profilePicture": "https://sessionize.com/image/141f-400o400o1-Wa8bW5Nm34sqsS6wZ959vC.jpg",
       "isTopSpeaker": false,
       "links": [],
-      "sessions": [
-        675244
-      ],
+      "sessions": [675244],
       "fullName": "Seth Webster",
       "categoryItems": [],
       "questionAnswers": [
@@ -2056,9 +1934,7 @@
           "linkType": "Company_Website"
         }
       ],
-      "sessions": [
-        631606
-      ],
+      "sessions": [631606],
       "fullName": "Sunil Pai",
       "categoryItems": [],
       "questionAnswers": [

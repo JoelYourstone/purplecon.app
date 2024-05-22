@@ -13,7 +13,7 @@ export function DiscordInfo() {
   return (
     <InfoSection title="Discord Server">
       <ThemedText style={{ marginBottom: theme.space24 }}>
-        Chat with other folks at the conference on the React Conf 2024 Discord
+        Chat with other folks at the conference on the Purplecon 2024 Discord
         server. Coordinate around ridesharing and external activities.
       </ThemedText>
       <Button onPress={handlePress} title="Join us on Discord" />

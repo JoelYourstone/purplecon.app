@@ -29,7 +29,7 @@ export const useBookmarkStore = create(
       },
     }),
     {
-      name: "react-conf-2024-bookmarks",
+      name: "purplecon-2024-bookmarks",
       storage: createJSONStorage(() => AsyncStorage),
     },
   ),

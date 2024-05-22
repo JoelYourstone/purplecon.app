@@ -8,7 +8,7 @@ import { theme } from "@/theme";
 export function LiveStreamInfo() {
   const handlePress = () => {
     openWebBrowserAsync(
-      "https://ti.to/reactconf/2024/with/free-livestream-access",
+      "https://ti.to/reactconf/2024/with/free-livestream-access"
     );
   };
   return (
@@ -21,8 +21,8 @@ export function LiveStreamInfo() {
         Free Livestream Access
       </ThemedText>
       <ThemedText style={{ marginBottom: theme.space24 }}>
-        Join React Conf 2024 from anywhere with our Free Livestream Access!
-        Watch all the talks remotely.
+        Join Purplecon 2024 from anywhere with our Free Livestream Access! Watch
+        all the talks remotely.
       </ThemedText>
       <Button onPress={handlePress} title="Sign up" />
     </InfoSection>

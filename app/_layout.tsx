@@ -48,7 +48,7 @@ export default function Layout() {
   // Keep the root view background color in sync with the current theme
   useEffect(() => {
     setBackgroundColorAsync(
-      colorScheme === "dark" ? theme.colorDarkestBlue : theme.colorWhite,
+      colorScheme === "dark" ? theme.colorDarkestBlue : theme.colorWhite
     );
   }, [colorScheme]);
 

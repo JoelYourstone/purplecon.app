@@ -1,6 +1,6 @@
-# Conference App for React Conf 2024
+# Conference App for Purplecon 2024
 
-This is the source code for the React Conf 2024 app. Download it from stores: [Google Play](https://play.google.com/store/apps/details?id=com.reactconf.app), [App Store](https://apps.apple.com/gb/app/react-conf/id6499559897).
+This is the source code for the Purplecon 2024 app. Download it from stores: [Google Play](https://play.google.com/store/apps/details?id=com.purplecon.app), [App Store](https://apps.apple.com/gb/app/react-conf/id6499559897).
 
 To run the app locally, clone the repo and install dependencies with `yarn` (**yarn.lock** was generated with Yarn v1). Next, either [compile and run it locally](#compile-and-run-locally) or [build and run it with EAS](#build-and-run-with-eas).
 
@@ -9,7 +9,7 @@ To run the app locally, clone the repo and install dependencies with `yarn` (**y
 To compile the app locally, you will need to have Xcode ([learn more](https://docs.expo.dev/guides/local-app-development/#ios)) and/or Android ([learn more](https://docs.expo.dev/guides/local-app-development/#android)) toolchains installed and configured.
 
 > [!NOTE]
-> In order to be able to sign the app for an iOS device with a development certificate, you need a unique bundle identifier. Change the `APP_ID_PREFIX` in **app.config.js** to a unique ID, such as `yourname.reactconf`. Run `npx expo prebuild --clean` when you've updated the value to sync it to the native project.
+> In order to be able to sign the app for an iOS device with a development certificate, you need a unique bundle identifier. Change the `APP_ID_PREFIX` in **app.config.js** to a unique ID, such as `yourname.purplecon`. Run `npx expo prebuild --clean` when you've updated the value to sync it to the native project.
 
 ### Android
 

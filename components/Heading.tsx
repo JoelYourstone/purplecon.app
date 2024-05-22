@@ -18,7 +18,7 @@ export function Heading() {
           fontSize={theme.fontSize32}
           fontWeight="bold"
         >
-          REACT CONF
+          Purplecon
         </ThemedText>
         <ThemedText fontSize={theme.fontSize18} fontWeight="bold">
           May 15th - 16th 2024

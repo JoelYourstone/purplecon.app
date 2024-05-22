@@ -17,14 +17,14 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const interpolateHeader = (
   scrollOffset: SharedValue<number>,
-  outputRange: number[],
+  outputRange: number[]
 ) => {
   "worklet";
   return interpolate(
     scrollOffset.value,
-    [COLLAPSED_HEADER, EXPANDED_HEADER],
+    [0, EXPANDED_HEADER - 55],
     outputRange,
-    Extrapolation.CLAMP,
+    Extrapolation.CLAMP
   );
 };
 
@@ -34,8 +34,10 @@ interface ReactConfHeaderProps {
 
 export function ReactConfHeader({ scrollOffset }: ReactConfHeaderProps) {
   const tintColor = useThemeColor({
-    light: theme.colorReactDarkBlue,
-    dark: theme.colorReactLightBlue,
+    // light: theme.colorReactDarkBlue,
+    // dark: theme.colorReactLightBlue,
+    light: "#8549a1",
+    dark: "#8549a1",
   });
 
   const animatedLogoStyle = useAnimatedStyle(() => ({
@@ -55,14 +57,14 @@ export function ReactConfHeader({ scrollOffset }: ReactConfHeaderProps) {
 
   const secondLineStyle = useAnimatedStyle(() => ({
     transform: [
-      { translateX: interpolateHeader(scrollOffset, [0, 35]) },
+      { translateX: interpolateHeader(scrollOffset, [0, 95]) },
       { translateY: interpolateHeader(scrollOffset, [0, -18]) },
     ],
   }));
 
   const headerStyle = useAnimatedStyle(() => ({
     height: interpolateHeader(scrollOffset, [
-      EXPANDED_HEADER - ROW_HEIGHT,
+      EXPANDED_HEADER - 55,
       COLLAPSED_HEADER,
     ]),
   }));
@@ -77,7 +79,7 @@ export function ReactConfHeader({ scrollOffset }: ReactConfHeaderProps) {
       <AnimatedImage
         priority="high"
         tintColor={tintColor}
-        source={require("../assets/images/react-logo.png")}
+        source={require("../assets/images/meeple.svg")}
         style={[styles.reactImage, animatedLogoStyle]}
       />
       <View>
@@ -89,14 +91,15 @@ export function ReactConfHeader({ scrollOffset }: ReactConfHeaderProps) {
           lightColor={theme.colorBlack}
           animated
         >
-          REACT
+          PURPLECON
         </ThemedText>
         <ThemedText
+          // numberOfLines={1}
           fontSize={24}
           style={[styles.logoText, secondLineStyle]}
           animated
         >
-          CONF 2024
+          2024
         </ThemedText>
       </View>
     </ThemedView>
@@ -116,5 +119,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginHorizontal: theme.space8,
+    // backgroundColor: "green",
   },
 });
