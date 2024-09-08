@@ -8,8 +8,7 @@ import { ThemedText, useThemeColor } from "./Themed";
 
 import { theme } from "@/theme";
 
-const venueAddress = "101 Montelago Blvd, Henderson, NV 89011, United States";
-const venueName = "The Westin Lake Las Vegas Resort & Spa";
+const venueName = "Vipeholms Allé 53, 224 66, Lund";
 
 export function VenueInfo() {
   const { width } = useWindowDimensions();
@@ -17,9 +16,7 @@ export function VenueInfo() {
   const hotelImageSize = width / 3;
 
   const onOpenVenue = () => {
-    Linking.openURL(
-      `https://www.google.com/maps?q=${venueName}, ${venueAddress}`,
-    );
+    Linking.openURL(`https://www.google.com/maps?q=${venueName}`);
   };
 
   const iconColor = useThemeColor({
@@ -31,7 +28,9 @@ export function VenueInfo() {
     <InfoSection title="Venue">
       <View style={styles.venueContainer}>
         <Image
-          source={require("../assets/images/hotel.png")}
+          source={
+            "https://bilder.hemnet.se/images/itemgallery_cut/b4/92/b49277c4b2ee795c8804b24e02879c46.jpg"
+          }
           style={{
             width: hotelImageSize,
             height: hotelImageSize,
@@ -40,7 +39,7 @@ export function VenueInfo() {
         />
         <View style={styles.hotelName}>
           <ThemedText fontWeight="bold" fontSize={24}>
-            The Westin Lake Las Vegas Resort & Spa
+            Purplecon Arena
           </ThemedText>
         </View>
       </View>
@@ -50,7 +49,9 @@ export function VenueInfo() {
         activeOpacity={0.8}
       >
         <FontAwesome6 name="location-dot" size={24} color={iconColor} />
-        <ThemedText style={styles.address}>{venueAddress}</ThemedText>
+        <ThemedText style={styles.address}>
+          Vipeholms Allé 53, 224 66, Lund
+        </ThemedText>
       </TouchableOpacity>
     </InfoSection>
   );

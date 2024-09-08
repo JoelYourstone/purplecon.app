@@ -24,7 +24,7 @@ import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 import { Session } from "@/types";
 
-type SessionItem =
+export type SessionItem =
   | {
       type: "session";
       day: number;
@@ -236,7 +236,6 @@ interface HeaderProps {
 }
 
 function Header({ scrollOffset, refreshing }: HeaderProps) {
-  console.log(scrollOffset.value);
   const animatedHeader = useAnimatedStyle(() => ({
     height: interpolate(
       scrollOffset.value,

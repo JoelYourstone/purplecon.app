@@ -23,15 +23,7 @@ export default function Info() {
 
   return (
     <ThemedView style={[styles.container, { backgroundColor }]}>
-      <ScrollView style={styles.scrollView} ref={ref}>
-        <VenueInfo />
-        {/* <LiveStreamInfo /> */}
-        {/* <DiscordInfo /> */}
-        <SponsorsInfo />
-        <OrganizersInfo />
-        {/* <BuildDetails /> */}
-        {/* <PoweredByExpo /> */}
-      </ScrollView>
+      <ScrollView style={styles.scrollView} ref={ref}></ScrollView>
     </ThemedView>
   );
 }

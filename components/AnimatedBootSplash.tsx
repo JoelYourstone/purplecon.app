@@ -10,16 +10,16 @@ import Animated, {
 import { StyleSheet, View } from "react-native";
 import { ReactNode, useState } from "react";
 
-const MAX_SCALE = 10;
+const MAX_SCALE = 1200;
 
 const manifest: Manifest = require("../assets/bootsplash/manifest.json");
 
 const styles = StyleSheet.create({
   mask: {
-    backgroundColor: "black",
-    borderRadius: manifest.logo.width,
-    width: manifest.logo.width,
-    height: manifest.logo.height,
+    backgroundColor: "green",
+    borderRadius: 1,
+    width: 1,
+    height: 1,
   },
   transparent: {
     backgroundColor: "transparent",
@@ -62,19 +62,18 @@ export const AnimatedBootSplash = ({
 
     animate: () => {
       opacity.value = withTiming(0, {
-        duration: 250,
+        duration: 700,
         easing: Easing.out(Easing.ease),
       });
 
       scale.value = withTiming(
         MAX_SCALE,
         {
-          duration: 350,
-          easing: Easing.back(0.75),
+          duration: 1000,
         },
         () => {
           runOnJS(onAnimationEnd)();
-        },
+        }
       );
     },
   });
@@ -104,10 +103,7 @@ export const AnimatedBootSplash = ({
       {!animationEnded && (
         // Don't apply background color above the mask
         <View {...container} style={[container.style, styles.transparent]}>
-          <Animated.Image
-            {...logo}
-            style={[logo.style, opacityStyle, scaleStyle]}
-          />
+          <Animated.Image {...logo} style={[logo.style, opacityStyle]} />
 
           <Animated.Image {...brand} style={[brand.style, opacityStyle]} />
         </View>

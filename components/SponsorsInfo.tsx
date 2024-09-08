@@ -1,5 +1,5 @@
 import { Image, ImageSource, ImageStyle } from "expo-image";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, View, ViewStyle, Text } from "react-native";
 import openWebBrowserAsync from "@/utils/openWebBrowserAsync";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -47,53 +47,18 @@ const sponsors = {
 
 export function SponsorsInfo() {
   return (
-    <InfoSection title="Sponsors">
+    <InfoSection title="Sponsorer">
       <ThemedText fontSize={24} style={styles.firstHeading}>
         Diamond
       </ThemedText>
       <SponsorImage
-        sponsor={sponsors.remixSpotify}
+        sponsor={{
+          url: "https://yourstone.bar",
+          image: require("../assets/images/yourstonebar.jpeg"),
+        }}
         imageStyle={styles.mainImage}
       />
-      <ThemedText fontSize={24} style={styles.heading}>
-        Platinum
-      </ThemedText>
-      <SponsorImage sponsor={sponsors.amazon} imageStyle={styles.mainImage} />
-      <ThemedText fontSize={24} style={styles.heading}>
-        Gold
-      </ThemedText>
-      <View style={styles.twoSponsorContainer}>
-        <SponsorImage
-          sponsor={sponsors.mui}
-          style={styles.smallImageContainer}
-        />
-        <SponsorImage
-          sponsor={sponsors.sentry}
-          style={styles.smallImageContainer}
-        />
-      </View>
-      <View style={[styles.twoSponsorContainer, { marginTop: theme.space12 }]}>
-        <SponsorImage sponsor={sponsors.abbott} style={styles.halfWidth} />
-      </View>
-      <ThemedText fontSize={24} style={styles.heading}>
-        Silver
-      </ThemedText>
-      <View style={styles.twoSponsorContainer}>
-        <SponsorImage
-          sponsor={sponsors.expo}
-          style={styles.smallImageContainer}
-        />
-        <SponsorImage
-          sponsor={sponsors.redwood}
-          style={styles.smallImageContainer}
-        />
-      </View>
-      <ThemedText fontSize={24} style={styles.heading}>
-        Community Sponsor
-      </ThemedText>
-      <View style={styles.twoSponsorContainer}>
-        <SponsorImage sponsor={sponsors.vercel} style={styles.halfWidth} />
-      </View>
+      <Text>Rebecca Yourstone &lt;INSERT LOGO HERE &gt;</Text>
     </InfoSection>
   );
 }

@@ -5,6 +5,7 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import initialAllSessions from "@/data/allSessions.json";
 import { ApiAllSessions, Session } from "@/types";
 import { formatSessions } from "@/utils/sessions";
+import type { SessionItem } from "@/app/(tabs)";
 
 const doFetch = async (url: string) => {
   try {
@@ -29,7 +30,10 @@ type ConfState = {
 };
 
 const getInitialSchedule = () => {
+  console.log("LOADING INITIAL SCHEDULE");
   const [dayOne, dayTwo] = formatSessions(initialAllSessions);
+  console.log(initialAllSessions.sessions[0].title);
+  console.log(dayOne[0].title);
   return {
     schedule: {
       dayOne,
@@ -39,6 +43,10 @@ const getInitialSchedule = () => {
   };
 };
 
+// export const mockData: SessionItem[] = [
+//   {}
+// ];
+
 export const useReactConfStore = create(
   persist<ConfState>(
     (set, get) => ({
@@ -47,45 +55,13 @@ export const useReactConfStore = create(
       lastRefreshed: null,
       shouldUseLocalTz: false,
       refreshData: async (options) => {
-        const ttlMs = options?.ttlMs;
-        const { isRefreshing, lastRefreshed } = get();
-
-        // Bail out if already refreshing
-        if (isRefreshing) {
-          return;
-        }
-
-        // Bail out if last refresh was within TTL
-        if (lastRefreshed) {
-          const diff = new Date().getTime() - new Date(lastRefreshed).getTime();
-          if (ttlMs && diff < ttlMs) {
-            return;
-          }
-        }
-
-        try {
-          set({ isRefreshing: true });
-
-          const allSessions = await doFetch(
-            "https://sessionize.com/api/v2/ctta9bhe/view/All"
-          );
-
-          if (allSessions) {
-            const [dayOne, dayTwo] = formatSessions(allSessions);
-            set({
-              schedule: {
-                dayOne,
-                dayTwo,
-              },
-              allSessions,
-              lastRefreshed: new Date().toISOString(),
-            });
-          }
-        } catch (e) {
-          console.warn(e);
-        } finally {
-          set({ isRefreshing: false });
-        }
+        // set({
+        //   ...getInitialSchedule(),
+        //   isRefreshing: false,
+        //   lastRefreshed: new Date().toISOString(),
+        // });
+        return;
+        // Don't refresh, always use hardcoded data
       },
       toggleLocalTz: () => {
         set((state) => ({ shouldUseLocalTz: !state.shouldUseLocalTz }));

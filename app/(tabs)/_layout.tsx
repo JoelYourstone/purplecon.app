@@ -98,6 +98,29 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="spelcafe"
+        options={{
+          headerStyle: {
+            backgroundColor: tabBarBackgroundColor,
+          },
+          headerTitle: () => (
+            <ThemedText fontSize={20} fontWeight="bold">
+              Info
+            </ThemedText>
+          ),
+          tabBarButton: (props) => (
+            <TabBarButton
+              {...props}
+              activeTintColor={tabBarActiveTintColor}
+              inactiveTintColor={tabBarInactiveTintColor}
+              icon={({ color }) => (
+                <Octicons size={24} name="credit-card" color={color} />
+              )}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="info"
         options={{
           headerStyle: {

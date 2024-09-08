@@ -10,25 +10,18 @@ import { theme } from "@/theme";
 
 const organizers = {
   meta: {
-    image: require("../assets/images/meta-logo.svg"),
+    image: require("../assets/images/meeple.svg"),
     description:
       "Giving people the power to build community and bring the world closer together.",
     url: "https://www.meta.com/",
-  },
-  callstack: {
-    image: require("../assets/images/callstack-logo.svg"),
-    description:
-      "Callstack unlocks a universe of possibilities for your business with the React tech stack.",
-    url: "https://callstack.com/",
   },
 };
 
 export function OrganizersInfo() {
   return (
-    <InfoSection title="Organizers">
+    <InfoSection title="Arrangörer">
       <View style={styles.content}>
         <Organizer organizer={organizers.meta} />
-        <Organizer organizer={organizers.callstack} />
       </View>
     </InfoSection>
   );
