@@ -11,6 +11,7 @@
     "test": "jest",
     "sync-api": "node ./scripts/syncApi.js",
     "postinstall": "patch-package",
+    "eas-build-pre-install": "corepack enable",
     "lint": "eslint ."
   },
   "dependencies": {
