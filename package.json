@@ -1,6 +1,6 @@
 {
   "name": "purplecon-app",
-  "version": "1.1.0",
+  "version": "0.0.1",
   "main": "expo-router/entry",
   "private": true,
   "scripts": {
@@ -89,5 +89,6 @@
         "expo-splash-screen"
       ]
     }
-  }
+  },
+  "packageManager": "yarn@4.5.3"
 }

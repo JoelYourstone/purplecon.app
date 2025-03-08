@@ -1,6 +1,6 @@
 // Update this value to something unique in order to be able to build for a
 // physical iOS device.
-const APP_ID_PREFIX = "com.purplecon";
+const APP_ID_PREFIX = "mobile.purplecon.app";
 
 // These values are tied to EAS. If you would like to use EAS Build or Update
 // on this project while playing with it, then remove these values and run
@@ -23,7 +23,7 @@ const getName = () => {
   }
 
   if (IS_PREVIEW) {
-    return "Purplecon (Prev)";
+    return "Purplecon (Preview)";
   }
 
   return "Purplecon";
