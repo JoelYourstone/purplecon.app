@@ -45,7 +45,6 @@ export default {
   expo: {
     name: getName(),
     slug: "purplecon-app",
-    version: "1.1.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "automatic",
