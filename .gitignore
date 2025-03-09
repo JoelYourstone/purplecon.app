@@ -46,3 +46,8 @@ yarn-debug.log
 # ignoring as we're using CNG
 /ios
 /android
+
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
