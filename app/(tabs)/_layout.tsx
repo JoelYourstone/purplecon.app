@@ -103,11 +103,7 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: tabBarBackgroundColor,
           },
-          headerTitle: () => (
-            <ThemedText fontSize={20} fontWeight="bold">
-              Info
-            </ThemedText>
-          ),
+          headerShown: false,
           tabBarButton: (props) => (
             <TabBarButton
               {...props}

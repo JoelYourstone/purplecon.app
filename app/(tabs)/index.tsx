@@ -36,7 +36,7 @@ export type SessionItem =
     };
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList<SessionItem>
+  FlatList<SessionItem>,
 );
 
 export default function Schedule() {
@@ -55,7 +55,7 @@ export default function Schedule() {
       scrollOffset.value,
       [COLLAPSED_HEADER, EXPANDED_HEADER - 55],
       [0, ROW_HEIGHT],
-      Extrapolation.CLAMP
+      Extrapolation.CLAMP,
     ),
   }));
 
@@ -240,7 +240,7 @@ function Header({ scrollOffset, refreshing }: HeaderProps) {
     height: interpolate(
       scrollOffset.value,
       [0, EXPANDED_HEADER],
-      [EXPANDED_HEADER, 0]
+      [EXPANDED_HEADER, 0],
     ),
   }));
 

@@ -8,7 +8,7 @@ import { theme } from "@/theme";
 export function LiveStreamInfo() {
   const handlePress = () => {
     openWebBrowserAsync(
-      "https://ti.to/reactconf/2024/with/free-livestream-access"
+      "https://ti.to/reactconf/2024/with/free-livestream-access",
     );
   };
   return (

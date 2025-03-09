@@ -17,14 +17,14 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const interpolateHeader = (
   scrollOffset: SharedValue<number>,
-  outputRange: number[]
+  outputRange: number[],
 ) => {
   "worklet";
   return interpolate(
     scrollOffset.value,
     [0, EXPANDED_HEADER - 55],
     outputRange,
-    Extrapolation.CLAMP
+    Extrapolation.CLAMP,
   );
 };
 

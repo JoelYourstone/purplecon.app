@@ -73,7 +73,7 @@ export const AnimatedBootSplash = ({
         },
         () => {
           runOnJS(onAnimationEnd)();
-        }
+        },
       );
     },
   });
