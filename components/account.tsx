@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { StyleSheet, View, Alert, Button, TextInput } from "react-native";
 import { Session } from "@supabase/supabase-js";
+import Avatar from "./Avatar";
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
@@ -107,6 +108,17 @@ export default function Account({ session }: { session: Session }) {
             updateProfile({ username, website, avatar_url: avatarUrl })
           }
           disabled={loading}
+        />
+      </View>
+
+      <View>
+        <Avatar
+          size={200}
+          url={avatarUrl}
+          onUpload={(url: string) => {
+            setAvatarUrl(url);
+            updateProfile({ username, website, avatar_url: url });
+          }}
         />
       </View>
 

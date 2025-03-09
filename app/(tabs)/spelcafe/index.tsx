@@ -20,7 +20,12 @@ export default function App() {
   }, []);
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+      }}
+    >
       {session && session.user ? (
         <Account key={session.user.id} session={session} />
       ) : (

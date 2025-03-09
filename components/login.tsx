@@ -114,10 +114,6 @@ export default function Info() {
               onPress={() => signUpWithEmail()}
             />
           </View>
-
-          <Link href="/spelcafe/account" asChild>
-            <Button title="Account" />
-          </Link>
         </View>
       </ScrollView>
     </ThemedView>
