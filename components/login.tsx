@@ -81,7 +81,7 @@ export default function Info() {
             <TextInput
               // label="Email"
               // leftIcon={{ type: "font-awesome", name: "envelope" }}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text.trimEnd())}
               value={email}
               placeholder="email@address.com"
               textContentType="emailAddress"
