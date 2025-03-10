@@ -8,7 +8,7 @@ const APP_ID_PREFIX = "mobile.purplecon.app";
 const EAS_UPDATE_URL =
   "https://u.expo.dev/5c333e9f-c62e-4a57-bd8c-8e4b5268e62e";
 const EAS_PROJECT_ID = "5c333e9f-c62e-4a57-bd8c-8e4b5268e62e";
-const EAS_APP_OWNER = "jorel";
+const EAS_APP_OWNER = "purplecon";
 
 const IS_DEV = process.env.APP_VARIANT === "development";
 const IS_PREVIEW = process.env.APP_VARIANT === "preview";
