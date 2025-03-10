@@ -92,7 +92,7 @@ export default function Info() {
       <ScrollView style={styles.scrollView} ref={ref}>
         <View style={styles.container}>
           <View style={[styles.verticallySpaced, styles.mt20]}>
-            <TextInput
+            <TextInput style={styles.textInputStyle}
               // label="Email"
               // leftIcon={{ type: "font-awesome", name: "envelope" }}
               style={{ color: theme.colorWhite }}
@@ -155,4 +155,7 @@ const styles = StyleSheet.create({
   mt20: {
     marginTop: 20,
   },
+  textInputStyle: {
+    color: 'white',
+  }
 });
