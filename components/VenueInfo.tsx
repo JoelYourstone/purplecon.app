@@ -50,7 +50,7 @@ export function VenueInfo() {
       >
         <FontAwesome6 name="location-dot" size={24} color={iconColor} />
         <ThemedText style={styles.address}>
-          Vipeholms Allé 53, 224 66, Lund
+          {venueName}
         </ThemedText>
       </TouchableOpacity>
     </InfoSection>
