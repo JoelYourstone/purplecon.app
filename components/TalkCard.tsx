@@ -8,7 +8,6 @@ import { theme } from "../theme";
 import { Session, Speaker } from "../types";
 import { formatSessionTime } from "../utils/formatDate";
 
-import { useReactConfStore } from "@/store/reactConfStore";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 type Props = {
@@ -17,7 +16,8 @@ type Props = {
 };
 
 export function TalkCard({ session, isDayOne }: Props) {
-  const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+  // const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+  const shouldUseLocalTz = true;
 
   const shadow = useThemeColor({ light: theme.dropShadow, dark: undefined });
 

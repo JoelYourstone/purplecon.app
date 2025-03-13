@@ -17,7 +17,6 @@ import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { NotFound } from "@/components/NotFound";
 import { SpeakerImage } from "@/components/SpeakerImage";
 import { ThemedText, ThemedView, useThemeColor } from "@/components/Themed";
-import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 import { Session, Speaker } from "@/types";
 import { formatSessionTime } from "@/utils/formatDate";
@@ -28,7 +27,7 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 const findTalk = (
   talkId: string | string[] | undefined,
-  { dayOne, dayTwo }: { dayOne: Session[]; dayTwo: Session[] },
+  { dayOne, dayTwo }: { dayOne: Session[]; dayTwo: Session[] }
 ) => {
   const talkDay1 = dayOne.find((session) => session.id === talkId);
   if (talkDay1) {
@@ -46,8 +45,11 @@ export default function TalkDetail() {
   const navigation = useNavigation();
   const params = useLocalSearchParams();
   const talkId = params.talkId || undefined;
-  const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
-  const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+  // const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
+  // const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+  const shouldUseLocalTz = true;
+  const dayOne: Session[] = [];
+  const dayTwo: Session[] = [];
 
   // Animated header on scroll
   const translationY = useSharedValue(0);
@@ -62,7 +64,7 @@ export default function TalkDetail() {
             translationY.value,
             [-120, 0, 150],
             [-90, 0, 120],
-            Extrapolation.CLAMP,
+            Extrapolation.CLAMP
           ),
         },
         {
@@ -70,7 +72,7 @@ export default function TalkDetail() {
             translationY.value,
             [-120, 0],
             [1.4, 1],
-            Extrapolation.CLAMP,
+            Extrapolation.CLAMP
           ),
         },
       ],
@@ -232,7 +234,7 @@ function HeaderBackgroundIOS({
       scrollTranslationY.value,
       [0, 150],
       [0, 1],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     ),
   }));
 

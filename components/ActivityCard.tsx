@@ -2,7 +2,6 @@ import { StyleSheet, View } from "react-native";
 
 import { ThemedText, ThemedView } from "./Themed";
 
-import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 import { Session } from "@/types";
 import { formatSessionTime } from "@/utils/formatDate";
@@ -12,7 +11,8 @@ type Props = {
 };
 
 export function ActivityCard({ session }: Props) {
-  const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+  // const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+  const shouldUseLocalTz = true;
 
   return (
     <ThemedView style={styles.container}>

@@ -1,15 +1,13 @@
 import { Image } from "expo-image";
 import { StyleSheet } from "react-native";
 
-import { Button } from "./Button";
 import { ThemedText, ThemedView, useThemeColor } from "./Themed";
 
-import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 
 export function NotFound({ message }: { message: string }) {
-  const refetch = useReactConfStore((state) => state.refreshData);
-  const isRefetching = useReactConfStore((state) => state.isRefreshing);
+  // const refetch = useReactConfStore((state) => state.refreshData);
+  // const isRefetching = useReactConfStore((state) => state.isRefreshing);
   const iconColor = useThemeColor({
     light: theme.colorGrey,
     dark: theme.colorWhite,
@@ -29,7 +27,7 @@ export function NotFound({ message }: { message: string }) {
         style={styles.image}
       />
 
-      <Button title="Refetch" onPress={refetch} isLoading={isRefetching} />
+      {/* <Button title="Refetch" onPress={refetch} isLoading={isRefetching} /> */}
     </ThemedView>
   );
 }

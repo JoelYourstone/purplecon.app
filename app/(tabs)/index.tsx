@@ -20,9 +20,70 @@ import { ReactConfHeader } from "@/components/ReactConfHeader";
 import { TalkCard } from "@/components/TalkCard";
 import { ThemedText, ThemedView, useThemeColor } from "@/components/Themed";
 import { COLLAPSED_HEADER, EXPANDED_HEADER, ROW_HEIGHT } from "@/consts";
-import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 import { Session } from "@/types";
+
+// MOCK
+
+const dayOne: Session[] = [
+  {
+    id: "1",
+    title: "Introduction to TypeScript",
+    description: "A beginner-friendly session covering TS basics.",
+    startsAt: "2025-03-13T09:00:00",
+    endsAt: "2025-03-13T10:00:00",
+    speakers: [
+      {
+        id: "s1",
+        firstName: "Alice",
+        lastName: "Smith",
+        bio: "Front-end developer with a passion for TypeScript.",
+        tagLine: "TS Enthusiast",
+        profilePicture: null,
+        links: [
+          {
+            title: "GitHub",
+            url: "https://github.com/alicesmith",
+            linkType: "GitHub",
+          },
+        ],
+        sessions: [1],
+        fullName: "Alice Smith",
+        categoryItems: [1001],
+      },
+    ],
+    room: "Conference Room A",
+    isServiceSession: false,
+  },
+];
+
+const dayTwo: Session[] = [
+  {
+    id: "2",
+    title: "Advanced TypeScript Patterns",
+    description: "Deep dive into advanced usage of TypeScript.",
+    startsAt: "2025-03-14T11:00:00",
+    endsAt: "2025-03-14T12:00:00",
+    speakers: [
+      {
+        id: "s2",
+        firstName: "Bob",
+        lastName: "Johnson",
+        bio: null,
+        tagLine: "TypeScript Architect",
+        profilePicture: null,
+        links: [
+          { title: "Website", url: "https://bobstips.com", linkType: "Blog" },
+        ],
+        sessions: [2],
+        fullName: "Bob Johnson",
+        categoryItems: [1002],
+      },
+    ],
+    room: "Conference Room B",
+    isServiceSession: false,
+  },
+];
 
 export type SessionItem =
   | {
@@ -36,7 +97,7 @@ export type SessionItem =
     };
 
 const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList<SessionItem>,
+  FlatList<SessionItem>
 );
 
 export default function Schedule() {
@@ -55,7 +116,7 @@ export default function Schedule() {
       scrollOffset.value,
       [COLLAPSED_HEADER, EXPANDED_HEADER - 55],
       [0, ROW_HEIGHT],
-      Extrapolation.CLAMP,
+      Extrapolation.CLAMP
     ),
   }));
 
@@ -65,12 +126,17 @@ export default function Schedule() {
   });
 
   useFocusEffect(() => {
-    refreshSchedule({ ttlMs: 60_000 });
+    refreshSchedule();
   });
 
-  const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
-  const refreshSchedule = useReactConfStore((state) => state.refreshData);
-  const isRefreshing = useReactConfStore((state) => !!state.isRefreshing);
+  // const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
+  // const dayOne: Session[] = [];
+  // const dayTwo: Session[] = [];
+
+  const refreshSchedule = () => {
+    console.log("refreshSchedule");
+  };
+  const isRefreshing = false;
 
   const scrollToSection = ({
     isSchedule: isDayOne,
@@ -240,7 +306,7 @@ function Header({ scrollOffset, refreshing }: HeaderProps) {
     height: interpolate(
       scrollOffset.value,
       [0, EXPANDED_HEADER],
-      [EXPANDED_HEADER, 0],
+      [EXPANDED_HEADER, 0]
     ),
   }));
 

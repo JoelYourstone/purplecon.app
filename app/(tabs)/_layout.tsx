@@ -8,7 +8,6 @@ import React from "react";
 import { TabBarButton } from "@/components/TabBarButton";
 import { ThemedText, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
-import { useBookmarkStore } from "@/store/bookmarkStore";
 
 export default function TabLayout() {
   const tabBarBackgroundColor = useThemeColor({
@@ -144,12 +143,6 @@ export default function TabLayout() {
 }
 
 const BookmarkIcon = ({ color }: { color: string }) => {
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
-  return (
-    <MaterialCommunityIcons
-      name={bookmarks.length ? "bookmark-check" : "bookmark"}
-      size={24}
-      color={color}
-    />
-  );
+  // const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  return <MaterialCommunityIcons name={"bookmark"} size={24} color={color} />;
 };

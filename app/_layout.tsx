@@ -19,7 +19,6 @@ import { theme } from "../theme";
 import { BackButton } from "@/components/BackButton";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { ThemedText, useThemeColor } from "@/components/Themed";
-import { useReactConfStore } from "@/store/reactConfStore";
 import { AnimatedBootSplash } from "@/components/AnimatedBootSplash";
 
 Notifications.setNotificationHandler({
@@ -35,8 +34,6 @@ export default function Layout() {
   const router = useRouter();
   const pathName = usePathname();
   const colorScheme = useColorScheme() || "light";
-
-  const { refreshData, lastRefreshed } = useReactConfStore();
 
   const tabBarBackgroundColor = useThemeColor({
     light: theme.colorWhite,
@@ -72,15 +69,16 @@ export default function Layout() {
   useEffect(() => {
     const fetchData = async () => {
       if (
-        !lastRefreshed ||
-        differenceInMinutes(new Date(), new Date(lastRefreshed)) > 5
+        true
+        // !lastRefreshed ||
+        // differenceInMinutes(new Date(), new Date(lastRefreshed)) > 5
       ) {
-        await refreshData();
+        // await refreshData();
       }
     };
 
     fetchData();
-  }, [lastRefreshed, refreshData]);
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

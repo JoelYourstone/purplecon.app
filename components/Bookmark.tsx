@@ -9,7 +9,6 @@ import Animated, {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
 
-import { useBookmarkStore } from "@/store/bookmarkStore";
 import { theme } from "@/theme";
 import { registerForPushNotificationsAsync } from "@/utils/registerForPushNotificationsAsync";
 import { isPast, subMinutes } from "date-fns";
@@ -19,8 +18,11 @@ const AnimatedTouchableOpacity =
   Animated.createAnimatedComponent(TouchableOpacity);
 
 export function Bookmark({ session }: { session: Session }) {
-  const toggleBookmarked = useBookmarkStore((state) => state.toggleBookmarked);
-  const bookmarks = useBookmarkStore((state) => state.bookmarks);
+  // const toggleBookmarked = useBookmarkStore((state) => state.toggleBookmarked);
+  const bookmarks: { sessionId: string; notificationId?: string }[] = [];
+  const toggleBookmarked = (sessionId: string, notificationId?: string) => {
+    console.log("toggleBookmarked", sessionId, notificationId);
+  };
   const currentBookmark = bookmarks.find((b) => b.sessionId === session.id);
   const scale = useSharedValue(1);
 
@@ -61,7 +63,7 @@ export function Bookmark({ session }: { session: Session }) {
     if (currentBookmark) {
       if (currentBookmark?.notificationId) {
         await Notifications.cancelScheduledNotificationAsync(
-          currentBookmark?.notificationId,
+          currentBookmark?.notificationId
         );
       }
       toggleBookmarked(session.id);

@@ -12,13 +12,13 @@ import { MiniTalkCard } from "@/components/MiniTalkCard";
 import { NotFound } from "@/components/NotFound";
 import { SpeakerImage } from "@/components/SpeakerImage";
 import { ThemedText, ThemedView, useThemeColor } from "@/components/Themed";
-import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 import { Speaker } from "@/types";
 
 export default function SpeakerDetail() {
   const params = useLocalSearchParams();
-  const speakers = useReactConfStore((state) => state.allSessions.speakers);
+  // const speakers = useReactConfStore((state) => state.allSessions.speakers);
+  const speakers: Speaker[] = [];
   const speaker = speakers.find((speaker) => speaker.id === params.speakerId);
   const navigation = useNavigation();
 

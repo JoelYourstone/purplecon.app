@@ -5,14 +5,16 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { ThemedText, ThemedView, useThemeColor } from "./Themed";
 
-import { useReactConfStore } from "@/store/reactConfStore";
 import { theme } from "@/theme";
 import { formatSessionTime } from "@/utils/formatDate";
 import { Bookmark } from "./Bookmark";
+import { Session } from "@/types";
 
 export function MiniTalkCard({ sessionId }: { sessionId: string | number }) {
-  const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
-  const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
+  const shouldUseLocalTz = true;
+  const dayOne: Session[] = [];
+  const dayTwo: Session[] = [];
+
   const iconColor = useThemeColor({
     light: theme.colorWhite,
     dark: theme.colorDarkBlue,
@@ -20,13 +22,13 @@ export function MiniTalkCard({ sessionId }: { sessionId: string | number }) {
 
   const { talk, isDayOne } = (() => {
     const dayOneTalk = dayOne.find(
-      (session) => session.id === String(sessionId),
+      (session) => session.id === String(sessionId)
     );
     if (dayOneTalk) {
       return { talk: dayOneTalk, isDayOne: true };
     }
     const dayTwoTalk = dayTwo.find(
-      (session) => session.id === String(sessionId),
+      (session) => session.id === String(sessionId)
     );
     if (dayTwoTalk) {
       return { talk: dayTwoTalk, isDayOne: false };
