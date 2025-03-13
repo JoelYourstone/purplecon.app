@@ -74,6 +74,6 @@ export const useReactConfStore = create(
         const { isRefreshing: _, ...dataToPersist } = state;
         return dataToPersist;
       },
-    },
-  ),
+    }
+  )
 );
