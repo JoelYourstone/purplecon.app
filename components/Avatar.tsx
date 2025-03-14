@@ -65,7 +65,7 @@ export default function Avatar({ url, size = 150, onUpload }: Props) {
       }
 
       const arraybuffer = await fetch(image.uri).then((res) =>
-        res.arrayBuffer()
+        res.arrayBuffer(),
       );
 
       const fileExt = image.uri?.split(".").pop()?.toLowerCase() ?? "jpeg";

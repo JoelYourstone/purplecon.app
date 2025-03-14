@@ -22,13 +22,13 @@ export function MiniTalkCard({ sessionId }: { sessionId: string | number }) {
 
   const { talk, isDayOne } = (() => {
     const dayOneTalk = dayOne.find(
-      (session) => session.id === String(sessionId)
+      (session) => session.id === String(sessionId),
     );
     if (dayOneTalk) {
       return { talk: dayOneTalk, isDayOne: true };
     }
     const dayTwoTalk = dayTwo.find(
-      (session) => session.id === String(sessionId)
+      (session) => session.id === String(sessionId),
     );
     if (dayTwoTalk) {
       return { talk: dayTwoTalk, isDayOne: false };

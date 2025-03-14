@@ -63,7 +63,7 @@ export function Bookmark({ session }: { session: Session }) {
     if (currentBookmark) {
       if (currentBookmark?.notificationId) {
         await Notifications.cancelScheduledNotificationAsync(
-          currentBookmark?.notificationId
+          currentBookmark?.notificationId,
         );
       }
       toggleBookmarked(session.id);

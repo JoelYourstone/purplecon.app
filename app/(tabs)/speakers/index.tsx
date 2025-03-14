@@ -18,7 +18,7 @@ export default function Speakers() {
     Platform.select({
       ios: -90,
       default: 0,
-    })
+    }),
   );
   // const speakers = useReactConfStore((state) => state.allSessions.speakers);'
   const speakers: Speaker[] = [];

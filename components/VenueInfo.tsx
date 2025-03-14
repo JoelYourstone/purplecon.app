@@ -49,9 +49,7 @@ export function VenueInfo() {
         activeOpacity={0.8}
       >
         <FontAwesome6 name="location-dot" size={24} color={iconColor} />
-        <ThemedText style={styles.address}>
-          {venueName}
-        </ThemedText>
+        <ThemedText style={styles.address}>{venueName}</ThemedText>
       </TouchableOpacity>
     </InfoSection>
   );

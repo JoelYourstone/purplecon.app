@@ -27,7 +27,7 @@ const AnimatedScrollView = Animated.createAnimatedComponent(ScrollView);
 
 const findTalk = (
   talkId: string | string[] | undefined,
-  { dayOne, dayTwo }: { dayOne: Session[]; dayTwo: Session[] }
+  { dayOne, dayTwo }: { dayOne: Session[]; dayTwo: Session[] },
 ) => {
   const talkDay1 = dayOne.find((session) => session.id === talkId);
   if (talkDay1) {
@@ -64,7 +64,7 @@ export default function TalkDetail() {
             translationY.value,
             [-120, 0, 150],
             [-90, 0, 120],
-            Extrapolation.CLAMP
+            Extrapolation.CLAMP,
           ),
         },
         {
@@ -72,7 +72,7 @@ export default function TalkDetail() {
             translationY.value,
             [-120, 0],
             [1.4, 1],
-            Extrapolation.CLAMP
+            Extrapolation.CLAMP,
           ),
         },
       ],
@@ -234,7 +234,7 @@ function HeaderBackgroundIOS({
       scrollTranslationY.value,
       [0, 150],
       [0, 1],
-      Extrapolation.CLAMP
+      Extrapolation.CLAMP,
     ),
   }));
 
