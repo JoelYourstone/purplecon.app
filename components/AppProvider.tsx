@@ -6,7 +6,7 @@ import {
 import { usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { useColorScheme } from "react-native";
+import { useColorScheme, View, Text } from "react-native";
 import { setBackgroundColorAsync } from "expo-system-ui";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,6 +17,11 @@ import { theme } from "../theme";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { AnimatedBootSplash } from "@/components/AnimatedBootSplash";
 import { PropsWithChildren } from "react";
+import {
+  OnboardingProvider,
+  useOnboarding,
+} from "@/features/onboarding/OnboardingContext";
+import EnterCode from "@/features/onboarding/EnterCode";
 
 export function AppProvider({ children }: PropsWithChildren) {
   const [splashVisible, setSplashVisible] = useState(true);
@@ -78,12 +83,23 @@ export function AppProvider({ children }: PropsWithChildren) {
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-
-            {children}
+            <OnboardingProvider>
+              <InnerAppProvider>{children}</InnerAppProvider>
+            </OnboardingProvider>
             <OfflineBanner />
           </ThemeProvider>
         </AnimatedBootSplash>
       </ActionSheetProvider>
     </GestureHandlerRootView>
   );
+}
+
+function InnerAppProvider({ children }: PropsWithChildren) {
+  const { invitationCode } = useOnboarding();
+
+  if (!invitationCode) {
+    return <EnterCode />;
+  }
+
+  return children;
 }

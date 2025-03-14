@@ -11663,6 +11663,7 @@ __metadata:
     react-compiler-runtime: "npm:^19.0.0-beta-a7bf2bd-20241110"
     react-native: "npm:0.76.7"
     react-native-bootsplash: "npm:^6.3.0"
+    react-native-confirmation-code-field: "npm:^7.4.0"
     react-native-dynamic-app-icon: "npm:^1.1.0"
     react-native-gesture-handler: "npm:~2.20.2"
     react-native-reanimated: "npm:~3.16.1"
@@ -11843,6 +11844,21 @@ __metadata:
   bin:
     react-native-bootsplash: cli.js
   checksum: 10c0/1b6acc731b83dec756eabfd1461e098a14a3079b5eb0af29718c9b37f1f9dccf092f5972ab8ed2881e4320943be79453650e2ad7ec830d6be751552d2d9a9cdc
+  languageName: node
+  linkType: hard
+
+"react-native-confirmation-code-field@npm:^7.4.0":
+  version: 7.4.0
+  resolution: "react-native-confirmation-code-field@npm:7.4.0"
+  peerDependencies:
+    react: ">=16.4.0"
+    react-native: ">=0.64.0"
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 10c0/657cd4eb6fe931a4f2ac98ca7b4912cfb0577ec7e6ec5ea5c8921ae1aa2eb8b89ea4bff74db1e06bab8ba62422a9360c37535851fc1db4ebfb7cb5a67ab25271
   languageName: node
   linkType: hard
 
