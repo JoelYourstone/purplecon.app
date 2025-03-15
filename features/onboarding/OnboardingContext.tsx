@@ -41,10 +41,6 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
         // .eq("code", code)
         .maybeSingle();
 
-      console.log("data", data);
-      console.log("error", error);
-      console.log("code", code);
-
       if (error) {
         console.error("Error fetching invitation:", error.message);
         alert("Something went wrong. Please try again.");
@@ -75,10 +71,12 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
 
       // 3. If it's single-use, mark it as consumed
       if (data.single_use && !data.consumed) {
-        const { error: updateError } = await supabase
-          .from("invitations")
-          .update({ consumed: true })
-          .eq("id", data.id);
+        const { error: updateError } = await supabase.rpc(
+          "consume_invitation",
+          {
+            _id: data.id,
+          },
+        );
 
         if (updateError) {
           console.error("Error consuming invitation:", updateError.message);

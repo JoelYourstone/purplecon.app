@@ -12,7 +12,8 @@
     "sync-api": "node ./scripts/syncApi.js",
     "postinstall": "patch-package",
     "eas-build-pre-install": "corepack enable",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "update-supabase-types": "npx supabase gen types typescript --project-id ljjhtynzegxittmgmdvd --schema public > supabase.ts"
   },
   "dependencies": {
     "@config-plugins/react-native-dynamic-app-icon": "^8.0.0",
