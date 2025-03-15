@@ -2,11 +2,14 @@ import { supabase } from "@/lib/supabase";
 import { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 import { PropsWithChildren } from "react";
+import { Alert } from "react-native";
 
 type SessionContextType = {
   session: Session | null;
   isLoggedIn: boolean;
   profile: Profile | null;
+  updateProfile: (profile: Profile) => Promise<void>;
+  loading: boolean;
 };
 
 type Profile = {
@@ -20,6 +23,8 @@ const SessionContext = createContext<SessionContextType | null>(null);
 export function SessionProvider({ children }: PropsWithChildren) {
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
@@ -52,9 +57,44 @@ export function SessionProvider({ children }: PropsWithChildren) {
     });
   }, []);
 
+  async function updateProfile({ first_name, last_name, avatar_url }: Profile) {
+    try {
+      setLoading(true);
+      if (!session?.user) throw new Error("No user on the session!");
+
+      const updates = {
+        id: session?.user.id,
+        first_name,
+        last_name,
+        avatar_url,
+        updated_at: new Date().toISOString(),
+      };
+
+      const { error } = await supabase.from("profiles").upsert(updates);
+
+      if (error) {
+        throw error;
+      }
+
+      setProfile(updates);
+    } catch (error) {
+      if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <SessionContext.Provider
-      value={{ session, isLoggedIn: !!session, profile }}
+      value={{
+        session,
+        isLoggedIn: !!session,
+        profile,
+        updateProfile,
+        loading,
+      }}
     >
       {children}
     </SessionContext.Provider>

@@ -13,11 +13,7 @@ export default function App() {
         backgroundColor: "white",
       }}
     >
-      {session && session.user ? (
-        <Account key={session.user.id} session={session} />
-      ) : (
-        <Auth />
-      )}
+      {session && session.user ? <Account /> : <Auth />}
     </View>
   );
 }

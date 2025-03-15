@@ -4,6 +4,7 @@ import { View, Text } from "react-native";
 import { useSession } from "@/components/SessionProvider";
 import { Redirect } from "expo-router";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
+import { ClearReloadButton } from "../(tabs)/info";
 
 export default function Profile() {
   const { session } = useSession();
@@ -27,6 +28,7 @@ export default function Profile() {
       }}
     >
       <Account session={session} />
+      <ClearReloadButton />
     </View>
   );
 }
