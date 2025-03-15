@@ -7,13 +7,14 @@ import {
   View,
   Button,
   TextInput,
-  Text,
 } from "react-native";
 import { ThemedView, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
 import { ScrollView } from "react-native-gesture-handler";
 import { supabase } from "@/lib/supabase";
-import { Link } from "expo-router";
+
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
 // `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
@@ -58,17 +59,27 @@ export default function Info() {
 
   async function signUpWithEmail() {
     setLoading(true);
-    const {
-      data: { session },
-      error,
-    } = await supabase.auth.signUp({
+
+    // console.log(email);
+    // const phoneNumber = parsePhoneNumberFromString(email, "SE");
+    // console.log(phoneNumber);
+    // if (!phoneNumber) {
+    //   Alert.alert("Invalid phone number");
+    //   setLoading(false);
+    //   return;
+    // }
+
+    const { data, error } = await supabase.auth.signUp({
+      // phone: phoneNumber.format("E.164"),
       email: email,
       password: password,
     });
     // TODO email deep link to user
 
+    console.log(data);
+
     if (error) Alert.alert(error.message);
-    if (!session)
+    if (!data.session)
       Alert.alert("Please check your inbox for email verification!");
     setLoading(false);
   }
@@ -81,10 +92,12 @@ export default function Info() {
             <TextInput
               // label="Email"
               // leftIcon={{ type: "font-awesome", name: "envelope" }}
+              style={{ color: theme.colorWhite }}
               onChangeText={(text) => setEmail(text)}
               value={email}
-              placeholder="email@address.com"
+              placeholder="Email"
               textContentType="emailAddress"
+              // keyboardType="phone-pad"
               autoCapitalize={"none"}
             />
           </View>
@@ -95,21 +108,21 @@ export default function Info() {
               onChangeText={(text) => setPassword(text)}
               value={password}
               secureTextEntry={true}
-              placeholder="Password"
+              placeholder="Lösenord"
               textContentType="password"
               autoCapitalize={"none"}
             />
           </View>
-          <View style={[styles.verticallySpaced, styles.mt20]}>
+          {/* <View style={[styles.verticallySpaced, styles.mt20]}>
             <Button
               title="Sign in"
               disabled={loading}
               onPress={() => signInWithEmail()}
             />
-          </View>
+          </View> */}
           <View style={styles.verticallySpaced}>
             <Button
-              title="Sign up"
+              title="Fortsätt"
               disabled={loading}
               onPress={() => signUpWithEmail()}
             />

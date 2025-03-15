@@ -8,7 +8,9 @@ import {
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
 import { theme } from "@/theme";
-import { useOnboarding } from "./OnboardingContext";
+import { useOnboarding } from "@/features/onboarding/OnboardingContext";
+import { Redirect } from "expo-router";
+import { ClearReloadButton } from "@/app/(tabs)/info";
 const CELL_COUNT = 5;
 
 export default function EnterCode() {
@@ -19,9 +21,18 @@ export default function EnterCode() {
     setValue,
   });
 
-  const { invitationCode, submitInvitationCode, isLoading } = useOnboarding();
+  const {
+    invitationCode,
+    submitInvitationCode,
+    isLoading,
+    onboardingState,
+    RedirectToCurrentState,
+  } = useOnboarding();
+
+  console.log(invitationCode);
 
   useEffect(() => {
+    console.log("value", value);
     if (value.length === CELL_COUNT) {
       submitInvitationCode(value).then((success) => {
         if (success) {
@@ -33,7 +44,11 @@ export default function EnterCode() {
         }
       });
     }
-  }, [value, submitInvitationCode]);
+  }, [value]);
+
+  if (onboardingState !== "1.enterCode") {
+    return RedirectToCurrentState;
+  }
 
   return (
     <SafeAreaView style={styles.root}>
@@ -59,6 +74,7 @@ export default function EnterCode() {
           </View>
         )}
       />
+      <ClearReloadButton />
     </SafeAreaView>
   );
 }

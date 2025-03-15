@@ -6,7 +6,7 @@ import {
 import { usePathname, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { useColorScheme, View, Text } from "react-native";
+import { Platform, useColorScheme } from "react-native";
 import { setBackgroundColorAsync } from "expo-system-ui";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -17,11 +17,9 @@ import { theme } from "../theme";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { AnimatedBootSplash } from "@/components/AnimatedBootSplash";
 import { PropsWithChildren } from "react";
-import {
-  OnboardingProvider,
-  useOnboarding,
-} from "@/features/onboarding/OnboardingContext";
-import EnterCode from "@/features/onboarding/EnterCode";
+import { OnboardingProvider } from "@/features/onboarding/OnboardingContext";
+import { SessionProvider } from "./SessionProvider";
+import { useExpoNotifications } from "./notifications";
 
 export function AppProvider({ children }: PropsWithChildren) {
   const [splashVisible, setSplashVisible] = useState(true);
@@ -29,6 +27,8 @@ export function AppProvider({ children }: PropsWithChildren) {
 
   const router = useRouter();
   const pathName = usePathname();
+
+  useExpoNotifications();
 
   // Keep the root view background color in sync with the current theme
   useEffect(() => {
@@ -83,9 +83,11 @@ export function AppProvider({ children }: PropsWithChildren) {
             value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
           >
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
-            <OnboardingProvider>
-              <InnerAppProvider>{children}</InnerAppProvider>
-            </OnboardingProvider>
+            <SessionProvider>
+              <OnboardingProvider>
+                <InnerAppProvider>{children}</InnerAppProvider>
+              </OnboardingProvider>
+            </SessionProvider>
             <OfflineBanner />
           </ThemeProvider>
         </AnimatedBootSplash>
@@ -95,11 +97,5 @@ export function AppProvider({ children }: PropsWithChildren) {
 }
 
 function InnerAppProvider({ children }: PropsWithChildren) {
-  const { invitationCode } = useOnboarding();
-
-  if (!invitationCode) {
-    return <EnterCode />;
-  }
-
   return children;
 }

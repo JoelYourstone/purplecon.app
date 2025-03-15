@@ -7,18 +7,103 @@ import React, {
   useState,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { Redirect } from "expo-router";
+import { useSession } from "@/components/SessionProvider";
+import { getPermisions } from "./notification-permissions";
 type OnboardingContextType = {
   invitationCode: string;
   isLoading: boolean;
   submitInvitationCode: (code: string) => Promise<boolean>;
+  onboardingState: OnboardingState;
+  setOnboardingState: (state: OnboardingState) => void;
+  RedirectToCurrentState: React.ReactNode;
+  isNotificationsGranted: boolean;
 };
 
 const OnboardingContext = createContext<OnboardingContextType | null>(null);
 
+type OnboardingState =
+  | "1.enterCode"
+  | "2.createAccount"
+  | "3.profile"
+  | "4.notifications"
+  | "5.completed";
+
 export function OnboardingProvider({ children }: PropsWithChildren) {
   const [invitationCode, setInvitationCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [onboardingState, setOnboardingState] =
+    useState<OnboardingState>("1.enterCode");
+  const { isLoggedIn, profile } = useSession();
+  const [isNotificationsGranted, setIsNotificationsGranted] = useState(false);
+
+  useEffect(() => {
+    getPermisions().then((granted) => {
+      setIsNotificationsGranted(granted);
+    });
+  }, []);
+
+  let RedirectToCurrentState;
+  switch (onboardingState) {
+    case "1.enterCode":
+      RedirectToCurrentState = <Redirect href="/onboarding/EnterCode" />;
+      break;
+    case "2.createAccount":
+      RedirectToCurrentState = <Redirect href="/onboarding/CreateAccount" />;
+      break;
+    case "3.profile":
+      RedirectToCurrentState = <Redirect href="/onboarding/Profile" />;
+      break;
+    case "4.notifications":
+      RedirectToCurrentState = <Redirect href="/onboarding/Notifications" />;
+      break;
+    case "5.completed":
+      RedirectToCurrentState = <Redirect href="/" />;
+      break;
+  }
+
+  useEffect(() => {
+    const isOnboardingCompleted = async () => {
+      const onboardingCompleted = await AsyncStorage.getItem(
+        "onboardingCompleted",
+      );
+      if (onboardingCompleted) {
+        setOnboardingState("5.completed");
+      }
+    };
+    isOnboardingCompleted();
+  }, [onboardingState]);
+
+  useEffect(() => {
+    if (!invitationCode) {
+      setOnboardingState("1.enterCode");
+      return;
+    }
+
+    if (!isLoggedIn) {
+      setOnboardingState("2.createAccount");
+      return;
+    }
+
+    if (!profile?.first_name || !profile?.last_name) {
+      setOnboardingState("3.profile");
+      return;
+    }
+
+    if (!isNotificationsGranted) {
+      setOnboardingState("4.notifications");
+      return;
+    }
+
+    setOnboardingState("5.completed");
+  }, [
+    invitationCode,
+    isLoggedIn,
+    onboardingState,
+    profile?.first_name,
+    profile?.last_name,
+    isNotificationsGranted,
+  ]);
 
   // On mount, check localStorage for an existing code
   useEffect(() => {
@@ -38,11 +123,11 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
       const { data, error } = await supabase
         .from("invitations")
         .select("*")
-        // .eq("code", code)
+        .eq("code", code)
         .maybeSingle();
 
       if (error) {
-        console.error("Error fetching invitation:", error.message);
+        console.error("Error fetching invitation:", error.message, data);
         alert("Something went wrong. Please try again.");
         setIsLoading(false);
         return false;
@@ -71,15 +156,17 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
 
       // 3. If it's single-use, mark it as consumed
       if (data.single_use && !data.consumed) {
-        const { error: updateError } = await supabase.rpc(
-          "consume_invitation",
-          {
-            _id: data.id,
-          },
-        );
+        console.log("Consuming invitation");
+        const x = await supabase.rpc("consume_invitation", {
+          _id: data.id,
+        });
 
-        if (updateError) {
-          console.error("Error consuming invitation:", updateError.message);
+        if (x.error) {
+          console.error(
+            "Error consuming invitation:",
+            x.error.message,
+            data.id,
+          );
           alert("Something went wrong. Please try again.");
           setIsLoading(false);
           return false;
@@ -113,6 +200,10 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
         invitationCode,
         isLoading,
         submitInvitationCode,
+        onboardingState,
+        setOnboardingState,
+        RedirectToCurrentState,
+        isNotificationsGranted,
       }}
     >
       {children}

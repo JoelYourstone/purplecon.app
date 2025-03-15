@@ -2,12 +2,14 @@ import Feather from "@expo/vector-icons/build/Feather";
 import Ionicons from "@expo/vector-icons/build/Ionicons";
 import Octicons from "@expo/vector-icons/build/Octicons";
 import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import React from "react";
 
 import { TabBarButton } from "@/components/TabBarButton";
 import { ThemedText, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
+import { useSession } from "@/components/SessionProvider";
+import { useOnboarding } from "@/features/onboarding/OnboardingContext";
 
 export default function TabLayout() {
   const tabBarBackgroundColor = useThemeColor({
@@ -24,6 +26,12 @@ export default function TabLayout() {
     light: theme.colorGrey,
     dark: `rgba(255, 255, 255, 0.35)`,
   });
+
+  const { onboardingState } = useOnboarding();
+
+  if (onboardingState !== "5.completed") {
+    return <Redirect href="/onboarding" />;
+  }
 
   return (
     <Tabs

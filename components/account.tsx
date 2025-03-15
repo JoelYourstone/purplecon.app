@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
-import { StyleSheet, View, Alert, Button, TextInput } from "react-native";
+import { StyleSheet, View, Alert, Button, TextInput, Text } from "react-native";
 import { Session } from "@supabase/supabase-js";
 import Avatar from "./Avatar";
 
 export default function Account({ session }: { session: Session }) {
   const [loading, setLoading] = useState(true);
-  const [username, setUsername] = useState("");
-  const [website, setWebsite] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   useEffect(() => {
     if (session) getProfile();
@@ -23,7 +23,7 @@ export default function Account({ session }: { session: Session }) {
 
       const { data, error, status } = await supabase
         .from("profiles")
-        .select(`username, website, avatar_url`)
+        .select(`first_name, last_name, avatar_url`)
         .eq("id", session?.user.id)
         .single();
       if (error && status !== 406) {
@@ -31,9 +31,9 @@ export default function Account({ session }: { session: Session }) {
       }
 
       if (data) {
-        setUsername(data.username);
-        setWebsite(data.website);
-        setAvatarUrl(data.avatar_url);
+        setAvatarUrl(data.avatar_url ?? "");
+        setFirstName(data.first_name ?? "");
+        setLastName(data.last_name ?? "");
       } else {
         console.log("No data :((");
       }
@@ -49,12 +49,12 @@ export default function Account({ session }: { session: Session }) {
   }
 
   async function updateProfile({
-    username,
-    website,
+    first_name,
+    last_name,
     avatar_url,
   }: {
-    username: string;
-    website: string;
+    first_name: string;
+    last_name: string;
     avatar_url: string;
   }) {
     try {
@@ -63,10 +63,10 @@ export default function Account({ session }: { session: Session }) {
 
       const updates = {
         id: session?.user.id,
-        username,
-        website,
+        first_name,
+        last_name,
         avatar_url,
-        updated_at: new Date(),
+        updated_at: new Date().toISOString(),
       };
 
       const { error } = await supabase.from("profiles").upsert(updates);
@@ -85,19 +85,20 @@ export default function Account({ session }: { session: Session }) {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <TextInput value={session?.user?.email} />
-      </View>
       <View style={styles.verticallySpaced}>
+        <Text>Förnamn:</Text>
         <TextInput
-          value={username || ""}
-          onChangeText={(text) => setUsername(text)}
+          value={firstName || ""}
+          placeholder="Förnamn"
+          onChangeText={(text) => setFirstName(text)}
         />
       </View>
       <View style={styles.verticallySpaced}>
+        <Text>Efternamn:</Text>
         <TextInput
-          value={website || ""}
-          onChangeText={(text) => setWebsite(text)}
+          value={lastName || ""}
+          placeholder="Efternamn"
+          onChangeText={(text) => setLastName(text)}
         />
       </View>
 
@@ -105,25 +106,28 @@ export default function Account({ session }: { session: Session }) {
         <Button
           title={loading ? "Loading ..." : "Update"}
           onPress={() =>
-            updateProfile({ username, website, avatar_url: avatarUrl })
+            updateProfile({
+              first_name: firstName,
+              last_name: lastName,
+              avatar_url: avatarUrl,
+            })
           }
           disabled={loading}
         />
       </View>
-
       <View>
         <Avatar
           size={200}
           url={avatarUrl}
           onUpload={(url: string) => {
             setAvatarUrl(url);
-            updateProfile({ username, website, avatar_url: url });
+            updateProfile({
+              first_name: firstName,
+              last_name: lastName,
+              avatar_url: url,
+            });
           }}
         />
-      </View>
-
-      <View style={styles.verticallySpaced}>
-        <Button title="Sign Out" onPress={() => supabase.auth.signOut()} />
       </View>
     </View>
   );
