@@ -78,7 +78,10 @@ export default function Info() {
 
     console.log(data);
 
-    if (error) Alert.alert(error.message);
+    if (error) {
+      console.log(error);
+      // Alert.alert(error.message);
+    }
     if (!data.session)
       Alert.alert("Please check your inbox for email verification!");
     setLoading(false);

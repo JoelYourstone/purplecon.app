@@ -9,6 +9,7 @@ export default function Account({ session }: { session: Session }) {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [useCamera, setUseCamera] = useState(false);
 
   useEffect(() => {
     if (session) getProfile();
@@ -127,6 +128,8 @@ export default function Account({ session }: { session: Session }) {
               avatar_url: url,
             });
           }}
+          useCamera={useCamera}
+          onCameraToggle={() => setUseCamera(!useCamera)}
         />
       </View>
     </View>
