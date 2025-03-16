@@ -14,7 +14,8 @@
     "eas-build-pre-install": "corepack enable",
     "lint": "eslint .",
     "update-supabase-types": "npx supabase gen types typescript --project-id ljjhtynzegxittmgmdvd --schema public > supabase.ts && npx eslint --fix supabase.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "push-to-prod": "npx eas-cli update --channel production -m 'stuff'"
   },
   "dependencies": {
     "@config-plugins/react-native-dynamic-app-icon": "^8.0.0",
