@@ -13,8 +13,6 @@ import { theme } from "@/theme";
 import { ScrollView } from "react-native-gesture-handler";
 import { supabase } from "@/lib/supabase";
 
-import { parsePhoneNumberFromString } from "libphonenumber-js";
-
 // Tells Supabase Auth to continuously refresh the session automatically if
 // the app is in the foreground. When this is added, you will continue to receive
 // `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
@@ -93,9 +91,9 @@ export default function Info() {
         <View style={styles.container}>
           <View style={[styles.verticallySpaced, styles.mt20]}>
             <TextInput
+              style={styles.textInputStyle}
               // label="Email"
               // leftIcon={{ type: "font-awesome", name: "envelope" }}
-              style={{ color: theme.colorWhite }}
               onChangeText={(text) => setEmail(text.trim())}
               value={email}
               placeholder="Email"
@@ -154,5 +152,8 @@ const styles = StyleSheet.create({
   },
   mt20: {
     marginTop: 20,
+  },
+  textInputStyle: {
+    color: theme.colorWhite,
   },
 });
