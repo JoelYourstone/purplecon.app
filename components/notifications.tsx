@@ -36,12 +36,12 @@ export function useExpoNotifications() {
   useEffect(() => {
     if (!channelSetup || !session.isLoggedIn || notificationSentRef.current)
       return;
+    notificationSentRef.current = true;
 
     Notifications.getExpoPushTokenAsync({ projectId })
       .then(async (token) => {
         console.log("Expo push token", token);
         setExpoPushToken(token.data);
-        notificationSentRef.current = true;
         const { error } = await supabase
           .from("profiles")
           .update({
