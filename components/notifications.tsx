@@ -38,16 +38,24 @@ export function useExpoNotifications() {
       return;
 
     Notifications.getExpoPushTokenAsync({ projectId })
-      .then((token) => {
+      .then(async (token) => {
         console.log("Expo push token", token);
         setExpoPushToken(token.data);
         notificationSentRef.current = true;
-        supabase
+        const { data, error } = await supabase
           .from("profiles")
           .update({
             expo_push_token: token.data,
           })
           .eq("id", session.session!.user.id!);
+        if (error) {
+          Alert.alert(
+            "Error updating expo push token for " + session.session!.user.id!,
+            error.message,
+          );
+        } else {
+          Alert.alert("Expo push token updated");
+        }
       })
       .catch((error) => {
         console.log("Error getting expo push token");
