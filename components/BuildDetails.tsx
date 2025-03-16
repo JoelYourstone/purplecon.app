@@ -17,6 +17,10 @@ export function BuildDetails() {
         v{Application.nativeApplicationVersion} (
         {Application.nativeBuildVersion})
       </ThemedText>
+      <ThemedText fontSize={12}>
+        This update was released on{" "}
+        {updates?.currentlyRunning?.createdAt?.toLocaleDateString()}
+      </ThemedText>
       {currentUpdateId ? (
         <ThemedText fontSize={12} style={{ color: theme.colorGrey }}>
           {currentUpdateId}
