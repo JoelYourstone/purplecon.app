@@ -18,6 +18,7 @@ type OnboardingContextType = {
   setOnboardingState: (state: OnboardingState) => void;
   RedirectToCurrentState: React.ReactNode;
   isNotificationsGranted: boolean;
+  setIsNotificationsGranted: (granted: boolean) => void;
 };
 
 const OnboardingContext = createContext<OnboardingContextType | null>(null);
@@ -204,6 +205,7 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
         setOnboardingState,
         RedirectToCurrentState,
         isNotificationsGranted,
+        setIsNotificationsGranted,
       }}
     >
       {children}

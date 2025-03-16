@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
@@ -5,6 +6,9 @@ import { Platform } from "react-native";
 export function useExpoNotifications() {
   const [expoPushToken, setExpoPushToken] = useState<string | null>(null);
   const [channelSetup, setChannelSetup] = useState(Platform.OS === "ios");
+  const projectId =
+    Constants?.expoConfig?.extra?.eas?.projectId ??
+    Constants?.easConfig?.projectId;
 
   useEffect(() => {
     if (Platform.OS === "android") {
@@ -26,7 +30,7 @@ export function useExpoNotifications() {
 
   useEffect(() => {
     if (!channelSetup) return;
-    Notifications.getExpoPushTokenAsync()
+    Notifications.getExpoPushTokenAsync({ projectId })
       .then((token) => {
         console.log("Expo push token", token);
         setExpoPushToken(token.data);
@@ -35,7 +39,7 @@ export function useExpoNotifications() {
         console.log("Error getting expo push token");
         console.error(error);
       });
-  }, [channelSetup]);
+  }, [channelSetup, projectId]);
 
   return expoPushToken;
 }
