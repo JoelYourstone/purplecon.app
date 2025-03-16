@@ -28,8 +28,6 @@ export function AppProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathName = usePathname();
 
-  useExpoNotifications();
-
   // Keep the root view background color in sync with the current theme
   useEffect(() => {
     setBackgroundColorAsync(
@@ -97,5 +95,6 @@ export function AppProvider({ children }: PropsWithChildren) {
 }
 
 function InnerAppProvider({ children }: PropsWithChildren) {
+  useExpoNotifications();
   return children;
 }
