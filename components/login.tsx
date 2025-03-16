@@ -96,7 +96,7 @@ export default function Info() {
               // label="Email"
               // leftIcon={{ type: "font-awesome", name: "envelope" }}
               style={{ color: theme.colorWhite }}
-              onChangeText={(text) => setEmail(text)}
+              onChangeText={(text) => setEmail(text.trim())}
               value={email}
               placeholder="Email"
               textContentType="emailAddress"
