@@ -6,7 +6,6 @@ import {
   Alert,
   Image,
   Button,
-  Platform,
   TouchableOpacity,
   Text,
 } from "react-native";

@@ -1,8 +1,8 @@
 import { useScrollToTop } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { View, Text } from "react-native";
 
-import { theme } from "@/theme";
+// import { theme } from "@/theme";
 import { FlatList } from "react-native-gesture-handler";
 
 export default function Bookmarks() {
@@ -56,16 +56,16 @@ export default function Bookmarks() {
   // );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  flatListContainer: {
-    paddingTop: theme.space16,
-  },
-  bookmarks: {
-    flex: 1,
-    justifyContent: "center",
-    paddingHorizontal: theme.space24,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+//   flatListContainer: {
+//     paddingTop: theme.space16,
+//   },
+//   bookmarks: {
+//     flex: 1,
+//     justifyContent: "center",
+//     paddingHorizontal: theme.space24,
+//   },
+// });

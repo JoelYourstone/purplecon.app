@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, StyleSheet, Button } from "react-native";
+import { SafeAreaView, Text, View, StyleSheet } from "react-native";
 
 import {
   CodeField,
@@ -9,7 +9,6 @@ import {
 } from "react-native-confirmation-code-field";
 import { theme } from "@/theme";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
-import { Redirect } from "expo-router";
 import { ClearReloadButton } from "@/app/(tabs)/info";
 const CELL_COUNT = 5;
 
@@ -24,7 +23,6 @@ export default function EnterCode() {
   const {
     invitationCode,
     submitInvitationCode,
-    isLoading,
     onboardingState,
     RedirectToCurrentState,
   } = useOnboarding();
@@ -44,7 +42,7 @@ export default function EnterCode() {
         }
       });
     }
-  }, [value]);
+  }, [value, submitInvitationCode]);
 
   if (onboardingState !== "1.enterCode") {
     return RedirectToCurrentState;

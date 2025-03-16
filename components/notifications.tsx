@@ -42,7 +42,7 @@ export function useExpoNotifications() {
         console.log("Expo push token", token);
         setExpoPushToken(token.data);
         notificationSentRef.current = true;
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from("profiles")
           .update({
             expo_push_token: token.data,

@@ -37,23 +37,23 @@ export default function Info() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function signInWithEmail() {
-    setLoading(true);
-    const {
-      error,
-      data: { session },
-    } = await supabase.auth.signInWithPassword({
-      email: email,
-      password: password,
-    });
+  // async function signInWithEmail() {
+  //   setLoading(true);
+  //   const {
+  //     error,
+  //     data: { session },
+  //   } = await supabase.auth.signInWithPassword({
+  //     email: email,
+  //     password: password,
+  //   });
 
-    if (error) Alert.alert(error.message);
-    setLoading(false);
+  //   if (error) Alert.alert(error.message);
+  //   setLoading(false);
 
-    if (session) {
-      Alert.alert("Signed in!");
-    }
-  }
+  //   if (session) {
+  //     Alert.alert("Signed in!");
+  //   }
+  // }
 
   async function signUpWithEmail() {
     setLoading(true);

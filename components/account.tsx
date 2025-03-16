@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
-import { StyleSheet, View, Alert, Button, TextInput, Text } from "react-native";
+import { StyleSheet, View, Button, TextInput, Text } from "react-native";
 import Avatar from "./Avatar";
 import { useSession } from "./SessionProvider";
 
@@ -18,7 +17,7 @@ export default function Account() {
       setFirstName(profile?.first_name ?? "");
       setLastName(profile?.last_name ?? "");
     } else console.log("No session");
-  }, [session]);
+  }, [session, profile?.avatar_url, profile?.first_name, profile?.last_name]);
 
   return (
     <View style={styles.container}>

@@ -3,16 +3,12 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
 import { BuildDetails } from "@/components/BuildDetails";
-import { LiveStreamInfo } from "@/components/LiveStreamInfo";
 import { OrganizersInfo } from "@/components/OrganizersInfo";
 import { SponsorsInfo } from "@/components/SponsorsInfo";
-import { DiscordInfo } from "@/components/DiscordInfo";
-import { PoweredByExpo } from "@/components/PoweredByExpo";
 import { ThemedView, useThemeColor } from "@/components/Themed";
 import { VenueInfo } from "@/components/VenueInfo";
 import { theme } from "@/theme";
-import { Pressable, ScrollView } from "react-native-gesture-handler";
-import { Link } from "expo-router";
+import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "@/components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { reloadAppAsync } from "expo";

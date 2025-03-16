@@ -8,7 +8,6 @@ import React from "react";
 import { TabBarButton } from "@/components/TabBarButton";
 import { ThemedText, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
-import { useSession } from "@/components/SessionProvider";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
 
 export default function TabLayout() {

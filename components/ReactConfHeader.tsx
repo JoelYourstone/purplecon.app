@@ -11,7 +11,7 @@ import Animated, {
 import { ThemedText, ThemedView, useThemeColor } from "./Themed";
 import { theme } from "../theme";
 
-import { COLLAPSED_HEADER, EXPANDED_HEADER, ROW_HEIGHT } from "@/consts";
+import { COLLAPSED_HEADER, EXPANDED_HEADER } from "@/consts";
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 

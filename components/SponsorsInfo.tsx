@@ -1,5 +1,5 @@
 import { Image, ImageSource, ImageStyle } from "expo-image";
-import { StyleSheet, View, ViewStyle, Text } from "react-native";
+import { StyleSheet, ViewStyle, Text } from "react-native";
 import openWebBrowserAsync from "@/utils/openWebBrowserAsync";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -9,41 +9,6 @@ import { ThemedText, ThemedView } from "./Themed";
 import { theme } from "@/theme";
 
 const logoHeight = 40;
-
-const sponsors = {
-  remixSpotify: {
-    image: require("../assets/images/sponsor-remix-spotify.svg"),
-    url: "https://remix.run/",
-  },
-  mui: {
-    image: require("../assets/images/sponsor-mui.svg"),
-    url: "https://mui.com/",
-  },
-  sentry: {
-    image: require("../assets/images/sponsor-sentry.svg"),
-    url: "https://sentry.io/for/react/?utm_source=sponsored-conf&utm_medium=sponsored-event&utm_campaign=frontend-fy25q2-evergreen&utm_content=logo-reactconf2024-learnmore",
-  },
-  expo: {
-    image: require("../assets/images/sponsor-expo.svg"),
-    url: "https://expo.dev/",
-  },
-  redwood: {
-    image: require("../assets/images/sponsor-redwood.svg"),
-    url: "https://redwoodjs.com/",
-  },
-  vercel: {
-    image: require("../assets/images/sponsor-vercel.svg"),
-    url: "https://vercel.com/",
-  },
-  abbott: {
-    image: require("../assets/images/sponsor-abbott.svg"),
-    url: "https://www.jobs.abbott/software",
-  },
-  amazon: {
-    image: require("../assets/images/sponsor-amazon.webp"),
-    url: "https://developer.amazon.com/apps-and-games?cmp=US_2024_05_3P_React-Conf-2024&ch=prtnr&chlast=prtnr&pub=ref&publast=ref&type=org&typelast=org",
-  },
-};
 
 export function SponsorsInfo() {
   return (

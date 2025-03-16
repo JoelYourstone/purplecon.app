@@ -1,12 +1,8 @@
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
 import { theme } from "@/theme";
-import { View, Text, Button, Platform } from "react-native";
+import { View, Text, Button } from "react-native";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import Constants from "expo-constants";
-import { useState, useEffect } from "react";
-import { getPermisions } from "@/features/onboarding/notification-permissions";
-import { router } from "expo-router";
 
 export default function NotificationSetup() {
   const {

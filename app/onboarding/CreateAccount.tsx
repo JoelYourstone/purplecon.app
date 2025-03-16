@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import { theme } from "@/theme";
 import Login from "@/components/login";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
