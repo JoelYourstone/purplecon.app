@@ -23,7 +23,7 @@ export default function Layout() {
           },
           headerTitle: () => (
             <ThemedText fontSize={20} fontWeight="bold">
-              Auth
+              Announcements
             </ThemedText>
           ),
 

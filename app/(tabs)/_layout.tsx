@@ -1,7 +1,8 @@
 import Feather from "@expo/vector-icons/build/Feather";
 import Ionicons from "@expo/vector-icons/build/Ionicons";
 import Octicons from "@expo/vector-icons/build/Octicons";
-import MaterialCommunityIcons from "@expo/vector-icons/build/MaterialCommunityIcons";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
 
@@ -52,21 +53,21 @@ export default function TabLayout() {
               activeTintColor={tabBarActiveTintColor}
               inactiveTintColor={tabBarInactiveTintColor}
               icon={({ color }) => (
-                <Feather size={24} name="calendar" color={color} />
+                <Ionicons size={24} name="dice-outline" color={color} />
               )}
             />
           ),
         }}
       />
       <Tabs.Screen
-        name="bookmarks"
+        name="cafe" //todo change
         options={{
           headerStyle: {
             backgroundColor: tabBarBackgroundColor,
           },
           headerTitle: () => (
             <ThemedText fontSize={20} fontWeight="bold">
-              Bookmarked sessions
+              Spelcafé
             </ThemedText>
           ),
           tabBarButton: (props) => (
@@ -74,13 +75,13 @@ export default function TabLayout() {
               {...props}
               activeTintColor={tabBarActiveTintColor}
               inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => <BookmarkIcon color={color} />}
+              icon={({ color }) => <Feather name={"coffee"} size={24} color={color} />}
             />
           ),
         }}
       />
       <Tabs.Screen
-        name="speakers"
+        name="social"
         options={{
           headerStyle: {
             backgroundColor: tabBarBackgroundColor,
@@ -88,7 +89,7 @@ export default function TabLayout() {
           headerShown: false,
           headerTitle: () => (
             <ThemedText fontSize={20} fontWeight="bold">
-              Speakers
+              Social
             </ThemedText>
           ),
           tabBarButton: (props) => (
@@ -97,14 +98,14 @@ export default function TabLayout() {
               activeTintColor={tabBarActiveTintColor}
               inactiveTintColor={tabBarInactiveTintColor}
               icon={({ color }) => (
-                <Ionicons name="people" size={24} color={color} />
+                <FontAwesome5 name="users" size={24} color={color} />
               )}
             />
           ),
         }}
       />
       <Tabs.Screen
-        name="spelcafe"
+        name="announcements"
         options={{
           headerStyle: {
             backgroundColor: tabBarBackgroundColor,
@@ -116,7 +117,7 @@ export default function TabLayout() {
               activeTintColor={tabBarActiveTintColor}
               inactiveTintColor={tabBarInactiveTintColor}
               icon={({ color }) => (
-                <Octicons size={24} name="credit-card" color={color} />
+                <MaterialCommunityIcons name="newspaper-variant-outline" size={24} color={color} />
               )}
             />
           ),
@@ -148,8 +149,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const BookmarkIcon = ({ color }: { color: string }) => {
-  // const bookmarks = useBookmarkStore((state) => state.bookmarks);
-  return <MaterialCommunityIcons name={"bookmark"} size={24} color={color} />;
-};
