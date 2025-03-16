@@ -28,7 +28,7 @@ yarn-debug.*
 yarn-error.*
 
 # yarn
-yarn.lock
+# yarn.lock
 yarn-debug.log*
 yarn-debug.log
 .yarn/
