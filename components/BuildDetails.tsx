@@ -4,7 +4,13 @@ import { View, StyleSheet } from "react-native";
 import { ThemedText } from "./Themed";
 
 import { theme } from "@/theme";
-import { useUpdates } from "expo-updates";
+import {
+  useUpdates,
+  fetchUpdateAsync,
+  reloadAsync,
+  checkForUpdateAsync,
+} from "expo-updates";
+import { Button } from "./Button";
 
 export function BuildDetails() {
   const updates = useUpdates();
@@ -21,6 +27,21 @@ export function BuildDetails() {
         This update was released on{" "}
         {updates?.currentlyRunning?.createdAt?.toLocaleDateString()}
       </ThemedText>
+      <Button
+        title="Check for updates"
+        onPress={async () => {
+          if (await checkForUpdateAsync()) {
+            await fetchUpdateAsync();
+            await reloadAsync();
+          } else {
+            console.log("No update available");
+          }
+        }}
+      />
+      <ThemedText fontSize={12}>
+        Above button will reload if update found, otherwise do nothing
+      </ThemedText>
+
       {currentUpdateId ? (
         <ThemedText fontSize={12} style={{ color: theme.colorGrey }}>
           {currentUpdateId}
