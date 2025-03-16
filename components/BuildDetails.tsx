@@ -30,7 +30,8 @@ export function BuildDetails() {
       <Button
         title="Check for updates"
         onPress={async () => {
-          if (await checkForUpdateAsync()) {
+          const result = await checkForUpdateAsync();
+          if (result.isAvailable) {
             await fetchUpdateAsync();
             await reloadAsync();
           } else {
