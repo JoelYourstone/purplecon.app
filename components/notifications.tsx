@@ -54,7 +54,7 @@ export function useExpoNotifications() {
             error.message,
           );
         } else {
-          Alert.alert("Expo push token updated");
+          // Alert.alert("Expo push token updated");
         }
       })
       .catch((error) => {
