@@ -33,7 +33,7 @@ export default function Info() {
         {/* <DiscordInfo /> */}
         <SponsorsInfo />
         <OrganizersInfo />
-        {/* <BuildDetails /> */}
+        <BuildDetails />
         {/* <PoweredByExpo /> */}
 
         {__DEV__ && (
