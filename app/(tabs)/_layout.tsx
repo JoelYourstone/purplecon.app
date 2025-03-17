@@ -60,7 +60,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="cafe" //todo change
+        name="cafe"
         options={{
           headerStyle: {
             backgroundColor: tabBarBackgroundColor,

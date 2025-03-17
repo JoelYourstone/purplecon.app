@@ -5,13 +5,18 @@ import { View, Text } from "react-native";
 // import { theme } from "@/theme";
 import { FlatList } from "react-native-gesture-handler";
 
-export default function Bookmarks() {
+export default function Cafe() {
   const scrollRef = React.useRef<FlatList>(null);
   useScrollToTop(scrollRef);
 
   return (
-    <View>
-      <Text>Bookmarks</Text>
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+      }}
+    >
+    <Text>Menu</Text>
     </View>
   );
 
