@@ -3,7 +3,7 @@ import { useSession } from "@/components/SessionProvider";
 import Account from "@/components/account";
 import Auth from "@/components/login";
 
-export default function App() {
+export default function Profile() {
   const { session } = useSession();
 
   return (
@@ -13,6 +13,7 @@ export default function App() {
         backgroundColor: "white",
       }}
     >
+      {session && session.user ? <Account /> : <Auth />}
     </View>
   );
 }

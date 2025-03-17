@@ -126,14 +126,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="info"
         options={{
-          headerStyle: {
-            backgroundColor: tabBarBackgroundColor,
-          },
-          headerTitle: () => (
-            <ThemedText fontSize={20} fontWeight="bold">
-              Info
-            </ThemedText>
-          ),
+          headerShown: false,
           tabBarButton: (props) => (
             <TabBarButton
               {...props}
