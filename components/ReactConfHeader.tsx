@@ -99,7 +99,7 @@ export function ReactConfHeader({ scrollOffset }: ReactConfHeaderProps) {
           style={[styles.logoText, secondLineStyle]}
           animated
         >
-          2024
+          2025
         </ThemedText>
       </View>
     </ThemedView>

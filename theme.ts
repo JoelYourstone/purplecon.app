@@ -12,6 +12,7 @@ export const theme = {
   colorReactDarkBlue: "#087EA4",
   colorThemeLightGrey: "#FCFBFE",
   colorThemeGrey: "#F5F4F3",
+  colorPurple: "#4d2f66",
 
   darkActiveContent: "rgba(255,255,255, 0.3)",
 

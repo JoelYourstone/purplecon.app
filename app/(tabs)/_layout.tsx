@@ -1,8 +1,8 @@
 import Feather from "@expo/vector-icons/build/Feather";
 import Ionicons from "@expo/vector-icons/build/Ionicons";
 import Octicons from "@expo/vector-icons/build/Octicons";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Redirect, Tabs } from "expo-router";
 import React from "react";
 
@@ -63,11 +63,12 @@ export default function TabLayout() {
         name="cafe"
         options={{
           headerStyle: {
-            backgroundColor: tabBarBackgroundColor,
+            backgroundColor: theme.colorPurple,
           },
+          headerTitleAlign: "center",
           headerTitle: () => (
             <ThemedText fontSize={20} fontWeight="bold">
-              Spelcafé
+              SPELCAFÉ
             </ThemedText>
           ),
           tabBarButton: (props) => (
@@ -75,7 +76,9 @@ export default function TabLayout() {
               {...props}
               activeTintColor={tabBarActiveTintColor}
               inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => <Feather name={"coffee"} size={24} color={color} />}
+              icon={({ color }) => (
+                <Feather name={"coffee"} size={24} color={color} />
+              )}
             />
           ),
         }}
@@ -117,7 +120,11 @@ export default function TabLayout() {
               activeTintColor={tabBarActiveTintColor}
               inactiveTintColor={tabBarInactiveTintColor}
               icon={({ color }) => (
-                <MaterialCommunityIcons name="newspaper-variant-outline" size={24} color={color} />
+                <MaterialCommunityIcons
+                  name="newspaper-variant-outline"
+                  size={24}
+                  color={color}
+                />
               )}
             />
           ),

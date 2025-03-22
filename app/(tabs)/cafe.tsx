@@ -1,6 +1,16 @@
+import { TalkCard } from "@/components/TalkCard";
+import { ThemedText, ThemedView } from "@/components/Themed";
+import { theme } from "@/theme";
 import { useScrollToTop } from "@react-navigation/native";
 import React from "react";
-import { View, Text } from "react-native";
+import {
+  View,
+  SectionList,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 
 // import { theme } from "@/theme";
 import { FlatList } from "react-native-gesture-handler";
@@ -9,68 +19,86 @@ export default function Cafe() {
   const scrollRef = React.useRef<FlatList>(null);
   useScrollToTop(scrollRef);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-      }}
-    >
-    <Text>Menu</Text>
-    </View>
-  );
+  const menuSections = [
+    {
+      title: "Dryck",
+      data: [
+        { id: 1, name: "Läsk", price: 10 },
+        { id: 2, name: "Cider", price: 15 },
+        { id: 3, name: "Hot Chocolate", price: 4.0 },
+        { id: 4, name: "Iced Coffee", price: 4.0 },
+        { id: 5, name: "Iced Tea", price: 3.0 },
+        { id: 6, name: "Iced Chocolate", price: 4.5 },
+      ],
+    },
+    {
+      title: "Snacks",
+      data: [
+        { id: 7, name: "Cookie", price: 5 },
+        { id: 8, name: "Chokladboll", price: 5 },
+        { id: 9, name: "Chokladstycksak", price: 10 },
+      ],
+    },
+    {
+      title: "Mat",
+      data: [
+        { id: 10, name: "Pizza", price: 20 },
+        { id: 11, name: "Pirog", price: 15 },
+      ],
+    },
+  ];
 
-  // return (
-  //   <ThemedView
-  //     style={styles.container}
-  //     darkColor={theme.colorDarkBlue}
-  //     lightColor={theme.colorWhite}
-  //   >
-  //     {dayOneFiltered.length || dayTwoFiltered.length ? (
-  //       <FlatList
-  //         ref={scrollRef}
-  //         contentContainerStyle={styles.flatListContainer}
-  //         data={[
-  //           ...dayOneFiltered.map((talk) => ({ talk, isDayOne: true })),
-  //           ...dayTwoFiltered.map((talk) => ({ talk, isDayOne: false })),
-  //         ]}
-  //         renderItem={({ item }) => (
-  //           <TalkCard
-  //             key={item.talk.id}
-  //             session={item.talk}
-  //             isDayOne={item.isDayOne}
-  //           />
-  //         )}
-  //       />
-  //     ) : (
-  //       <View style={styles.bookmarks}>
-  //         <ThemedText
-  //           fontWeight="bold"
-  //           fontSize={20}
-  //           style={{ marginBottom: theme.space8 }}
-  //         >
-  //           No sessions bookmarked
-  //         </ThemedText>
-  //         <ThemedText fontSize={18}>
-  //           Tap on the bookmark icon on a session to add it to your bookmarks,
-  //           and it will be displayed here.
-  //         </ThemedText>
-  //       </View>
-  //     )}
-  //   </ThemedView>
-  // );
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <SectionList
+        sections={menuSections}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity key={item.id} style={styles.menuItem}>
+            <Text style={styles.menuText}>{item.name}</Text>
+            <Text style={styles.menuText}>{item.price}:-</Text>
+          </TouchableOpacity>
+        )}
+        renderSectionHeader={({ section: { title } }) => (
+          <ThemedView
+            style={styles.sectionHeader}
+            lightColor={theme.colorWhite}
+            darkColor={theme.colorDarkBlue}
+          >
+            <ThemedText fontWeight="bold" fontSize={20}>
+              {title}
+            </ThemedText>
+          </ThemedView>
+        )}
+        contentContainerStyle={styles.flatListContainer}
+      />
+    </ScrollView>
+  );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//   },
-//   flatListContainer: {
-//     paddingTop: theme.space16,
-//   },
-//   bookmarks: {
-//     flex: 1,
-//     justifyContent: "center",
-//     paddingHorizontal: theme.space24,
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: theme.colorWhite,
+  },
+  sectionHeader: {
+    backgroundColor: theme.colorPurple,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 4,
+    marginBottom: 8,
+  },
+  menuItem: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+  },
+  menuText: {
+    color: theme.colorBlack,
+    fontSize: 16,
+  },
+  flatListContainer: {
+    paddingTop: theme.space16,
+  },
+});
