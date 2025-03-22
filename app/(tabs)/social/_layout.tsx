@@ -19,7 +19,7 @@ export default function Layout() {
         name="index"
         options={{
           headerStyle: {
-            backgroundColor: tabBarBackgroundColor,
+            backgroundColor: theme.colorPurple,
           },
           headerTitle: () => (
             <ThemedText fontSize={20} fontWeight="bold">

@@ -97,7 +97,7 @@ export default function TabLayout() {
         name="social"
         options={{
           headerStyle: {
-            backgroundColor: tabBarBackgroundColor,
+            backgroundColor: theme.colorPurple,
           },
           headerShown: false,
           headerTitle: () => (
