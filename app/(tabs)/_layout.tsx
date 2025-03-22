@@ -3,15 +3,17 @@ import Ionicons from "@expo/vector-icons/build/Ionicons";
 import Octicons from "@expo/vector-icons/build/Octicons";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { Redirect, Tabs } from "expo-router";
+import { Redirect, Tabs, useRouter } from "expo-router";
 import React from "react";
-
+import { TouchableOpacity } from "react-native";
 import { TabBarButton } from "@/components/TabBarButton";
 import { ThemedText, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
 
 export default function TabLayout() {
+  const router = useRouter();
+
   const tabBarBackgroundColor = useThemeColor({
     light: theme.colorWhite,
     dark: theme.colorDarkestBlue,
@@ -70,6 +72,14 @@ export default function TabLayout() {
             <ThemedText fontSize={20} fontWeight="bold">
               SPELCAFÉ
             </ThemedText>
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => console.log("Go to cart")}
+              style={{ marginRight: 10 }}
+            >
+              <Feather name="shopping-cart" size={24} color="white" />
+            </TouchableOpacity>
           ),
           tabBarButton: (props) => (
             <TabBarButton

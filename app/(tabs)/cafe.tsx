@@ -2,7 +2,7 @@ import { TalkCard } from "@/components/TalkCard";
 import { ThemedText, ThemedView } from "@/components/Themed";
 import { theme } from "@/theme";
 import { useScrollToTop } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   SectionList,
@@ -18,6 +18,8 @@ import { FlatList } from "react-native-gesture-handler";
 export default function Cafe() {
   const scrollRef = React.useRef<FlatList>(null);
   useScrollToTop(scrollRef);
+
+  const [cartTotal, setCartTotal] = useState(0);
 
   const menuSections = [
     {
@@ -54,7 +56,15 @@ export default function Cafe() {
         sections={menuSections}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity key={item.id} style={styles.menuItem}>
+          <TouchableOpacity
+            key={item.id}
+            style={styles.menuItem}
+            onPress={() =>
+              alert(
+                "You have selected " + item.name + " for " + item.price + ":-",
+              )
+            }
+          >
             <Text style={styles.menuText}>{item.name}</Text>
             <Text style={styles.menuText}>{item.price}:-</Text>
           </TouchableOpacity>
