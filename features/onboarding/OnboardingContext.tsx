@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect } from "expo-router";
 import { useSession } from "@/components/SessionProvider";
 import { getPermisions } from "./notification-permissions";
+import { useSplashContext } from "@/components/SplashProvider";
 type OnboardingContextType = {
   invitationCode: string;
   isLoading: boolean;
@@ -37,12 +38,25 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
     useState<OnboardingState>("1.enterCode");
   const { isLoggedIn, profile } = useSession();
   const [isNotificationsGranted, setIsNotificationsGranted] = useState(false);
+  const { setHasFinishedOnboardingLoading } = useSplashContext();
 
   useEffect(() => {
-    getPermisions().then((granted) => {
+    async function loadInitialStuff() {
+      const granted = await getPermisions();
       setIsNotificationsGranted(granted);
-    });
-  }, []);
+
+      const onboardingCompleted = await AsyncStorage.getItem(
+        "onboardingCompleted",
+      );
+      if (onboardingCompleted) {
+        setOnboardingState("5.completed");
+      }
+
+      setHasFinishedOnboardingLoading(true);
+    }
+
+    loadInitialStuff();
+  }, [setHasFinishedOnboardingLoading]);
 
   let RedirectToCurrentState;
   switch (onboardingState) {
@@ -62,18 +76,6 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
       RedirectToCurrentState = <Redirect href="/" />;
       break;
   }
-
-  useEffect(() => {
-    const isOnboardingCompleted = async () => {
-      const onboardingCompleted = await AsyncStorage.getItem(
-        "onboardingCompleted",
-      );
-      if (onboardingCompleted) {
-        setOnboardingState("5.completed");
-      }
-    };
-    isOnboardingCompleted();
-  }, [onboardingState]);
 
   useEffect(() => {
     if (!invitationCode) {

@@ -27,10 +27,10 @@ export default function EnterCode() {
     RedirectToCurrentState,
   } = useOnboarding();
 
-  console.log(invitationCode);
+  // console.log(invitationCode);
 
   useEffect(() => {
-    console.log("value", value);
+    // console.log("value", value);
     if (value.length === CELL_COUNT) {
       submitInvitationCode(value).then((success) => {
         if (success) {

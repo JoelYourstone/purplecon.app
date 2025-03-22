@@ -15,7 +15,7 @@ import * as Notifications from "expo-notifications";
 import { theme } from "../theme";
 
 import { OfflineBanner } from "@/components/OfflineBanner";
-import { AnimatedBootSplash } from "@/components/AnimatedBootSplash";
+import { SplashProvider } from "@/components/SplashProvider";
 import { PropsWithChildren } from "react";
 import { OnboardingProvider } from "@/features/onboarding/OnboardingContext";
 import { SessionProvider } from "./SessionProvider";
@@ -71,7 +71,7 @@ export function AppProvider({ children }: PropsWithChildren) {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ActionSheetProvider>
-        <AnimatedBootSplash
+        <SplashProvider
           animationEnded={!splashVisible}
           onAnimationEnd={() => {
             setSplashVisible(false);
@@ -88,7 +88,7 @@ export function AppProvider({ children }: PropsWithChildren) {
             </SessionProvider>
             <OfflineBanner />
           </ThemeProvider>
-        </AnimatedBootSplash>
+        </SplashProvider>
       </ActionSheetProvider>
     </GestureHandlerRootView>
   );

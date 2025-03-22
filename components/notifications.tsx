@@ -34,7 +34,12 @@ export function useExpoNotifications() {
   }, []);
 
   useEffect(() => {
-    if (!channelSetup || !session.isLoggedIn || notificationSentRef.current)
+    if (
+      !channelSetup ||
+      !session.isLoggedIn ||
+      notificationSentRef.current ||
+      __DEV__
+    )
       return;
     notificationSentRef.current = true;
 

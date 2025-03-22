@@ -134,7 +134,7 @@ export default function Schedule() {
   // const dayTwo: Session[] = [];
 
   const refreshSchedule = () => {
-    console.log("refreshSchedule");
+    // console.log("refreshSchedule");
   };
   const isRefreshing = false;
 

@@ -3,6 +3,7 @@ import { Session } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState } from "react";
 import { PropsWithChildren } from "react";
 import { Alert } from "react-native";
+import { useSplashContext } from "./SplashProvider";
 
 type SessionContextType = {
   session: Session | null;
@@ -25,6 +26,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(false);
 
+  const { setHasFinishedSupabaseLoading } = useSplashContext();
+
   useEffect(() => {
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
@@ -35,9 +38,13 @@ export function SessionProvider({ children }: PropsWithChildren) {
           .eq("id", session.user.id)
           .single();
         if (error && status !== 406) {
+          setHasFinishedSupabaseLoading(true);
           throw error;
         }
         setProfile(data);
+        setHasFinishedSupabaseLoading(true);
+      } else {
+        setHasFinishedSupabaseLoading(true);
       }
     });
 
@@ -55,7 +62,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         setProfile(data);
       }
     });
-  }, []);
+  }, [setHasFinishedSupabaseLoading]);
 
   async function updateProfile({ first_name, last_name, avatar_url }: Profile) {
     try {

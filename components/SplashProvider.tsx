@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { StyleSheet, View } from "react-native";
-import { ReactNode, useState } from "react";
+import { createContext, ReactNode, useContext, useRef, useState } from "react";
 
 const MAX_SCALE = 1200;
 
@@ -32,12 +32,25 @@ type Props = {
   onAnimationEnd: () => void;
 };
 
-export const AnimatedBootSplash = ({
+type SplashContextType = {
+  setHasFinishedSupabaseLoading: (hasFinished: boolean) => void;
+  setHasFinishedOnboardingLoading: (hasFinished: boolean) => void;
+};
+
+const SplashContext = createContext<SplashContextType | null>(null);
+
+export function SplashProvider({
   animationEnded,
   children,
   onAnimationEnd,
-}: Props) => {
-  const [ready, setReady] = useState(false);
+}: Props) {
+  const [hasFinishedSupabaseLoading, setHasFinishedSupabaseLoading] =
+    useState<boolean>(false);
+  const [hasFinishedOnboardingLoading, setHasFinishedOnboardingLoading] =
+    useState<boolean>(false);
+
+  const hasFinishedLoading =
+    hasFinishedSupabaseLoading && hasFinishedOnboardingLoading;
 
   const opacity = useSharedValue(1);
   const scale = useSharedValue(animationEnded ? MAX_SCALE : 1);
@@ -52,7 +65,7 @@ export const AnimatedBootSplash = ({
 
   const { container, logo, brand } = BootSplash.useHideAnimation({
     manifest,
-    ready,
+    ready: hasFinishedLoading,
 
     logo: require("../assets/bootsplash/logo.png"),
     brand: require("../assets/bootsplash/brand.png"),
@@ -61,6 +74,7 @@ export const AnimatedBootSplash = ({
     navigationBarTranslucent: false,
 
     animate: () => {
+      console.log("animate");
       opacity.value = withTiming(0, {
         duration: 700,
         easing: Easing.out(Easing.ease),
@@ -79,7 +93,12 @@ export const AnimatedBootSplash = ({
   });
 
   return (
-    <>
+    <SplashContext.Provider
+      value={{
+        setHasFinishedSupabaseLoading,
+        setHasFinishedOnboardingLoading,
+      }}
+    >
       {/* Apply background color under the mask */}
       {!animationEnded && <View style={container.style} />}
 
@@ -91,7 +110,7 @@ export const AnimatedBootSplash = ({
             <Animated.View
               style={[styles.mask, scaleStyle]}
               onLayout={() => {
-                setReady(true);
+                // setReady(true);
               }}
             />
           </View>
@@ -108,6 +127,14 @@ export const AnimatedBootSplash = ({
           <Animated.Image {...brand} style={[brand.style, opacityStyle]} />
         </View>
       )}
-    </>
+    </SplashContext.Provider>
   );
-};
+}
+
+export function useSplashContext() {
+  const context = useContext(SplashContext);
+  if (!context) {
+    throw new Error("useSplash must be used within a SplashProvider");
+  }
+  return context;
+}
