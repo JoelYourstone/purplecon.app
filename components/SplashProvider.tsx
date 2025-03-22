@@ -10,7 +10,7 @@ import Animated, {
 import { StyleSheet, View, Text } from "react-native";
 import { createContext, ReactNode, useContext, useRef, useState } from "react";
 
-const MAX_SCALE = 1200;
+const MAX_SCALE = 2000;
 
 const manifest: Manifest = require("../assets/bootsplash/manifest.json");
 
