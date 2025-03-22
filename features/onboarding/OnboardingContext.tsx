@@ -21,6 +21,7 @@ type OnboardingContextType = {
   RedirectToCurrentState: React.ReactNode;
   isNotificationsGranted: boolean;
   setIsNotificationsGranted: (granted: boolean) => void;
+  setLoginInstead: (loginInstead: boolean) => void;
 };
 
 const OnboardingContext = createContext<OnboardingContextType | null>(null);
@@ -30,7 +31,8 @@ type OnboardingState =
   | "2.createAccount"
   | "3.profile"
   | "4.notifications"
-  | "5.completed";
+  | "5.completed"
+  | "10.login";
 
 export function OnboardingProvider({ children }: PropsWithChildren) {
   const [invitationCode, setInvitationCode] = useState("");
@@ -40,6 +42,7 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
   const { isLoggedIn, profile } = useSession();
   const [isNotificationsGranted, setIsNotificationsGranted] = useState(false);
   const { setHasFinishedOnboardingLoading } = useSplashContext();
+  const [loginInstead, setLoginInstead] = useState(false);
 
   useEffect(() => {
     async function loadInitialStuff() {
@@ -87,10 +90,18 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
     case "5.completed":
       RedirectToCurrentState = <Redirect href="/" />;
       break;
+    case "10.login":
+      RedirectToCurrentState = <Redirect href="/onboarding/login" />;
+      break;
   }
 
   useEffect(() => {
-    if (!invitationCode) {
+    if (loginInstead && !isLoggedIn) {
+      setOnboardingState("10.login");
+      return;
+    }
+
+    if (!invitationCode && !isLoggedIn) {
       setOnboardingState("1.enterCode");
       return;
     }
@@ -118,6 +129,7 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
     profile?.first_name,
     profile?.last_name,
     isNotificationsGranted,
+    loginInstead,
   ]);
 
   // On mount, check localStorage for an existing code
@@ -220,6 +232,7 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
         RedirectToCurrentState,
         isNotificationsGranted,
         setIsNotificationsGranted,
+        setLoginInstead,
       }}
     >
       {children}

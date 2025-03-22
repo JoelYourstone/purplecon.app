@@ -10,6 +10,7 @@ import {
 import { theme } from "@/theme";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
 import { ClearReloadButton } from "@/app/(tabs)/info";
+import { Button } from "@/components/Button";
 const CELL_COUNT = 5;
 
 export default function EnterCode() {
@@ -25,9 +26,10 @@ export default function EnterCode() {
     submitInvitationCode,
     onboardingState,
     RedirectToCurrentState,
+    setLoginInstead,
   } = useOnboarding();
 
-  // console.log(invitationCode);
+  // console.log(invitationCode);signInWithEmail
 
   useEffect(() => {
     console.log("value", value);
@@ -72,6 +74,12 @@ export default function EnterCode() {
           </View>
         )}
       />
+      <View style={{ marginTop: 100, marginBottom: 40 }}>
+        <Button
+          title="har du redan konto? Logga in"
+          onPress={() => setLoginInstead(true)}
+        />
+      </View>
       <ClearReloadButton />
     </SafeAreaView>
   );

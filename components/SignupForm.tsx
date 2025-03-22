@@ -25,7 +25,7 @@ AppState.addEventListener("change", (state) => {
   }
 });
 
-export default function Info() {
+export default function SignupForm() {
   const backgroundColor = useThemeColor({
     light: theme.colorWhite,
     dark: theme.colorDarkBlue,
