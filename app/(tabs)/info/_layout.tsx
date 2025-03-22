@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ThemedText, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
 import { Stack, useRouter, useNavigation } from "expo-router";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function Layout() {
   const router = useRouter();
@@ -18,8 +18,8 @@ export default function Layout() {
   });
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-        router.dismissTo('/info');
+    const unsubscribe = navigation.addListener("focus", () => {
+      router.dismissTo("/info");
     });
 
     return unsubscribe;
@@ -30,30 +30,34 @@ export default function Layout() {
       <Stack.Screen
         name="index"
         options={{
-            headerStyle: {
-                backgroundColor: tabBarBackgroundColor,
-            },
-        headerTitle: () => (
-        <ThemedText fontSize={20} fontWeight="bold">
-            Info
-        </ThemedText>
-        ),
-        headerRight: () => (
+          headerStyle: {
+            backgroundColor: tabBarBackgroundColor,
+          },
+          headerTitle: () => (
+            <ThemedText fontSize={20} fontWeight="bold">
+              Info
+            </ThemedText>
+          ),
+          headerRight: () => (
             <TouchableOpacity
-                onPress={() => router.push("/info/profile")}
-                style={{ marginRight: 10 }}
+              onPress={() => router.push("/info/profile")}
+              style={{ marginRight: 10 }}
             >
-                <Ionicons name="person-circle-outline" size={24} color={tabBarTintColor} />
+              <Ionicons
+                name="person-circle-outline"
+                size={24}
+                color={tabBarTintColor}
+              />
             </TouchableOpacity>
-        )
+          ),
         }}
       />
       <Stack.Screen
         name="profile"
         options={{
-            headerShown: false,
+          headerShown: false,
         }}
-        />
+      />
     </Stack>
   );
 }
