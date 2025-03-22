@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { createContext, ReactNode, useContext, useRef, useState } from "react";
 
 const MAX_SCALE = 1200;
@@ -122,6 +122,10 @@ export function SplashProvider({
       {!animationEnded && (
         // Don't apply background color above the mask
         <View {...container} style={[container.style, styles.transparent]}>
+          <Text style={{ color: "white" }}>
+            Loading {hasFinishedSupabaseLoading ? "supabase" : ""}{" "}
+            {hasFinishedOnboardingLoading ? "onboarding" : ""}
+          </Text>
           <Animated.Image {...logo} style={[logo.style, opacityStyle]} />
 
           <Animated.Image {...brand} style={[brand.style, opacityStyle]} />
