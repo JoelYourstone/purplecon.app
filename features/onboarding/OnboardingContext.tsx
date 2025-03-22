@@ -43,17 +43,28 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     async function loadInitialStuff() {
-      const granted = await getPermisions();
-      setIsNotificationsGranted(granted);
+      try {
+        const timer = setTimeout(() => {
+          setHasFinishedOnboardingLoading(true);
+        }, 5000);
 
-      const onboardingCompleted = await AsyncStorage.getItem(
-        "onboardingCompleted",
-      );
-      if (onboardingCompleted) {
-        setOnboardingState("5.completed");
+        const granted = await getPermisions();
+        setIsNotificationsGranted(granted);
+
+        const onboardingCompleted = await AsyncStorage.getItem(
+          "onboardingCompleted",
+        );
+        if (onboardingCompleted) {
+          setOnboardingState("5.completed");
+        }
+
+        clearTimeout(timer);
+
+        setHasFinishedOnboardingLoading(true);
+      } catch (error) {
+        console.error("Error loading initial stuff:", error);
+        setHasFinishedOnboardingLoading(true);
       }
-
-      setHasFinishedOnboardingLoading(true);
     }
 
     loadInitialStuff();
