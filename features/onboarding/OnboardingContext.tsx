@@ -5,6 +5,7 @@ import React, {
   PropsWithChildren,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Redirect } from "expo-router";
@@ -119,7 +120,7 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
     getInvitationCode();
   }, []);
 
-  const submitInvitationCode = async (code: string) => {
+  const submitInvitationCode = useCallback(async (code: string) => {
     setIsLoading(true);
     try {
       // 1. Fetch invitation row by code
@@ -195,7 +196,7 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
       setIsLoading(false);
       return false;
     }
-  };
+  }, []);
 
   return (
     <OnboardingContext.Provider

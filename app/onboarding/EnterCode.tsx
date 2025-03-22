@@ -30,7 +30,7 @@ export default function EnterCode() {
   // console.log(invitationCode);
 
   useEffect(() => {
-    // console.log("value", value);
+    console.log("value", value);
     if (value.length === CELL_COUNT) {
       submitInvitationCode(value).then((success) => {
         if (success) {
@@ -38,7 +38,7 @@ export default function EnterCode() {
           // router.push("/onboarding/success");
         } else {
           console.log("failed!!");
-          setValue("");
+          // setValue("");
         }
       });
     }
