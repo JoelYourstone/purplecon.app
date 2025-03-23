@@ -23,15 +23,10 @@ export default function Cafe() {
   const scrollRef = React.useRef<FlatList>(null);
   useScrollToTop(scrollRef);
 
-  const [cartTotal, setCartTotal] = useState(0);
   const [cartItems, setCartItems] = useState<Record<number, CartItem>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const handleAddToCart = (item: CafeItem) => {
-    setCartTotal((prevTotal) => {
-      return prevTotal + item.price;
-    });
-
+  const increaseItemQuantity = (item: CafeItem) => {
     setCartItems((prevItems) => {
       const newItems: Record<number, CartItem> = { ...prevItems };
       if (newItems[item.id]) {
@@ -43,15 +38,59 @@ export default function Cafe() {
     });
   };
 
+  const decreaseItemQuantity = (item: CafeItem) => {
+    setCartItems((prevItems) => {
+      const newItems: Record<number, CartItem> = { ...prevItems };
+      newItems[item.id].quantity -= 1;
+      if (newItems[item.id].quantity === 0) {
+        delete newItems[item.id];
+      }
+
+      return newItems;
+    });
+  };
+
+  const handleAddToCart = (item: CafeItem) => {
+    increaseItemQuantity(item);
+  };
+
+  const getTotalPrice = () => {
+    return Object.values(cartItems).reduce(
+      (total, item) => total + item.quantity * item.item.price,
+      0,
+    );
+  };
+
   const renderCartSummary = () => {
     return (
       <View>
         {Object.values(cartItems).map((cartItem: CartItem) => (
-          <View key={cartItem.item.id} style={styles.cartSummaryRow}>
-            <Text style={styles.cartSummaryText}>
-              {cartItem.quantity}x {cartItem.item.name}
-            </Text>
-            <Text style={styles.cartSummaryTotal}>
+          <View key={cartItem.item.id} style={styles.cartItemsRow}>
+            <Text style={styles.cartSummaryText}>{cartItem.item.name}</Text>
+            <View style={styles.quantityContainer}>
+              <TouchableOpacity
+                onPress={() => decreaseItemQuantity(cartItem.item)}
+                style={styles.quantityButton}
+              >
+                <Feather
+                  name="minus-square"
+                  size={24}
+                  color={theme.colorPurple}
+                />
+              </TouchableOpacity>
+              <Text style={styles.quantity}>{cartItem.quantity}</Text>
+              <TouchableOpacity
+                onPress={() => increaseItemQuantity(cartItem.item)}
+                style={styles.quantityButton}
+              >
+                <Feather
+                  name="plus-square"
+                  size={24}
+                  color={theme.colorPurple}
+                />
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.cartItemTotal}>
               {cartItem.quantity * cartItem.item.price}:-
             </Text>
           </View>
@@ -59,7 +98,7 @@ export default function Cafe() {
         <View style={styles.divider} />
         <View key={"cart_total"} style={styles.cartSummaryRow}>
           <Text style={styles.cartTotalText}>Totalt</Text>
-          <Text style={styles.cartTotalText}>{cartTotal}:-</Text>
+          <Text style={styles.cartTotalText}>{getTotalPrice()}:-</Text>
         </View>
       </View>
     );
@@ -258,6 +297,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cartSummaryText: {
+    flex: 1,
     fontSize: 14,
     color: theme.colorBlack,
     marginBottom: 4,
@@ -290,15 +330,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 16,
   },
+  cartItemsRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 14,
+  },
   cartSummaryRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 8,
   },
-  cartSummaryTotal: {
+  cartItemTotal: {
+    flex: 1,
     fontSize: 14,
     color: theme.colorBlack,
-    flex: 1,
     fontWeight: "bold",
     textAlign: "right",
   },
@@ -344,5 +390,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  quantityContainer: {
+    flex: 3,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  quantity: {
+    alignContent: "center",
+    paddingLeft: 8,
+    paddingRight: 8,
+    fontSize: 16,
+  },
+  quantityButton: {
+    padding: 0,
   },
 });
