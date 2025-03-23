@@ -133,16 +133,18 @@ export default function Cafe() {
         sections={menuSections}
         keyExtractor={(item: CafeItem) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.menuItem}
-            onPress={() => {
-              handleAddToCart(item);
-            }}
-          >
+          <View style={styles.menuItem}>
             <Text style={styles.menuText}>{item.name}</Text>
-            <Text style={styles.menuText}>{item.price}:-</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => {
+                handleAddToCart(item);
+              }}
+              style={styles.addToCartButton}
+            >
+              <Text style={styles.addToCartButtonText}>{item.price}:-</Text>
+            </TouchableOpacity>
+          </View>
         )}
         renderSectionHeader={({ section: { title } }) => (
           <ThemedView
@@ -159,7 +161,11 @@ export default function Cafe() {
       />
       {countItems() > 0 && (
         <View style={styles.shoppingCartBadge}>
-          <TouchableOpacity onPress={() => setIsCartOpen(true)}>
+          <TouchableOpacity
+            onPress={() => setIsCartOpen(true)}
+            style={styles.shoppingCartTouchable}
+          >
+            <Text style={styles.buttonText}>{getTotalPrice()}:-</Text>
             <Feather name="shopping-cart" size={24} color="white" />
             <View style={styles.itemCountBadge}>
               <Text style={styles.itemCoutBadgeText}>{countItems()}</Text>
@@ -186,7 +192,7 @@ export default function Cafe() {
                           }}
                           style={styles.clearButton}
                         >
-                          <Text style={styles.clearButtonText}>Rensa</Text>
+                          <Text style={styles.buttonText}>Rensa</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                           onPress={() => {
@@ -196,7 +202,7 @@ export default function Cafe() {
                           }}
                           style={styles.swishButton}
                         >
-                          <Text style={styles.swishButtonText}>Swish</Text>
+                          <Text style={styles.buttonText}>Swish</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
@@ -233,22 +239,35 @@ const styles = StyleSheet.create({
     color: theme.colorBlack,
     fontSize: 16,
   },
+  addToCartButton: {
+    backgroundColor: theme.colorPurple,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 16,
+    alignSelf: "center",
+  },
+  addToCartButtonText: {
+    color: theme.colorWhite,
+    fontSize: 14,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   flatListContainer: {
     paddingTop: theme.space16,
   },
   shoppingCartBadge: {
-    position: "absolute",
-    bottom: 20,
-    right: 20,
     backgroundColor: theme.colorPurple,
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+  },
+  shoppingCartTouchable: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   itemCountBadge: {
     position: "absolute",
@@ -334,12 +353,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     alignSelf: "center",
   },
-  swishButtonText: {
-    color: theme.colorWhite,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
   clearButton: {
     backgroundColor: theme.colorGrey,
     paddingVertical: 12,
@@ -350,7 +363,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     alignSelf: "center",
   },
-  clearButtonText: {
+  buttonText: {
     color: theme.colorWhite,
     fontSize: 16,
     fontWeight: "bold",
