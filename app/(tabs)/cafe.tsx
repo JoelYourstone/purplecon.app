@@ -3,6 +3,7 @@ import { theme } from "@/theme";
 import Feather from "@expo/vector-icons/build/Feather";
 import { useScrollToTop } from "@react-navigation/native";
 import React, { useState } from "react";
+import { Button } from "@/components/Button";
 import { CafeItem, MenuSection, CartItem } from "@/types";
 import {
   View,
@@ -10,9 +11,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   Modal,
   TouchableWithoutFeedback,
+  Linking,
 } from "react-native";
 
 // import { theme } from "@/theme";
@@ -144,18 +145,40 @@ export default function Cafe() {
         >
           <TouchableWithoutFeedback onPress={() => setIsCartOpen(false)}>
             <View style={styles.modalOverlay}>
-              <TouchableWithoutFeedback>
-                <View style={styles.sidePanel}>
-                  <Text style={styles.sidePanelTitle}>Your Cart</Text>
-                  {Object.keys(cartItems).length > 0 ? (
-                    renderCartSummary()
-                  ) : (
-                    <Text style={styles.emptyCartText}>
-                      Your cart is empty.
-                    </Text>
-                  )}
-                </View>
-              </TouchableWithoutFeedback>
+              <View style={styles.sidePanel}>
+                <TouchableWithoutFeedback>
+                  <View>
+                    <Text style={styles.sidePanelTitle}>Your Cart</Text>
+                    {Object.keys(cartItems).length > 0 ? (
+                      renderCartSummary()
+                    ) : (
+                      <Text style={styles.emptyCartText}>
+                        Your cart is empty.
+                      </Text>
+                    )}
+                    <View style={styles.buttonRow}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setIsCartOpen(false);
+                        }}
+                        style={styles.closeButton}
+                      >
+                        <Text style={styles.closeButtonText}>Close</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL(
+                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${cartTotal}&cur=SEK&msg='Purplecon Spelcafé'&src=qr`,
+                          );
+                        }}
+                        style={styles.swishButton}
+                      >
+                        <Text style={styles.swishButtonText}>Swish</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </Modal>
@@ -264,5 +287,42 @@ const styles = StyleSheet.create({
     color: theme.colorBlack,
     textAlign: "center",
     marginTop: 16,
+  },
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginTop: 16,
+  },
+  swishButton: {
+    backgroundColor: theme.colorPurple,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 16,
+    alignSelf: "center",
+  },
+  swishButtonText: {
+    color: theme.colorWhite,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  closeButton: {
+    backgroundColor: theme.colorGrey,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 16,
+    alignSelf: "center",
+  },
+  closeButtonText: {
+    color: theme.colorWhite,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
