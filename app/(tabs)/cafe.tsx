@@ -216,7 +216,7 @@ export default function Cafe() {
                       <TouchableOpacity
                         onPress={() => {
                           Linking.openURL(
-                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg='Purplecon Spelcafé'&src=qr`,
+                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg=Purplecon Spelcafé&src=qr`,
                           );
                         }}
                         style={styles.swishButton}
