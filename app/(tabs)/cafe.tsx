@@ -85,7 +85,7 @@ export default function Cafe() {
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       <SectionList
         sections={menuSections}
         keyExtractor={(item: CafeItem) => item.id.toString()}
@@ -118,9 +118,22 @@ export default function Cafe() {
       <View style={styles.floatingBadge}>
         <TouchableOpacity
           onPress={() => setIsCartOpen(true)}
-          style={{ marginRight: 10 }}
+          style={styles.floatingBadgeTouchable}
         >
           <Feather name="shopping-cart" size={24} color="white" />
+          {Object.values(cartItems).reduce(
+            (total, item) => total + item.quantity,
+            0,
+          ) > 0 && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>
+                {Object.values(cartItems).reduce(
+                  (total, item) => total + item.quantity,
+                  0,
+                )}
+              </Text>
+            </View>
+          )}
         </TouchableOpacity>
 
         <Modal
@@ -147,7 +160,7 @@ export default function Cafe() {
           </TouchableWithoutFeedback>
         </Modal>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -190,10 +203,27 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  floatingBadgeTouchable: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badge: {
+    position: "absolute",
+    top: -15,
+    right: -15,
+    backgroundColor: theme.colorRed,
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
   badgeText: {
     color: theme.colorWhite,
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
+    textAlign: "center",
   },
   cartSummaryText: {
     fontSize: 14,

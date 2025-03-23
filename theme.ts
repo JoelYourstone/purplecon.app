@@ -13,6 +13,7 @@ export const theme = {
   colorThemeLightGrey: "#FCFBFE",
   colorThemeGrey: "#F5F4F3",
   colorPurple: "#4d2f66",
+  colorRed: "#FF0000",
 
   darkActiveContent: "rgba(255,255,255, 0.3)",
 
