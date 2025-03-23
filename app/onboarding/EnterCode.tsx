@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, Text, View, StyleSheet } from "react-native";
+import { SafeAreaView, Text, View, StyleSheet, Linking } from "react-native";
 
 import {
   CodeField,
@@ -78,6 +78,17 @@ export default function EnterCode() {
         <Button
           title="har du redan konto? Logga in"
           onPress={() => setLoginInstead(true)}
+        />
+      </View>
+
+      <View style={{ marginTop: 100, marginBottom: 40 }}>
+        <Button
+          title="Swish"
+          onPress={() => {
+            Linking.openURL(
+              "https://app.swish.nu/1/p/sw/?sw=0703133780&amt=1&cur=SEK&msg=&src=qr",
+            );
+          }}
         />
       </View>
       <ClearReloadButton />
