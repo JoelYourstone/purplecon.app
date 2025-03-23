@@ -1,8 +1,9 @@
-import { TalkCard } from "@/components/TalkCard";
 import { ThemedText, ThemedView } from "@/components/Themed";
 import { theme } from "@/theme";
+import Feather from "@expo/vector-icons/build/Feather";
 import { useScrollToTop } from "@react-navigation/native";
 import React, { useState } from "react";
+import { CafeItem, MenuSection, CartItem } from "@/types";
 import {
   View,
   SectionList,
@@ -10,6 +11,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 // import { theme } from "@/theme";
@@ -20,8 +23,39 @@ export default function Cafe() {
   useScrollToTop(scrollRef);
 
   const [cartTotal, setCartTotal] = useState(0);
+  const [cartItems, setCartItems] = useState<Record<number, CartItem>>({});
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const menuSections = [
+  const handleAddToCart = (item: CafeItem) => {
+    setCartTotal((prevTotal) => {
+      return prevTotal + item.price;
+    });
+
+    setCartItems((prevItems) => {
+      const newItems: Record<number, CartItem> = { ...prevItems };
+      if (newItems[item.id]) {
+        newItems[item.id].quantity += 1;
+      } else {
+        newItems[item.id] = { item, quantity: 1 };
+      }
+      return newItems;
+    });
+  };
+
+  const renderCartSummary = () => {
+    return Object.values(cartItems).map((cartItem: CartItem) => (
+      <View key={cartItem.item.id} style={styles.cartSummaryRow}>
+        <Text style={styles.cartSummaryText}>
+          {cartItem.quantity}x {cartItem.item.name}
+        </Text>
+        <Text style={styles.cartSummaryTotal}>
+          {cartItem.quantity * cartItem.item.price}:-
+        </Text>
+      </View>
+    ));
+  };
+
+  const menuSections: MenuSection[] = [
     {
       title: "Dryck",
       data: [
@@ -54,16 +88,14 @@ export default function Cafe() {
     <ScrollView contentContainerStyle={styles.container}>
       <SectionList
         sections={menuSections}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item: CafeItem) => item.id.toString()}
         renderItem={({ item }) => (
           <TouchableOpacity
             key={item.id}
             style={styles.menuItem}
-            onPress={() =>
-              alert(
-                "You have selected " + item.name + " for " + item.price + ":-",
-              )
-            }
+            onPress={() => {
+              handleAddToCart(item);
+            }}
           >
             <Text style={styles.menuText}>{item.name}</Text>
             <Text style={styles.menuText}>{item.price}:-</Text>
@@ -82,6 +114,39 @@ export default function Cafe() {
         )}
         contentContainerStyle={styles.flatListContainer}
       />
+
+      <View style={styles.floatingBadge}>
+        <TouchableOpacity
+          onPress={() => setIsCartOpen(true)}
+          style={{ marginRight: 10 }}
+        >
+          <Feather name="shopping-cart" size={24} color="white" />
+        </TouchableOpacity>
+
+        <Modal
+          visible={isCartOpen}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setIsCartOpen(false)}
+        >
+          <TouchableWithoutFeedback onPress={() => setIsCartOpen(false)}>
+            <View style={styles.modalOverlay}>
+              <TouchableWithoutFeedback>
+                <View style={styles.sidePanel}>
+                  <Text style={styles.sidePanelTitle}>Your Cart</Text>
+                  {Object.keys(cartItems).length > 0 ? (
+                    renderCartSummary()
+                  ) : (
+                    <Text style={styles.emptyCartText}>
+                      Your cart is empty.
+                    </Text>
+                  )}
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      </View>
     </ScrollView>
   );
 }
@@ -110,5 +175,64 @@ const styles = StyleSheet.create({
   },
   flatListContainer: {
     paddingTop: theme.space16,
+  },
+  floatingBadge: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    backgroundColor: theme.colorPurple,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  badgeText: {
+    color: theme.colorWhite,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  cartSummaryText: {
+    fontSize: 14,
+    color: theme.colorBlack,
+    marginBottom: 4,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  sidePanel: {
+    backgroundColor: theme.colorWhite,
+    padding: 16,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    maxHeight: "80%",
+  },
+  sidePanelTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  cartSummaryRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  cartSummaryTotal: {
+    fontSize: 14,
+    color: theme.colorBlack,
+    flex: 1,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  emptyCartText: {
+    fontSize: 16,
+    color: theme.colorBlack,
+    textAlign: "center",
+    marginTop: 16,
   },
 });

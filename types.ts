@@ -1,5 +1,21 @@
 import { allSessions } from "@/utils/testData/allSessions";
 
+export type CafeItem = {
+  id: number;
+  name: string;
+  price: number;
+};
+
+export type CartItem = {
+  item: CafeItem;
+  quantity: number;
+};
+
+export type MenuSection = {
+  title: string;
+  data: CafeItem[];
+};
+
 export type Session = {
   id: string;
   title: string;

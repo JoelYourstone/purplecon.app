@@ -73,14 +73,6 @@ export default function TabLayout() {
               SPELCAFÉ
             </ThemedText>
           ),
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => console.log("Go to cart")}
-              style={{ marginRight: 10 }}
-            >
-              <Feather name="shopping-cart" size={24} color="white" />
-            </TouchableOpacity>
-          ),
           tabBarButton: (props) => (
             <TabBarButton
               {...props}
