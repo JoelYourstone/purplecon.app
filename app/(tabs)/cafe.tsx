@@ -44,16 +44,25 @@ export default function Cafe() {
   };
 
   const renderCartSummary = () => {
-    return Object.values(cartItems).map((cartItem: CartItem) => (
-      <View key={cartItem.item.id} style={styles.cartSummaryRow}>
-        <Text style={styles.cartSummaryText}>
-          {cartItem.quantity}x {cartItem.item.name}
-        </Text>
-        <Text style={styles.cartSummaryTotal}>
-          {cartItem.quantity * cartItem.item.price}:-
-        </Text>
+    return (
+      <View>
+        {Object.values(cartItems).map((cartItem: CartItem) => (
+          <View key={cartItem.item.id} style={styles.cartSummaryRow}>
+            <Text style={styles.cartSummaryText}>
+              {cartItem.quantity}x {cartItem.item.name}
+            </Text>
+            <Text style={styles.cartSummaryTotal}>
+              {cartItem.quantity * cartItem.item.price}:-
+            </Text>
+          </View>
+        ))}
+        <View style={styles.divider} />
+        <View key={"cart_total"} style={styles.cartSummaryRow}>
+          <Text style={styles.cartTotalText}>Totalt</Text>
+          <Text style={styles.cartTotalText}>{cartTotal}:-</Text>
+        </View>
       </View>
-    ));
+    );
   };
 
   const menuSections: MenuSection[] = [
@@ -148,12 +157,12 @@ export default function Cafe() {
               <View style={styles.sidePanel}>
                 <TouchableWithoutFeedback>
                   <View>
-                    <Text style={styles.sidePanelTitle}>Your Cart</Text>
+                    <Text style={styles.sidePanelTitle}>Dina varor</Text>
                     {Object.keys(cartItems).length > 0 ? (
                       renderCartSummary()
                     ) : (
                       <Text style={styles.emptyCartText}>
-                        Your cart is empty.
+                        Du har inte valt några varor.
                       </Text>
                     )}
                     <View style={styles.buttonRow}>
@@ -163,7 +172,7 @@ export default function Cafe() {
                         }}
                         style={styles.closeButton}
                       >
-                        <Text style={styles.closeButtonText}>Close</Text>
+                        <Text style={styles.closeButtonText}>Stäng</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
@@ -251,6 +260,17 @@ const styles = StyleSheet.create({
   cartSummaryText: {
     fontSize: 14,
     color: theme.colorBlack,
+    marginBottom: 4,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: theme.colorGrey,
+    marginVertical: 8,
+  },
+  cartTotalText: {
+    fontSize: 18,
+    color: theme.colorBlack,
+    fontWeight: "bold",
     marginBottom: 4,
   },
   modalOverlay: {
