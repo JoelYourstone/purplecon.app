@@ -216,7 +216,7 @@ export default function Cafe() {
                       <TouchableOpacity
                         onPress={() => {
                           Linking.openURL(
-                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${cartTotal}&cur=SEK&msg='Purplecon Spelcafé'&src=qr`,
+                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg='Purplecon Spelcafé'&src=qr`,
                           );
                         }}
                         style={styles.swishButton}
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   cartSummaryText: {
-    flex: 1,
+    flex: 4,
     fontSize: 14,
     color: theme.colorBlack,
     marginBottom: 4,
@@ -396,14 +396,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
+    gap: 4,
   },
   quantity: {
-    alignContent: "center",
-    paddingLeft: 8,
-    paddingRight: 8,
+    marginHorizontal: 4,
     fontSize: 16,
   },
-  quantityButton: {
-    padding: 0,
-  },
+  quantityButton: {},
 });
