@@ -3,6 +3,7 @@ import { theme } from "@/theme";
 import Feather from "@expo/vector-icons/build/Feather";
 import { useScrollToTop } from "@react-navigation/native";
 import React, { useState } from "react";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { CafeItem, MenuSection, CartItem } from "@/types";
 import {
   View,
@@ -22,6 +23,14 @@ export default function Cafe() {
 
   const [cartItems, setCartItems] = useState<Record<number, CartItem>>({});
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCartEditMode, setIsCartEditMode] = useState(false);
+
+  const handleSetIsCartOpen = (value: boolean) => {
+    setIsCartOpen(value);
+    if (!value) {
+      setIsCartEditMode(false);
+    }
+  };
 
   const increaseItemQuantity = (item: CafeItem) => {
     setCartItems((prevItems) => {
@@ -35,12 +44,15 @@ export default function Cafe() {
     });
   };
 
-  const clearItem = (item: CafeItem) => {
+  const decreaseItemQuantity = (item: CafeItem) => {
     setCartItems((prevItems) => {
       const newItems: Record<number, CartItem> = { ...prevItems };
-      delete newItems[item.id];
+      newItems[item.id].quantity -= 1;
+      if (newItems[item.id].quantity === 0) {
+        delete newItems[item.id];
+      }
       if (Object.keys(newItems).length === 0) {
-        setIsCartOpen(false);
+        handleSetIsCartOpen(false);
       }
       return newItems;
     });
@@ -50,7 +62,7 @@ export default function Cafe() {
     setCartItems(() => {
       return {};
     });
-    setIsCartOpen(false);
+    handleSetIsCartOpen(false);
   };
 
   const handleAddToCart = (item: CafeItem) => {
@@ -79,11 +91,29 @@ export default function Cafe() {
             <Text style={styles.cartSummaryText}>
               {cartItem.quantity} x {cartItem.item.name}
             </Text>
-            <View style={styles.clearItemContainer}>
-              <TouchableOpacity onPress={() => clearItem(cartItem.item)}>
-                <Feather name="trash-2" size={24} color={theme.colorPurple} />
-              </TouchableOpacity>
-            </View>
+            {isCartEditMode && (
+              <View style={styles.quantityContainer}>
+                <TouchableOpacity
+                  onPress={() => decreaseItemQuantity(cartItem.item)}
+                >
+                  <Feather
+                    name="minus-square"
+                    size={24}
+                    color={theme.colorPurple}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.quantity}>{cartItem.quantity}</Text>
+                <TouchableOpacity
+                  onPress={() => increaseItemQuantity(cartItem.item)}
+                >
+                  <Feather
+                    name="plus-square"
+                    size={24}
+                    color={theme.colorPurple}
+                  />
+                </TouchableOpacity>
+              </View>
+            )}
             <Text style={styles.cartItemTotal}>
               {cartItem.quantity * cartItem.item.price}:-
             </Text>
@@ -158,47 +188,68 @@ export default function Cafe() {
         contentContainerStyle={styles.flatListContainer}
       />
       {countItems() > 0 && (
-        <View style={styles.shoppingCartBadge}>
-          <TouchableOpacity onPress={() => setIsCartOpen(true)}>
-            <Feather name="shopping-cart" size={24} color="white" />
-            <View style={styles.itemCountBadge}>
-              <Text style={styles.itemCoutBadgeText}>{countItems()}</Text>
-            </View>
+        <View>
+          <TouchableOpacity
+            onPress={() => handleSetIsCartOpen(true)}
+            style={styles.payNowButton}
+          >
+            <Text style={styles.payNowButtonText}>
+              Betala {getTotalPrice()}:- för {countItems()} varor
+            </Text>
           </TouchableOpacity>
 
           <Modal
             visible={isCartOpen}
             animationType="slide"
             transparent={true}
-            onRequestClose={() => setIsCartOpen(false)}
+            onRequestClose={() => handleSetIsCartOpen(false)}
           >
-            <TouchableWithoutFeedback onPress={() => setIsCartOpen(false)}>
+            <TouchableWithoutFeedback
+              onPress={() => handleSetIsCartOpen(false)}
+            >
               <View style={styles.modalOverlay}>
                 <View style={styles.cartPopup}>
                   <TouchableWithoutFeedback>
                     <View>
-                      <Text style={styles.cartPopupTitle}>Dina varor</Text>
-                      {renderCartSummary()}
-                      <View style={styles.buttonRow}>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <View style={{ flexDirection: "row" }}>
+                          <Text style={styles.cartPopupTitle}>Dina varor</Text>
+                          {isCartEditMode && (
+                            <TouchableOpacity onPress={() => clearCart()}>
+                              <MaterialIcons
+                                name="clear"
+                                size={24}
+                                color={theme.colorPurple}
+                              />
+                            </TouchableOpacity>
+                          )}
+                        </View>
                         <TouchableOpacity
-                          onPress={() => {
-                            clearCart();
-                          }}
-                          style={styles.clearButton}
+                          onPress={() => setIsCartEditMode(!isCartEditMode)}
                         >
-                          <Text style={styles.clearButtonText}>Rensa</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            Linking.openURL(
-                              `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg=Purplecon Spelcafé&src=qr`,
-                            );
-                          }}
-                          style={styles.swishButton}
-                        >
-                          <Text style={styles.swishButtonText}>Swish</Text>
+                          <Feather
+                            name="edit"
+                            size={24}
+                            color={theme.colorPurple}
+                          />
                         </TouchableOpacity>
                       </View>
+                      {renderCartSummary()}
+                      <TouchableOpacity
+                        onPress={() => {
+                          Linking.openURL(
+                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg=Purplecon Spelcafé&src=qr`,
+                          );
+                        }}
+                        style={styles.swishButton}
+                      >
+                        <Text style={styles.swishButtonText}>Swish</Text>
+                      </TouchableOpacity>
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
@@ -236,19 +287,22 @@ const styles = StyleSheet.create({
   flatListContainer: {
     paddingTop: theme.space16,
   },
-  shoppingCartBadge: {
-    position: "absolute",
-    bottom: 20,
-    right: 20,
+  payNowButton: {
     backgroundColor: theme.colorPurple,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 30,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 16,
+    marginHorizontal: 16,
+  },
+  payNowButtonText: {
+    color: theme.colorWhite,
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
   },
   itemCountBadge: {
     position: "absolute",
@@ -319,20 +373,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "right",
   },
-  buttonRow: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
-    marginTop: 16,
-  },
   swishButton: {
     backgroundColor: theme.colorPurple,
     paddingVertical: 12,
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
     borderRadius: 8,
-    justifyContent: "center",
+    flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 16,
-    alignSelf: "center",
+    marginHorizontal: 16,
   },
   swishButtonText: {
     color: theme.colorWhite,
@@ -340,27 +390,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  clearButton: {
-    backgroundColor: theme.colorGrey,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 16,
-    alignSelf: "center",
-  },
-  clearButtonText: {
-    color: theme.colorWhite,
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  clearItemContainer: {
+  quantityContainer: {
     flex: 3,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
     gap: 4,
+  },
+  quantity: {
+    marginHorizontal: 4,
+    fontSize: 16,
   },
 });
