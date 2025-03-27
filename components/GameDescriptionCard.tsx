@@ -5,18 +5,17 @@ import { Bookmark } from "./Bookmark";
 import { SpeakerImage } from "./SpeakerImage";
 import { ThemedText, ThemedView, useThemeColor } from "./Themed";
 import { theme } from "../theme";
-import { Session, Speaker } from "../types";
+import { Session, Game } from "../types";
 import { formatSessionTime } from "../utils/formatDate";
 
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 type Props = {
   session: Session;
-  isDayOne: boolean;
+  isOddSession: boolean;
 };
 
-export function TalkCard({ session, isDayOne }: Props) {
-  // const shouldUseLocalTz = useReactConfStore((state) => state.shouldUseLocalTz);
+export function GameDescriptionCard({ session, isOddSession }: Props) {
   const shouldUseLocalTz = true;
 
   const shadow = useThemeColor({ light: theme.dropShadow, dark: undefined });
@@ -25,8 +24,8 @@ export function TalkCard({ session, isDayOne }: Props) {
     <Link
       push
       href={{
-        pathname: "/talk/[talk]",
-        params: { talk: session.id },
+        pathname: "/game/[game]",
+        params: { game: session.id },
       }}
       asChild
     >
@@ -38,10 +37,10 @@ export function TalkCard({ session, isDayOne }: Props) {
         >
           <ThemedView
             lightColor={
-              isDayOne ? theme.colorReactLightBlue : theme.colorLightGreen
+              isOddSession ? theme.colorReactLightBlue : theme.colorLightGreen
             }
             darkColor={
-              isDayOne ? "rgba(88,196,220, 0.5)" : "rgba(155,223,177, 0.5)"
+              isOddSession ? "rgba(88,196,220, 0.5)" : "rgba(155,223,177, 0.5)"
             }
             style={styles.heading}
           >
@@ -62,14 +61,18 @@ export function TalkCard({ session, isDayOne }: Props) {
           <ThemedView
             style={styles.content}
             lightColor={
-              isDayOne ? "rgba(88,196,220, 0.15)" : "rgba(155,223,177, 0.15)"
+              isOddSession
+                ? "rgba(88,196,220, 0.15)"
+                : "rgba(155,223,177, 0.15)"
             }
             darkColor={
-              isDayOne ? "rgba(88,196,220, 0.15)" : "rgba(155,223,177, 0.15)"
+              isOddSession
+                ? "rgba(88,196,220, 0.15)"
+                : "rgba(155,223,177, 0.15)"
             }
           >
-            {session.speakers.map((speaker) => (
-              <SpeakerDetails speaker={speaker} key={speaker.id} />
+            {session.games.map((game) => (
+              <GameDetails game={game} key={game.id} />
             ))}
           </ThemedView>
         </ThemedView>
@@ -78,16 +81,16 @@ export function TalkCard({ session, isDayOne }: Props) {
   );
 }
 
-function SpeakerDetails({ speaker }: { speaker: Speaker }) {
+function GameDetails({ game }: { game: Game }) {
   return (
     <View style={styles.speaker}>
-      <SpeakerImage profilePicture={speaker.profilePicture} animated />
+      <SpeakerImage profilePicture={game.image} size="large" />
       <View style={styles.speakerDetails}>
         <ThemedText fontSize={18} fontWeight="bold">
-          {speaker.fullName}
+          {game.name}
         </ThemedText>
-        <ThemedText fontSize={16} fontWeight="medium">
-          {speaker.tagLine}
+        <ThemedText fontSize={16} fontWeight="light">
+          {game.mechanics}
         </ThemedText>
       </View>
     </View>

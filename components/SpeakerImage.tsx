@@ -43,12 +43,11 @@ export function SpeakerImage({
   const placeholder = (
     <View style={[imageStyles, styles.fallbackImage]}>
       <Image
-        source={require("@/assets/images/reactlogo-white.png")}
+        source={require("@/assets/images/meeple.svg")}
         style={reactLogoSize}
       />
     </View>
   );
-
   return (
     <ThemedView
       lightColor="rgba(255,255,255,0.15)"

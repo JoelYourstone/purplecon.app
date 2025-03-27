@@ -18,7 +18,7 @@ import { NotFound } from "@/components/NotFound";
 import { SpeakerImage } from "@/components/SpeakerImage";
 import { ThemedText, ThemedView, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
-import { Session, Speaker } from "@/types";
+import { Session, Game } from "@/types";
 import { formatSessionTime } from "@/utils/formatDate";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Bookmark } from "@/components/Bookmark";
@@ -143,18 +143,18 @@ export default function TalkDetail() {
               lightColor={theme.colorWhite}
               style={styles.content}
             >
-              {talk.speakers.map((speaker) => (
+              {talk.games.map((game) => (
                 <Link
                   push
-                  key={speaker.id}
+                  key={game.id}
                   href={{
                     pathname: "/speaker/[speaker]",
-                    params: { speaker: speaker.id },
+                    params: { speaker: game.id },
                   }}
                   asChild
                 >
                   <TouchableOpacity activeOpacity={0.8}>
-                    <SpeakerDetails speaker={speaker} />
+                    <GameDetails game={game} />
                   </TouchableOpacity>
                 </Link>
               ))}
@@ -264,16 +264,16 @@ function HeaderBackgroundIOS({
   );
 }
 
-function SpeakerDetails({ speaker }: { speaker: Speaker }) {
+function GameDetails({ game }: { game: Game }) {
   return (
     <View style={styles.speaker}>
-      <SpeakerImage profilePicture={speaker.profilePicture} />
+      <SpeakerImage profilePicture={game.image} />
       <View style={styles.speakerDetails}>
         <ThemedText fontSize={18} fontWeight="bold">
-          {speaker.fullName}
+          {game.name}
         </ThemedText>
-        <ThemedText fontSize={16} fontWeight="medium">
-          {speaker.tagLine}
+        <ThemedText fontSize={16} fontWeight="bold">
+          {game.mechanics}
         </ThemedText>
       </View>
     </View>

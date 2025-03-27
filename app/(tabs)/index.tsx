@@ -1,180 +1,224 @@
-import { useScrollToTop } from "@react-navigation/native";
-import { useFocusEffect } from "expo-router";
-import React, { useState } from "react";
-import { ActivityIndicator, StyleSheet, View, ViewToken } from "react-native";
-import Animated, {
-  useAnimatedRef,
-  useSharedValue,
-  useAnimatedStyle,
-  useAnimatedScrollHandler,
-  SharedValue,
-  Extrapolation,
-  interpolate,
-} from "react-native-reanimated";
+import { useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 
-import { ActivityCard } from "@/components/ActivityCard";
-import { NotFound } from "@/components/NotFound";
-import { ReactConfHeader } from "@/components/ReactConfHeader";
-import { TalkCard } from "@/components/TalkCard";
+import { PurpleconHeader } from "@/components/PurpleconHeader";
+import { GameDescriptionCard } from "@/components/GameDescriptionCard";
 import { ThemedText, ThemedView, useThemeColor } from "@/components/Themed";
-import { COLLAPSED_HEADER, EXPANDED_HEADER, ROW_HEIGHT } from "@/consts";
 import { theme } from "@/theme";
 import { Session } from "@/types";
 
 // MOCK
 
-const dayOne: Session[] = [
+const sessionOne: Session[] = [
   {
     id: "1",
-    title: "Introduction to TypeScript",
-    description: "A beginner-friendly session covering TS basics.",
-    startsAt: "2025-03-13T09:00:00",
-    endsAt: "2025-03-13T10:00:00",
-    speakers: [
+    title: "Modern Classics",
+    description:
+      "This session contains games that we consider to be modern classics. These games are easy to learn, provide strategic challenges to keep the players engaged and have a good presentation.",
+    startsAt: "2025-05-10T11:00:00",
+    endsAt: "2025-05-10T14:00:00",
+    games: [
       {
-        id: "s1",
-        firstName: "Alice",
-        lastName: "Smith",
-        bio: "Front-end developer with a passion for TypeScript.",
-        tagLine: "TS Enthusiast",
-        profilePicture: null,
+        id: "g1",
+        name: "7 Wonders",
+        mechanics: "Deckbuilding",
+        short_description: "A game about building wonders.",
+        description:
+          "7 Wonders is a card drafting game that is played using three decks of cards featuring depictions of ancient civilizations, military conflicts, and commercial activity. The game is highly regarded, being one of the highest rated games on the board game database BoardGameGeek.",
+        image:
+          "https://cf.geekdo-images.com/35h9Za_JvMMMtx_92kT0Jg__imagepage/img/WKlTys0Dc3F6x9r05Fwyvs82tz4=/fit-in/900x600/filters:no_upscale():strip_icc()/pic7149798.jpg",
         links: [
           {
-            title: "GitHub",
-            url: "https://github.com/alicesmith",
-            linkType: "GitHub",
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/68448/7-wonders",
           },
         ],
-        sessions: [1],
-        fullName: "Alice Smith",
-        categoryItems: [1001],
+      },
+      {
+        id: "g2",
+        name: "Pandemic",
+        mechanics: "Co-op",
+        short_description: "A game about saving the world.",
+        description:
+          "Pandemic is a cooperative board game designed by Matt Leacock and first published y",
+        image:
+          "https://cf.geekdo-images.com/S3ybV1LAp-8SnHIXLLjVqA__imagepage/img/kIBu-2Ljb_ml5n-S8uIbE6ehGFc=/fit-in/900x600/filters:no_upscale():strip_icc()/pic1534148.jpg",
+        links: [
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/30549/pandemic",
+          },
+        ],
       },
     ],
-    room: "Conference Room A",
-    isServiceSession: false,
   },
 ];
 
-const dayTwo: Session[] = [
+const sessionTwo: Session[] = [
   {
     id: "2",
     title: "Advanced TypeScript Patterns",
     description: "Deep dive into advanced usage of TypeScript.",
     startsAt: "2025-03-14T11:00:00",
     endsAt: "2025-03-14T12:00:00",
-    speakers: [
+    games: [
       {
-        id: "s2",
-        firstName: "Bob",
-        lastName: "Johnson",
-        bio: null,
-        tagLine: "TypeScript Architect",
-        profilePicture: null,
+        id: "g1",
+        name: "7 Wonders",
+        mechanics: "Deckbuilding",
+        short_description: "A game about building wonders.",
+        description:
+          "7 Wonders is a card drafting game that is played using three decks of cards featuring depictions of ancient civilizations, military conflicts, and commercial activity. The game is highly regarded, being one of the highest rated games on the board game database BoardGameGeek.",
+        image: null,
         links: [
-          { title: "Website", url: "https://bobstips.com", linkType: "Blog" },
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/68448/7-wonders",
+          },
         ],
-        sessions: [2],
-        fullName: "Bob Johnson",
-        categoryItems: [1002],
+      },
+      {
+        id: "g2",
+        name: "Pandemic",
+        mechanics: "Co-op",
+        short_description: "A game about saving the world.",
+        description:
+          "Pandemic is a cooperative board game designed by Matt Leacock and first published y",
+        image: null,
+        links: [
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/30549/pandemic",
+          },
+        ],
       },
     ],
-    room: "Conference Room B",
-    isServiceSession: false,
   },
 ];
 
-export type SessionItem =
-  | {
-      type: "session";
-      day: number;
-      item: Session;
-    }
-  | {
-      type: "section-header";
-      day: number;
-    };
+// These should not be Sessions - just a list of games.
+const sessionOneSpelbibliotek: Session[] = [
+  {
+    id: "1",
+    title: "Another page with Modern Classics",
+    description:
+      "This session contains games that we consider to be modern classics. These games are easy to learn, provide strategic challenges to keep the players engaged and have a good presentation.",
+    startsAt: "2025-05-10T11:00:00",
+    endsAt: "2025-05-10T14:00:00",
+    games: [
+      {
+        id: "g1",
+        name: "7 Wonders",
+        mechanics: "Deckbuilding",
+        short_description: "A game about building wonders.",
+        description:
+          "7 Wonders is a card drafting game that is played using three decks of cards featuring depictions of ancient civilizations, military conflicts, and commercial activity. The game is highly regarded, being one of the highest rated games on the board game database BoardGameGeek.",
+        image:
+          "https://cf.geekdo-images.com/35h9Za_JvMMMtx_92kT0Jg__imagepage/img/WKlTys0Dc3F6x9r05Fwyvs82tz4=/fit-in/900x600/filters:no_upscale():strip_icc()/pic7149798.jpg",
+        links: [
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/68448/7-wonders",
+          },
+        ],
+      },
+      {
+        id: "g2",
+        name: "Pandemic",
+        mechanics: "Co-op",
+        short_description: "A game about saving the world.",
+        description:
+          "Pandemic is a cooperative board game designed by Matt Leacock and first published y",
+        image:
+          "https://cf.geekdo-images.com/S3ybV1LAp-8SnHIXLLjVqA__imagepage/img/kIBu-2Ljb_ml5n-S8uIbE6ehGFc=/fit-in/900x600/filters:no_upscale():strip_icc()/pic1534148.jpg",
+        links: [
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/30549/pandemic",
+          },
+        ],
+      },
+    ],
+  },
+];
 
-const AnimatedFlatList = Animated.createAnimatedComponent(
-  FlatList<SessionItem>,
-);
+const sessionTwoSpelbibliotek: Session[] = [
+  {
+    id: "2",
+    title: "Advanced TypeScript Patterns",
+    description: "Deep dive into advanced usage of TypeScript.",
+    startsAt: "2025-03-14T11:00:00",
+    endsAt: "2025-03-14T12:00:00",
+    games: [
+      {
+        id: "g1",
+        name: "7 Wonders",
+        mechanics: "Deckbuilding",
+        short_description: "A game about building wonders.",
+        description:
+          "7 Wonders is a card drafting game that is played using three decks of cards featuring depictions of ancient civilizations, military conflicts, and commercial activity. The game is highly regarded, being one of the highest rated games on the board game database BoardGameGeek.",
+        image: null,
+        links: [
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/68448/7-wonders",
+          },
+        ],
+      },
+      {
+        id: "g2",
+        name: "Pandemic",
+        mechanics: "Co-op",
+        short_description: "A game about saving the world.",
+        description:
+          "Pandemic is a cooperative board game designed by Matt Leacock and first published y",
+        image: null,
+        links: [
+          {
+            title: "Boardgame Geek",
+            url: "https://boardgamegeek.com/boardgame/30549/pandemic",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+export type SessionItem = {
+  day: number;
+  item: Session;
+};
 
 export default function Schedule() {
   const insets = useSafeAreaInsets();
-  const scrollRef = useAnimatedRef<FlatList>();
-  useScrollToTop(scrollRef as any);
-  const [shouldShowDayOneHeader, setShouldShowDayOneHeader] = useState(true);
+  const [shouldShowSpelschema, setShouldShowSpelschema] = useState(true);
 
-  const scrollOffset = useSharedValue(0);
-  const scrollHandler = useAnimatedScrollHandler((event) => {
-    scrollOffset.value = event.contentOffset.y;
-  });
+  const flatListRef = useRef<FlatList<SessionItem>>(null);
 
-  const paddingTopStyle = useAnimatedStyle(() => ({
-    paddingTop: interpolate(
-      scrollOffset.value,
-      [COLLAPSED_HEADER, EXPANDED_HEADER - 55],
-      [0, ROW_HEIGHT],
-      Extrapolation.CLAMP,
-    ),
-  }));
+  function Header() {
+    return (
+      <View style={{ paddingTop: insets.top }}>
+        <PurpleconHeader />
+      </View>
+    );
+  }
 
   const sectionListBackgroundColor = useThemeColor({
     light: theme.colorWhite,
     dark: theme.colorDarkestBlue,
   });
 
-  useFocusEffect(() => {
-    refreshSchedule();
-  });
-
-  // const { dayOne, dayTwo } = useReactConfStore((state) => state.schedule);
-  // const dayOne: Session[] = [];
-  // const dayTwo: Session[] = [];
-
-  const refreshSchedule = () => {
-    // console.log("refreshSchedule");
-  };
-  const isRefreshing = false;
-
-  const scrollToSection = ({
-    isSchedule: isDayOne,
-  }: {
-    isSchedule: boolean;
-  }) => {
-    scrollRef.current?.scrollToIndex({
-      index: isDayOne ? 0 : dayOne.length,
-      animated: true,
-    });
-  };
-
-  const onViewableItemsChanged = (items: {
-    viewableItems: ViewToken<SessionItem>[];
-    changed: ViewToken<SessionItem>[];
-  }) => {
-    const topVisibleIndex = items.viewableItems?.[0]?.index || 0;
-    const isDayOneThreshold = topVisibleIndex <= dayOne.length;
-    const isDayTwoThreshold = topVisibleIndex >= dayOne.length;
-
-    if (!shouldShowDayOneHeader && isDayOneThreshold) {
-      setShouldShowDayOneHeader(true);
-    }
-
-    if (shouldShowDayOneHeader && isDayTwoThreshold) {
-      setShouldShowDayOneHeader(false);
-    }
-  };
-
-  const data = [
-    ...dayOne.map((item) => ({ type: "session", day: 1, item })),
-    { type: "section-header", day: 2 },
-    ...dayTwo.map((item) => ({ type: "session", day: 2, item })),
-  ] as SessionItem[];
-
-  if (!dayOne.length || !dayTwo.length) {
-    return <NotFound message="Schedule unavailable" />;
-  }
+  const data = shouldShowSpelschema
+    ? ([
+        ...sessionOne.map((item) => ({ day: 1, item })),
+        ...sessionTwo.map((item) => ({ day: 2, item })),
+      ] as SessionItem[])
+    : ([
+        ...sessionOneSpelbibliotek.map((item) => ({ day: 1, item })),
+        ...sessionTwoSpelbibliotek.map((item) => ({ day: 2, item })),
+      ] as SessionItem[]);
 
   return (
     <ThemedView
@@ -182,15 +226,12 @@ export default function Schedule() {
       darkColor={theme.colorDarkBlue}
       lightColor={theme.colorWhite}
     >
-      <ThemedView style={[styles.container, paddingTopStyle]} animated>
-        <AnimatedFlatList
-          ref={scrollRef}
-          onViewableItemsChanged={onViewableItemsChanged}
-          onScroll={scrollHandler}
+      <ThemedView style={[styles.container]}>
+        <Header />
+
+        <FlatList<SessionItem>
+          ref={flatListRef}
           style={{ backgroundColor: sectionListBackgroundColor }}
-          contentContainerStyle={{
-            paddingTop: EXPANDED_HEADER - 55,
-          }}
           scrollEventThrottle={8}
           data={data}
           stickyHeaderIndices={[0]}
@@ -200,9 +241,7 @@ export default function Schedule() {
                 style={[
                   styles.sectionHeader,
                   {
-                    borderBottomColor: shouldShowDayOneHeader
-                      ? theme.colorReactLightBlue
-                      : theme.colorLightGreen,
+                    borderBottomColor: theme.colorReactLightBlue,
                   },
                 ]}
                 lightColor={theme.colorWhite}
@@ -210,61 +249,41 @@ export default function Schedule() {
               >
                 <SectionListButton
                   title="Spelschema"
-                  isBold={shouldShowDayOneHeader}
-                  onPress={() => scrollToSection({ isSchedule: true })}
+                  isBold={shouldShowSpelschema}
+                  onPress={() => {
+                    setShouldShowSpelschema(true);
+                    flatListRef.current?.scrollToOffset({
+                      offset: 0,
+                      animated: true,
+                    });
+                  }}
                 />
                 <SectionListButton
                   title="Spelbiblioteket"
-                  isBold={!shouldShowDayOneHeader}
-                  onPress={() => scrollToSection({ isSchedule: false })}
+                  isBold={!shouldShowSpelschema}
+                  onPress={() => {
+                    setShouldShowSpelschema(false);
+                    flatListRef.current?.scrollToOffset({
+                      offset: 0,
+                      animated: true,
+                    });
+                  }}
                 />
               </ThemedView>
             );
           }}
           renderItem={({ item }) => {
-            const isDayOne = item.day === 1;
-            if (item.type === "section-header") {
-              return (
-                <ThemedView
-                  style={[
-                    styles.sectionHeader,
-                    {
-                      borderBottomColor: isDayOne
-                        ? theme.colorReactLightBlue
-                        : theme.colorLightGreen,
-                    },
-                  ]}
-                  lightColor={theme.colorWhite}
-                  darkColor={theme.colorDarkBlue}
-                >
-                  <SectionListButton
-                    title="Day 1"
-                    isBold={isDayOne}
-                    onPress={() => scrollToSection({ isSchedule: true })}
-                  />
-                  <SectionListButton
-                    title="Day 2"
-                    isBold={!isDayOne}
-                    onPress={() => scrollToSection({ isSchedule: false })}
-                  />
-                </ThemedView>
-              );
-            }
+            const isOddSession = item.day % 2 !== 0;
 
-            if (item.item.isServiceSession) {
-              return <ActivityCard session={item.item} />;
-            } else {
-              return (
-                <TalkCard
-                  key={item.item.id}
-                  session={item.item}
-                  isDayOne={isDayOne}
-                />
-              );
-            }
+            return (
+              <GameDescriptionCard
+                key={item.item.id}
+                session={item.item}
+                isOddSession={isOddSession}
+              />
+            );
           }}
         />
-        <Header scrollOffset={scrollOffset} refreshing={isRefreshing} />
       </ThemedView>
     </ThemedView>
   );
@@ -296,34 +315,6 @@ const SectionListButton = ({
   );
 };
 
-interface HeaderProps {
-  scrollOffset: SharedValue<number>;
-  refreshing: boolean;
-}
-
-function Header({ scrollOffset, refreshing }: HeaderProps) {
-  const animatedHeader = useAnimatedStyle(() => ({
-    height: interpolate(
-      scrollOffset.value,
-      [0, EXPANDED_HEADER],
-      [EXPANDED_HEADER, 0],
-    ),
-  }));
-
-  return (
-    <Animated.View style={[styles.header, animatedHeader]}>
-      <ReactConfHeader scrollOffset={scrollOffset} />
-      <View style={{ position: "absolute", right: 20, top: 15 }}>
-        <ActivityIndicator
-          size="small"
-          hidesWhenStopped={true}
-          animating={refreshing}
-        />
-      </View>
-    </Animated.View>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -336,19 +327,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     borderBottomWidth: 3,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: theme.space8,
-    backgroundColor: theme.colorThemeLightGrey,
-    overflow: "hidden",
-  },
-  header: {
-    position: "absolute",
-    top: 0,
-    zIndex: 1,
-    width: "100%",
   },
 });
