@@ -194,7 +194,8 @@ export default function Cafe() {
             style={styles.payNowButton}
           >
             <Text style={styles.payNowButtonText}>
-              Betala {getTotalPrice()}:- för {countItems()} varor
+              Betala {getTotalPrice()}:- för {countItems()}{" "}
+              {countItems() > 1 ? "varor" : "vara"}
             </Text>
           </TouchableOpacity>
 
