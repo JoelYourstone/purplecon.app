@@ -29,7 +29,10 @@ export function SessionProvider({ children }: PropsWithChildren) {
   const { setHasFinishedSupabaseLoading } = useSplashContext();
 
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
+    async function getSession() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       setSession(session);
       if (session?.user?.id) {
         const { data, error, status } = await supabase
@@ -46,7 +49,9 @@ export function SessionProvider({ children }: PropsWithChildren) {
       } else {
         setHasFinishedSupabaseLoading(true);
       }
-    });
+    }
+
+    getSession();
 
     supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
@@ -57,11 +62,17 @@ export function SessionProvider({ children }: PropsWithChildren) {
           .eq("id", session.user.id)
           .single();
         if (error && status !== 406) {
+          setHasFinishedSupabaseLoading(true);
           throw error;
         }
         setProfile(data);
       }
+      setHasFinishedSupabaseLoading(true);
     });
+
+    setTimeout(() => {
+      setHasFinishedSupabaseLoading(true);
+    }, 5000);
   }, [setHasFinishedSupabaseLoading]);
 
   async function updateProfile({ first_name, last_name, avatar_url }: Profile) {

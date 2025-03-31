@@ -32,7 +32,6 @@ export default function EnterCode() {
   // console.log(invitationCode);signInWithEmail
 
   useEffect(() => {
-    console.log("value", value);
     if (value.length === CELL_COUNT) {
       submitInvitationCode(value).then((success) => {
         if (success) {

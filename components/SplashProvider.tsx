@@ -124,8 +124,8 @@ export function SplashProvider({
         <View {...container} style={[container.style, styles.transparent]}>
           {!hasFinishedLoading && (
             <Text style={{ color: "white" }}>
-              Loading {hasFinishedSupabaseLoading ? "supabase" : ""}{" "}
-              {hasFinishedOnboardingLoading ? "onboarding" : ""}
+              Loading {!hasFinishedSupabaseLoading ? "supabase" : ""}{" "}
+              {!hasFinishedOnboardingLoading ? "onboarding" : ""}
             </Text>
           )}
           <Animated.Image {...logo} style={[logo.style, opacityStyle]} />
