@@ -130,30 +130,30 @@ export default function Cafe() {
 
   const menuSections: MenuSection[] = [
     {
-      title: "Dryck",
-      data: [
-        { id: 1, name: "Läsk", price: 10 },
-        { id: 2, name: "Cider", price: 15 },
-        { id: 3, name: "Hot Chocolate", price: 4.0 },
-        { id: 4, name: "Iced Coffee", price: 4.0 },
-        { id: 5, name: "Iced Tea", price: 3.0 },
-        { id: 6, name: "Iced Chocolate", price: 4.5 },
-      ],
-    },
-    {
       title: "Snacks",
       data: [
-        { id: 7, name: "Cookie", price: 5 },
-        { id: 8, name: "Chokladboll", price: 5 },
-        { id: 9, name: "Chokladstycksak", price: 10 },
-      ],
+        { name: "Cookie", price: 5 },
+        { name: "Chokladboll", price: 5 },
+        { name: "Chokladstycksak", price: 10 },
+      ].map((item, index) => ({ ...item, id: `snacks-${index}` })),
+    },
+    {
+      title: "Dryck",
+      data: [
+        { name: "Läsk", price: 10 },
+        { name: "Cider", price: 15 },
+        { name: "Hot Chocolate", price: 4.0 },
+        { name: "Iced Coffee", price: 4.0 },
+        { name: "Iced Tea", price: 3.0 },
+        { name: "Iced Chocolate", price: 4.5 },
+      ].map((item, index) => ({ ...item, id: `dryck-${index}` })),
     },
     {
       title: "Mat",
       data: [
-        { id: 10, name: "Pizza", price: 20 },
-        { id: 11, name: "Pirog", price: 15 },
-      ],
+        { name: "Pizza", price: 20 },
+        { name: "Pirog", price: 15 },
+      ].map((item, index) => ({ ...item, id: `mat-${index}` })),
     },
   ];
 
@@ -161,7 +161,7 @@ export default function Cafe() {
     <View style={styles.container}>
       <SectionList
         sections={menuSections}
-        keyExtractor={(item: CafeItem) => item.id.toString()}
+        keyExtractor={(item: CafeItem) => item.id}
         renderItem={({ item }) => (
           <View>
             <TouchableOpacity

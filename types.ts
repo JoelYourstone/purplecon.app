@@ -1,5 +1,5 @@
 export type CafeItem = {
-  id: number;
+  id: string;
   name: string;
   price: number;
 };
