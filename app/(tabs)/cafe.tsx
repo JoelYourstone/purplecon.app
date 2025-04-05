@@ -132,9 +132,13 @@ export default function Cafe() {
     {
       title: "Snacks",
       data: [
-        { name: "Cookie", price: 5 },
-        { name: "Chokladboll", price: 5 },
-        { name: "Chokladstycksak", price: 10 },
+        { name: "Chips/popcornbägare (fri påfyllning)", price: 15 },
+        { name: "Snickers/Smarties", price: 5 },
+        { name: "Bilar", price: 15 },
+        { name: "Haribo godispåse", price: 10 },
+        { name: "Vegansk godispåse", price: 10 },
+        { name: "Delicatoboll (vegansk)", price: 5 },
+        { name: "Kladdkakecookies", price: 5 },
       ].map((item, index) => ({ ...item, id: `snacks-${index}` })),
     },
     {
@@ -142,17 +146,13 @@ export default function Cafe() {
       data: [
         { name: "Läsk", price: 10 },
         { name: "Cider", price: 15 },
-        { name: "Hot Chocolate", price: 4.0 },
-        { name: "Iced Coffee", price: 4.0 },
-        { name: "Iced Tea", price: 3.0 },
-        { name: "Iced Chocolate", price: 4.5 },
       ].map((item, index) => ({ ...item, id: `dryck-${index}` })),
     },
     {
       title: "Mat",
       data: [
-        { name: "Pizza", price: 20 },
-        { name: "Pirog", price: 15 },
+        { name: "Pizza/pirog (kött/vegansk finns)", price: 20 },
+        { name: "Bygg din egen pastasallad", price: 40 },
       ].map((item, index) => ({ ...item, id: `mat-${index}` })),
     },
   ];
