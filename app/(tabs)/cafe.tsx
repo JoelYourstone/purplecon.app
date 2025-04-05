@@ -163,16 +163,34 @@ export default function Cafe() {
         sections={menuSections}
         keyExtractor={(item: CafeItem) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.menuItem}
-            onPress={() => {
-              handleAddToCart(item);
-            }}
-          >
-            <Text style={styles.menuText}>{item.name}</Text>
-            <Text style={styles.menuText}>{item.price}:-</Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity
+              key={item.id}
+              style={styles.menuItem}
+              onPress={() => {
+                handleAddToCart(item);
+              }}
+            >
+              <View style={{ flexDirection: "column", gap: 4 }}>
+                <Text style={[styles.menuText, { fontWeight: "bold" }]}>
+                  {item.name}
+                </Text>
+                <Text style={styles.menuText}>{item.price}:-</Text>
+              </View>
+              <Feather
+                name="plus-circle"
+                size={24}
+                color={theme.colorPurple}
+                style={{ verticalAlign: "middle" }}
+              />
+            </TouchableOpacity>
+            <View
+              style={{
+                borderBottomColor: "grey",
+                borderBottomWidth: StyleSheet.hairlineWidth,
+              }}
+            />
+          </View>
         )}
         renderSectionHeader={({ section: { title } }) => (
           <ThemedView
@@ -187,78 +205,88 @@ export default function Cafe() {
         )}
         contentContainerStyle={styles.flatListContainer}
       />
-      {countItems() > 0 && (
-        <View>
-          <TouchableOpacity
-            onPress={() => handleSetIsCartOpen(true)}
-            style={styles.payNowButton}
-          >
+      <View>
+        <View
+          style={{
+            borderTopColor: theme.colorPurple,
+            borderTopWidth: StyleSheet.hairlineWidth,
+          }}
+        />
+        <TouchableOpacity
+          onPress={() => handleSetIsCartOpen(true)}
+          style={styles.payNowButton}
+        >
+          {countItems() > 0 ? (
             <Text style={styles.payNowButtonText}>
               Betala {getTotalPrice()}:- för {countItems()}{" "}
               {countItems() > 1 ? "varor" : "vara"}
             </Text>
-          </TouchableOpacity>
+          ) : (
+            <Text style={styles.payNowButtonText}>Din varukorg är tom</Text>
+          )}
+        </TouchableOpacity>
 
-          <Modal
-            visible={isCartOpen}
-            animationType="slide"
-            transparent={true}
-            onRequestClose={() => handleSetIsCartOpen(false)}
-          >
-            <TouchableWithoutFeedback
-              onPress={() => handleSetIsCartOpen(false)}
-            >
-              <View style={styles.modalOverlay}>
-                <View style={styles.cartPopup}>
-                  <TouchableWithoutFeedback>
-                    <View>
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <View style={{ flexDirection: "row" }}>
-                          <Text style={styles.cartPopupTitle}>Dina varor</Text>
-                          {isCartEditMode && (
-                            <TouchableOpacity onPress={() => clearCart()}>
-                              <MaterialIcons
-                                name="clear"
-                                size={24}
-                                color={theme.colorPurple}
-                              />
-                            </TouchableOpacity>
-                          )}
-                        </View>
-                        <TouchableOpacity
-                          onPress={() => setIsCartEditMode(!isCartEditMode)}
-                        >
+        <Modal
+          visible={isCartOpen}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => handleSetIsCartOpen(false)}
+        >
+          <TouchableWithoutFeedback onPress={() => handleSetIsCartOpen(false)}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.cartPopup}>
+                <TouchableWithoutFeedback>
+                  <View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        marginBottom: 16,
+                      }}
+                    >
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.cartPopupTitle}>Dina varor</Text>
+                        <TouchableOpacity onPress={() => clearCart()}>
                           <Feather
-                            name="edit"
+                            name="trash-2"
                             size={24}
                             color={theme.colorPurple}
+                            style={{
+                              alignSelf: "center",
+                              marginLeft: 8,
+                            }}
                           />
                         </TouchableOpacity>
                       </View>
-                      {renderCartSummary()}
                       <TouchableOpacity
-                        onPress={() => {
-                          Linking.openURL(
-                            `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg=Purplecon Spelcafé&src=qr`,
-                          );
-                        }}
-                        style={styles.swishButton}
+                        style={{ alignSelf: "flex-end" }}
+                        onPress={() => setIsCartEditMode(!isCartEditMode)}
                       >
-                        <Text style={styles.swishButtonText}>Swish</Text>
+                        <Feather
+                          name="edit"
+                          size={24}
+                          color={theme.colorPurple}
+                        />
                       </TouchableOpacity>
                     </View>
-                  </TouchableWithoutFeedback>
-                </View>
+                    {renderCartSummary()}
+                    <TouchableOpacity
+                      onPress={() => {
+                        Linking.openURL(
+                          `https://app.swish.nu/1/p/sw/?sw=0766313471&amt=${getTotalPrice()}&cur=SEK&msg=Purplecon Spelcafé&src=qr`,
+                        );
+                      }}
+                      style={styles.swishButton}
+                    >
+                      <Text style={styles.swishButtonText}>Swish</Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
-            </TouchableWithoutFeedback>
-          </Modal>
-        </View>
-      )}
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+      </View>
     </View>
   );
 }
@@ -324,7 +352,7 @@ const styles = StyleSheet.create({
   },
   cartSummaryText: {
     flex: 4,
-    fontSize: 14,
+    fontSize: 16,
     color: theme.colorBlack,
     marginBottom: 4,
   },
@@ -354,7 +382,6 @@ const styles = StyleSheet.create({
   cartPopupTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
   },
   cartItemsRow: {
     flexDirection: "row",
