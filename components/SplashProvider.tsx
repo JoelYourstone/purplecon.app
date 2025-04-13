@@ -35,6 +35,7 @@ type Props = {
 type SplashContextType = {
   setHasFinishedSupabaseLoading: (hasFinished: boolean) => void;
   setHasFinishedOnboardingLoading: (hasFinished: boolean) => void;
+  setHasFinishedEventLoading: (hasFinished: boolean) => void;
 };
 
 const SplashContext = createContext<SplashContextType | null>(null);
@@ -48,9 +49,13 @@ export function SplashProvider({
     useState<boolean>(false);
   const [hasFinishedOnboardingLoading, setHasFinishedOnboardingLoading] =
     useState<boolean>(false);
+  const [hasFinishedEventLoading, setHasFinishedEventLoading] =
+    useState<boolean>(false);
 
   const hasFinishedLoading =
-    hasFinishedSupabaseLoading && hasFinishedOnboardingLoading;
+    hasFinishedSupabaseLoading &&
+    hasFinishedOnboardingLoading &&
+    hasFinishedEventLoading;
 
   const opacity = useSharedValue(1);
   const scale = useSharedValue(animationEnded ? MAX_SCALE : 1);
@@ -97,6 +102,7 @@ export function SplashProvider({
       value={{
         setHasFinishedSupabaseLoading,
         setHasFinishedOnboardingLoading,
+        setHasFinishedEventLoading,
       }}
     >
       {/* Apply background color under the mask */}

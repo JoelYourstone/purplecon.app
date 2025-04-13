@@ -20,6 +20,7 @@ import { PropsWithChildren } from "react";
 import { OnboardingProvider } from "@/features/onboarding/OnboardingContext";
 import { SessionProvider } from "./SessionProvider";
 import { useExpoNotifications } from "./notifications";
+import { EventProvider } from "./EventProvider";
 
 export function AppProvider({ children }: PropsWithChildren) {
   const [splashVisible, setSplashVisible] = useState(true);
@@ -83,7 +84,9 @@ export function AppProvider({ children }: PropsWithChildren) {
             <StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
             <SessionProvider>
               <OnboardingProvider>
-                <InnerAppProvider>{children}</InnerAppProvider>
+                <EventProvider>
+                  <InnerAppProvider>{children}</InnerAppProvider>
+                </EventProvider>
               </OnboardingProvider>
             </SessionProvider>
             <OfflineBanner />
