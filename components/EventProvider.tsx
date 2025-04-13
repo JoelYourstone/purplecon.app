@@ -9,7 +9,7 @@ import {
 import { useSplashContext } from "./SplashProvider";
 import { useSession } from "./SessionProvider";
 
-type RsvpStatus = "pending" | "confirmed" | "rejected";
+type RsvpStatus = "pending" | "confirmed" | "rejected" | "tentative";
 
 type Rsvp = {
   userId: string;
@@ -94,5 +94,6 @@ function rsvpToStatus(rsvp: string | null | undefined) {
   if (rsvp === "pending") return "pending";
   if (rsvp === "confirmed") return "confirmed";
   if (rsvp === "rejected") return "rejected";
+  if (rsvp === "tentative") return "tentative";
   throw new Error(`Invalid RSVP status: ${rsvp}`);
 }
