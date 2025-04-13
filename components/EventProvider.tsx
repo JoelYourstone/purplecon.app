@@ -9,7 +9,7 @@ import {
 import { useSplashContext } from "./SplashProvider";
 import { useSession } from "./SessionProvider";
 
-type RsvpStatus = "pending" | "confirmed" | "rejected" | "tentative";
+export type RsvpStatus = "pending" | "confirmed" | "rejected" | "tentative";
 
 type Rsvp = {
   userId: string;
@@ -24,6 +24,7 @@ type EventInfo = {
 type EventContextType = {
   currentEventInfo: EventInfo | null;
   userRsvpStatus?: RsvpStatus;
+  confirmRsvp: (status: RsvpStatus) => Promise<void>;
 };
 
 const EventContext = createContext<EventContextType | null>(null);
@@ -74,8 +75,23 @@ export function EventProvider({ children }: PropsWithChildren) {
     fetchEventInfo();
   }, [setHasFinishedEventLoading, isLoggedIn, session?.user.id]);
 
+  async function confirmRsvp(status: RsvpStatus) {
+    if (!currentEventInfo || !session?.user.id) {
+      return;
+    }
+
+    await supabase.from("event_invite").upsert({
+      event_id: currentEventInfo.id,
+      user_id: session.user.id,
+      rsvp: status,
+    });
+    setUserRsvpStatus(status);
+  }
+
   return (
-    <EventContext.Provider value={{ currentEventInfo, userRsvpStatus }}>
+    <EventContext.Provider
+      value={{ currentEventInfo, userRsvpStatus, confirmRsvp }}
+    >
       {children}
     </EventContext.Provider>
   );

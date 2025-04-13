@@ -126,7 +126,7 @@ export default function Speakers() {
         darkColor={theme.colorDarkBlue}
       >
         <SectionListButton
-          title="Kommer"
+          title={`Kommer (${currentEventInfo?.rsvps.filter((rsvp) => rsvp.status === "confirmed").length})`}
           isBold={currentTab === "attending"}
           onPress={() => {
             setCurrentTab("attending");
@@ -137,7 +137,7 @@ export default function Speakers() {
           }}
         />
         <SectionListButton
-          title="Tentativa"
+          title={`Tentativa (${currentEventInfo?.rsvps.filter((rsvp) => rsvp.status === "tentative").length})`}
           isBold={currentTab === "tentative"}
           onPress={() => {
             setCurrentTab("tentative");
@@ -234,14 +234,15 @@ function PersonList({
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
       ItemSeparatorComponent={() => <View style={{ height: theme.space16 }} />}
-      renderItem={({ item }) => <SpeakerCard speaker={item} key={item.id} />}
+      renderItem={({ item }) => (
+        <View style={{ width: screenWidth }}>
+          <SpeakerCard speaker={item} key={item.id} />
+        </View>
+      )}
       data={people}
       ListEmptyComponent={
         <ThemedView style={styles.noResultsContainer}>
-          <ThemedText>
-            Här var det tomt :(
-            <ThemedText fontWeight="bold">{searchText}</ThemedText>
-          </ThemedText>
+          <ThemedText>Här var det tomt :(</ThemedText>
         </ThemedView>
       }
     />

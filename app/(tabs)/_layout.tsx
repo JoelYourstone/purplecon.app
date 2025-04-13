@@ -5,11 +5,15 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { Redirect, Tabs, useRouter } from "expo-router";
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View, StyleSheet } from "react-native";
 import { TabBarButton } from "@/components/TabBarButton";
 import { ThemedText, useThemeColor } from "@/components/Themed";
 import { theme } from "@/theme";
 import { useOnboarding } from "@/features/onboarding/OnboardingContext";
+import { useEvent } from "@/components/EventProvider";
+import { RsvpArea } from "@/components/RsvpArea";
+
+const TAB_BAR_HEIGHT = 49;
 
 export default function TabLayout() {
   const router = useRouter();
@@ -36,118 +40,122 @@ export default function TabLayout() {
   }
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor,
-        tabBarInactiveTintColor,
-        tabBarStyle: {
-          backgroundColor: tabBarBackgroundColor,
-        },
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          headerShown: false,
-          tabBarButton: (props) => (
-            <TabBarButton
-              {...props}
-              activeTintColor={tabBarActiveTintColor}
-              inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => (
-                <Ionicons size={24} name="dice-outline" color={color} />
-              )}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="cafe"
-        options={{
-          headerStyle: {
-            backgroundColor: theme.colorPurple,
-          },
-          headerTitleAlign: "center",
-          headerTitle: () => (
-            <ThemedText fontSize={20} fontWeight="bold">
-              SPELCAFÉ
-            </ThemedText>
-          ),
-          tabBarButton: (props) => (
-            <TabBarButton
-              {...props}
-              activeTintColor={tabBarActiveTintColor}
-              inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => (
-                <Feather name={"coffee"} size={24} color={color} />
-              )}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="social"
-        options={{
-          headerStyle: {
-            backgroundColor: theme.colorPurple,
-          },
-          headerShown: false,
-          headerTitle: () => (
-            <ThemedText fontSize={20} fontWeight="bold">
-              Social
-            </ThemedText>
-          ),
-          tabBarButton: (props) => (
-            <TabBarButton
-              {...props}
-              activeTintColor={tabBarActiveTintColor}
-              inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => (
-                <FontAwesome5 name="users" size={24} color={color} />
-              )}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="announcements"
-        options={{
-          headerStyle: {
+    <>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor,
+          tabBarInactiveTintColor,
+          tabBarStyle: {
             backgroundColor: tabBarBackgroundColor,
+            height: TAB_BAR_HEIGHT,
           },
-          headerShown: false,
-          tabBarButton: (props) => (
-            <TabBarButton
-              {...props}
-              activeTintColor={tabBarActiveTintColor}
-              inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => (
-                <MaterialCommunityIcons
-                  name="newspaper-variant-outline"
-                  size={24}
-                  color={color}
-                />
-              )}
-            />
-          ),
         }}
-      />
-      <Tabs.Screen
-        name="info"
-        options={{
-          headerShown: false,
-          tabBarButton: (props) => (
-            <TabBarButton
-              {...props}
-              activeTintColor={tabBarActiveTintColor}
-              inactiveTintColor={tabBarInactiveTintColor}
-              icon={({ color }) => (
-                <Octicons size={24} name="info" color={color} />
-              )}
-            />
-          ),
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            headerShown: false,
+            tabBarButton: (props) => (
+              <TabBarButton
+                {...props}
+                activeTintColor={tabBarActiveTintColor}
+                inactiveTintColor={tabBarInactiveTintColor}
+                icon={({ color }) => (
+                  <Ionicons size={24} name="dice-outline" color={color} />
+                )}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="cafe"
+          options={{
+            headerStyle: {
+              backgroundColor: theme.colorPurple,
+            },
+            headerTitleAlign: "center",
+            headerTitle: () => (
+              <ThemedText fontSize={20} fontWeight="bold">
+                SPELCAFÉ
+              </ThemedText>
+            ),
+            tabBarButton: (props) => (
+              <TabBarButton
+                {...props}
+                activeTintColor={tabBarActiveTintColor}
+                inactiveTintColor={tabBarInactiveTintColor}
+                icon={({ color }) => (
+                  <Feather name={"coffee"} size={24} color={color} />
+                )}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="social"
+          options={{
+            headerStyle: {
+              backgroundColor: theme.colorPurple,
+            },
+            headerShown: false,
+            headerTitle: () => (
+              <ThemedText fontSize={20} fontWeight="bold">
+                Social
+              </ThemedText>
+            ),
+            tabBarButton: (props) => (
+              <TabBarButton
+                {...props}
+                activeTintColor={tabBarActiveTintColor}
+                inactiveTintColor={tabBarInactiveTintColor}
+                icon={({ color }) => (
+                  <FontAwesome5 name="users" size={24} color={color} />
+                )}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="announcements"
+          options={{
+            headerStyle: {
+              backgroundColor: tabBarBackgroundColor,
+            },
+            headerShown: false,
+            tabBarButton: (props) => (
+              <TabBarButton
+                {...props}
+                activeTintColor={tabBarActiveTintColor}
+                inactiveTintColor={tabBarInactiveTintColor}
+                icon={({ color }) => (
+                  <MaterialCommunityIcons
+                    name="newspaper-variant-outline"
+                    size={24}
+                    color={color}
+                  />
+                )}
+              />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="info"
+          options={{
+            headerShown: false,
+            tabBarButton: (props) => (
+              <TabBarButton
+                {...props}
+                activeTintColor={tabBarActiveTintColor}
+                inactiveTintColor={tabBarInactiveTintColor}
+                icon={({ color }) => (
+                  <Octicons size={24} name="info" color={color} />
+                )}
+              />
+            ),
+          }}
+        />
+      </Tabs>
+      <RsvpArea />
+    </>
   );
 }
