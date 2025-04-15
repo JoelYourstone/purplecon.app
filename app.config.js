@@ -63,9 +63,10 @@ export default {
       },
       userInterfaceStyle: "automatic",
       package: getAppId(),
-      googleServicesFile:
-        process.env.GOOGLE_SERVICES_JSON ??
-        "../SECRET/purplecon/google-services.json",
+      googleServicesFile: IS_DEV
+        ? undefined
+        : process.env.GOOGLE_SERVICES_JSON ??
+          "../SECRET/purplecon/google-services.json",
     },
     web: {
       favicon: "./assets/favicon.png",

@@ -15,7 +15,7 @@
     "lint": "eslint .",
     "update-supabase-types": "npx supabase gen types typescript --project-id ljjhtynzegxittmgmdvd --schema public > supabase.ts && npx eslint --fix supabase.ts",
     "typecheck": "tsc --noEmit",
-    "push-to-prod": "npx eas-cli update --channel production -m 'stuff'"
+    "push-to-prod": "powershell -ExecutionPolicy Bypass -File ./scripts/push-prod.ps1"
   },
   "dependencies": {
     "@config-plugins/react-native-dynamic-app-icon": "^8.0.0",
