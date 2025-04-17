@@ -4,6 +4,7 @@ import { Announcement } from "@/app/(tabs)/announcements";
 import { getPublicAvatarUrl } from "@/supabase/index";
 import { sv } from "date-fns/locale";
 import { LikeButton } from "./LikeButton";
+import { useAnnouncementReadStatus } from "@/lib/announcementReadStatus";
 
 interface AnnouncementCardProps {
   announcement: Announcement;
@@ -20,8 +21,18 @@ export function AnnouncementCard({
   onUnlike,
   isLiked,
 }: AnnouncementCardProps) {
+  const { readStatus, markAsRead } = useAnnouncementReadStatus();
+  const isRead = readStatus[announcement.id] || false;
+
+  const handlePress = () => {
+    if (!isRead) {
+      markAsRead(announcement.id);
+    }
+    onPress();
+  };
+
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity style={styles.container} onPress={handlePress}>
       <View style={styles.header}>
         {announcement.author.avatar_url && (
           <Image
@@ -45,6 +56,7 @@ export function AnnouncementCard({
             })}
           </Text>
         </View>
+        {!isRead && <View style={styles.unreadIndicator} />}
       </View>
       <Text style={styles.title}>{announcement.title}</Text>
       <Text style={styles.content}>{announcement.content}</Text>
@@ -131,5 +143,12 @@ const styles = StyleSheet.create({
   interactionText: {
     fontSize: 14,
     color: "#666",
+  },
+  unreadIndicator: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#6200ee",
+    marginLeft: "auto",
   },
 });

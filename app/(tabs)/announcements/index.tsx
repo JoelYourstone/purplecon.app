@@ -13,6 +13,7 @@ import { NewAnnouncementModal } from "@/components/announcements/NewAnnouncement
 import { supabase } from "@/lib/supabase";
 import { useSession } from "@/components/SessionProvider";
 import { Tables } from "@/supabase";
+import { useAnnouncementReadStatus } from "@/lib/announcementReadStatus";
 
 export default function Announcements() {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,6 +22,7 @@ export default function Announcements() {
     new Set(),
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { markAllAsRead } = useAnnouncementReadStatus();
 
   const { session, profile } = useSession();
   const userId = session?.user.id;
@@ -203,6 +205,12 @@ export default function Announcements() {
   useEffect(() => {
     fetchAnnouncements();
   }, []);
+
+  useEffect(() => {
+    if (announcements.length > 0) {
+      markAllAsRead(announcements.map((a) => a.id));
+    }
+  }, [announcements]);
 
   return (
     <View style={styles.container}>
