@@ -12,20 +12,14 @@ import { AnnouncementSkeleton } from "@/components/announcements/AnnouncementSke
 import { supabase } from "@/lib/supabase";
 import { useSession } from "@/components/SessionProvider";
 import { Tables } from "@/supabase";
+
 export default function Announcements() {
   const [isLoading, setIsLoading] = useState(true);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
 
-  const { session } = useSession();
+  const { session, profile } = useSession();
   const userId = session?.user.id;
-
-  // Simulate loading
-  useState(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
-    return () => clearTimeout(timer);
-  });
+  const isAdmin = profile?.is_admin ?? false;
 
   const renderItem = useCallback(({ item }: { item: Announcement }) => {
     return (
@@ -119,8 +113,9 @@ export default function Announcements() {
           `
           *,
           author:profiles (
-            name,
-            avatar
+            first_name,
+            last_name,
+            avatar_url
           ),
           likes:announcement_likes (
             user_id
@@ -130,8 +125,9 @@ export default function Announcements() {
             content,
             created_at,
             user:profiles (
-              name,
-              avatar
+              first_name,
+              last_name,
+              avatar_url
             )
           )
         `,
@@ -165,15 +161,17 @@ export default function Announcements() {
         keyExtractor={(item, index) => (item?.id || index).toString()}
         contentContainerStyle={styles.listContent}
       />
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => {
-          // Handle new announcement press
-          console.log("New announcement pressed");
-        }}
-      >
-        <Ionicons name="add" size={24} color="white" />
-      </TouchableOpacity>
+      {isAdmin && (
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={() => {
+            // Handle new announcement press
+            console.log("New announcement pressed");
+          }}
+        >
+          <Ionicons name="add" size={24} color="white" />
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -207,4 +205,32 @@ const styles = StyleSheet.create({
   },
 });
 
-export type Announcement = Tables<"announcements">;
+export type Announcement = {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  author_id: string;
+  event_id: number | null;
+  comments_count: number;
+  likes_count: number;
+  author: {
+    first_name: string | null;
+    last_name: string | null;
+    avatar_url: string | null;
+  };
+  likes: {
+    user_id: string;
+  }[];
+  comments: {
+    id: string;
+    content: string;
+    created_at: string;
+    user: {
+      first_name: string | null;
+      last_name: string | null;
+      avatar_url: string | null;
+    };
+  }[];
+};

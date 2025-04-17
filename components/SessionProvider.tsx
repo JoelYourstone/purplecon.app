@@ -17,6 +17,7 @@ type Profile = {
   first_name: string | null;
   last_name: string | null;
   avatar_url: string | null;
+  is_admin: boolean;
 };
 
 const SessionContext = createContext<SessionContextType | null>(null);
@@ -37,7 +38,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       if (session?.user?.id) {
         const { data, error, status } = await supabase
           .from("profiles")
-          .select(`first_name, last_name, avatar_url`)
+          .select(`first_name, last_name, avatar_url, is_admin`)
           .eq("id", session.user.id)
           .single();
         if (error && status !== 406) {
@@ -58,7 +59,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       if (session?.user?.id) {
         const { data, error, status } = await supabase
           .from("profiles")
-          .select(`first_name, last_name, avatar_url`)
+          .select(`first_name, last_name, avatar_url, is_admin`)
           .eq("id", session.user.id)
           .single();
         if (error && status !== 406) {
@@ -94,7 +95,12 @@ export function SessionProvider({ children }: PropsWithChildren) {
         throw error;
       }
 
-      setProfile(updates);
+      setProfile((p) => ({
+        ...p!,
+        first_name,
+        last_name,
+        avatar_url,
+      }));
     } catch (error) {
       if (error instanceof Error) {
         Alert.alert(error.message);

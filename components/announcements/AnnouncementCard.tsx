@@ -2,6 +2,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { formatDistanceToNow } from "date-fns";
 import { Announcement } from "@/app/(tabs)/announcements";
 
+import { getPublicAvatarUrl } from "@/supabase/index";
+import { sv } from "date-fns/locale";
+
 interface AnnouncementCardProps {
   announcement: Announcement;
   onPress: () => void;
@@ -14,15 +17,25 @@ export function AnnouncementCard({
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <View style={styles.header}>
-        <Image
-          source={{ uri: announcement.author.avatar }}
-          style={styles.avatar}
-        />
-        <View style={styles.headerText}>
-          <Text style={styles.authorName}>{announcement.author.name}</Text>
+        {announcement.author.avatar_url && (
+          <Image
+            source={{ uri: getPublicAvatarUrl(announcement.author.avatar_url) }}
+            style={styles.avatar}
+          />
+        )}
+        <View
+          style={[
+            styles.headerText,
+            !announcement.author.avatar_url && styles.headerTextNoAvatar,
+          ]}
+        >
+          <Text style={styles.authorName}>
+            {`${announcement.author.first_name} ${announcement.author.last_name}`}
+          </Text>
           <Text style={styles.timestamp}>
-            {formatDistanceToNow(new Date(announcement.createdAt), {
+            {formatDistanceToNow(new Date(announcement.created_at), {
               addSuffix: true,
+              locale: sv,
             })}
           </Text>
         </View>
@@ -31,12 +44,18 @@ export function AnnouncementCard({
       <Text style={styles.content}>{announcement.content}</Text>
       <View style={styles.footer}>
         <View style={styles.interaction}>
-          <Text style={styles.interactionText}>{announcement.likes} likes</Text>
+          {announcement.likes_count > 0 && (
+            <Text style={styles.interactionText}>
+              {announcement.likes_count} likes
+            </Text>
+          )}
         </View>
         <View style={styles.interaction}>
-          <Text style={styles.interactionText}>
-            {announcement.comments} comments
-          </Text>
+          {announcement.comments_count > 0 && (
+            <Text style={styles.interactionText}>
+              {announcement.comments_count} comments
+            </Text>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -69,6 +88,9 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginLeft: 12,
+  },
+  headerTextNoAvatar: {
+    marginLeft: 0,
   },
   authorName: {
     fontSize: 16,
