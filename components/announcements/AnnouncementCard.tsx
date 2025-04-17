@@ -4,7 +4,7 @@ import { Announcement } from "@/app/(tabs)/announcements";
 import { getPublicAvatarUrl } from "@/supabase/index";
 import { sv } from "date-fns/locale";
 import { LikeButton } from "./LikeButton";
-import { useAnnouncementReadStatus } from "@/lib/announcementReadStatus";
+import { useEvent } from "@/components/EventProvider";
 
 interface AnnouncementCardProps {
   announcement: Announcement;
@@ -21,13 +21,10 @@ export function AnnouncementCard({
   onUnlike,
   isLiked,
 }: AnnouncementCardProps) {
-  const { readStatus, markAsRead } = useAnnouncementReadStatus();
+  const { readStatus } = useEvent();
   const isRead = readStatus[announcement.id] || false;
 
   const handlePress = () => {
-    if (!isRead) {
-      markAsRead(announcement.id);
-    }
     onPress();
   };
 

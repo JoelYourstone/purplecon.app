@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 4,
     right: 4,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#6200ee",
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: "red",
   },
 });

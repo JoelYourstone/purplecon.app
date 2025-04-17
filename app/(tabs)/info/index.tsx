@@ -12,7 +12,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Button } from "@/components/Button";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { reloadAppAsync } from "expo";
-import { useAnnouncementReadStatus } from "@/lib/announcementReadStatus";
+import { READ_STATUS_KEY } from "@/components/EventProvider";
 
 export default function Info() {
   const backgroundColor = useThemeColor({
@@ -59,15 +59,18 @@ export function ClearReloadButton() {
 }
 
 export function ClearReadStatusButton() {
-  const { markAllAsRead } = useAnnouncementReadStatus();
-
   if (!__DEV__) return null;
 
   return (
     <Button
       onPress={async () => {
-        await AsyncStorage.removeItem("@announcement_read_status");
-        await reloadAppAsync();
+        await AsyncStorage.removeItem(READ_STATUS_KEY);
+
+        console.log("cleared read status");
+
+        const readStatus = await AsyncStorage.getItem(READ_STATUS_KEY);
+        console.log("readStatus", readStatus);
+        // await reloadAppAsync();
       }}
       title="Clear all read statuses"
     />
