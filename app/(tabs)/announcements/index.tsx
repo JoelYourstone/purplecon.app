@@ -9,6 +9,7 @@ import { useState, useCallback, useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { AnnouncementCard } from "@/components/announcements/AnnouncementCard";
 import { AnnouncementSkeleton } from "@/components/announcements/AnnouncementSkeleton";
+import { NewAnnouncementModal } from "@/components/announcements/NewAnnouncementModal";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "@/components/SessionProvider";
 import { Tables } from "@/supabase";
@@ -19,6 +20,7 @@ export default function Announcements() {
   const [likedAnnouncements, setLikedAnnouncements] = useState<Set<string>>(
     new Set(),
   );
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const { session, profile } = useSession();
   const userId = session?.user.id;
@@ -194,6 +196,10 @@ export default function Announcements() {
     }
   };
 
+  const handleNewAnnouncementCreated = () => {
+    fetchAnnouncements();
+  };
+
   useEffect(() => {
     fetchAnnouncements();
   }, []);
@@ -209,15 +215,19 @@ export default function Announcements() {
         contentContainerStyle={styles.listContent}
       />
       {isAdmin && (
-        <TouchableOpacity
-          style={styles.fab}
-          onPress={() => {
-            // Handle new announcement press
-            console.log("New announcement pressed");
-          }}
-        >
-          <Ionicons name="add" size={24} color="white" />
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            style={styles.fab}
+            onPress={() => setIsModalVisible(true)}
+          >
+            <Ionicons name="add" size={24} color="white" />
+          </TouchableOpacity>
+          <NewAnnouncementModal
+            visible={isModalVisible}
+            onClose={() => setIsModalVisible(false)}
+            onAnnouncementCreated={handleNewAnnouncementCreated}
+          />
+        </>
       )}
     </View>
   );
