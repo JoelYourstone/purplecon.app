@@ -65,14 +65,9 @@ export function ClearReadStatusButton() {
     <Button
       onPress={async () => {
         await AsyncStorage.removeItem(READ_STATUS_KEY);
-
-        console.log("cleared read status");
-
-        const readStatus = await AsyncStorage.getItem(READ_STATUS_KEY);
-        console.log("readStatus", readStatus);
-        // await reloadAppAsync();
+        await reloadAppAsync();
       }}
-      title="Clear all read statuses"
+      title="Clear announcements & reload"
     />
   );
 }

@@ -22,7 +22,10 @@ export default function Announcements() {
     new Set(),
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { markAllAnnouncementsAsRead } = useEvent();
+  const [newAnnouncements, setNewAnnouncements] = useState<Set<string>>(
+    new Set(),
+  );
+  const { markAllAnnouncementsAsRead, readStatus } = useEvent();
 
   const { session, profile } = useSession();
   const userId = session?.user.id;
@@ -30,14 +33,15 @@ export default function Announcements() {
 
   const renderItem = ({ item }: { item: Announcement }) => {
     const isLiked = likedAnnouncements.has(item.id);
+    const isNew = newAnnouncements.has(item.id);
 
     return (
       <AnnouncementCard
         announcement={item}
         isLiked={isLiked}
+        isNew={isNew}
         onPress={() => {
           // Handle announcement press
-          console.log("Announcement pressed:", item.id);
         }}
         onLike={async () => {
           await handleLike(item.id);
@@ -91,8 +95,6 @@ export default function Announcements() {
 
       if (error) {
         console.error("Error liking announcement:", error.message);
-      } else {
-        console.log("Announcement liked successfully");
       }
     } catch (error) {
       console.error("Error liking announcement:", error);
@@ -113,8 +115,6 @@ export default function Announcements() {
 
       if (error) {
         console.error("Error unliking announcement:", error.message);
-      } else {
-        console.log("Announcement unliked successfully");
       }
     } catch (error) {
       console.error("Error unliking announcement:", error);
@@ -138,8 +138,6 @@ export default function Announcements() {
 
       if (error) {
         console.error("Error adding comment:", error.message);
-      } else {
-        console.log("Comment added successfully");
       }
     } catch (error) {
       console.error("Error adding comment:", error);
@@ -208,7 +206,26 @@ export default function Announcements() {
 
   useEffect(() => {
     if (announcements.length > 0) {
-      markAllAnnouncementsAsRead();
+      // Find announcements that are not marked as read
+      const unreadAnnouncements = announcements.filter(
+        (announcement) => !readStatus[announcement.id],
+      );
+
+      if (unreadAnnouncements.length > 0) {
+        // Add them to the new announcements set
+        setNewAnnouncements(new Set(unreadAnnouncements.map((a) => a.id)));
+
+        // Set a timeout to mark them as read after 10 seconds
+        const timeoutId = setTimeout(() => {
+          markAllAnnouncementsAsRead();
+          setNewAnnouncements(new Set());
+        }, 10000);
+
+        return () => clearTimeout(timeoutId);
+      } else {
+        // If all announcements are already read, just mark them as read immediately
+        markAllAnnouncementsAsRead();
+      }
     }
   }, [announcements]);
 

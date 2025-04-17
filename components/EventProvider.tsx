@@ -105,7 +105,6 @@ export function EventProvider({ children }: PropsWithChildren) {
   }, [setHasFinishedEventLoading, isLoggedIn, session?.user.id]);
 
   const markAllAnnouncementsAsRead = useCallback(async () => {
-    console.log("markAllAnnouncementsAsRead");
     if (!currentEventInfo) return;
     try {
       const newStatus = { ...readStatus };
@@ -131,13 +130,6 @@ export function EventProvider({ children }: PropsWithChildren) {
     });
     setUserRsvpStatus(status);
   }
-
-  console.log(
-    "announcementIds",
-    currentEventInfo?.announcementIds,
-    "readstatus",
-    readStatus,
-  );
 
   const hasUnreadAnnouncements =
     currentEventInfo?.announcementIds.some((id) => !readStatus[id]) ?? false;
