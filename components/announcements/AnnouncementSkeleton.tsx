@@ -8,32 +8,20 @@ export function AnnouncementSkeleton() {
         <Skeleton colorMode="light" width={40} height={40} radius="round" />
         <View style={styles.headerText}>
           <Skeleton colorMode="light" width={120} height={16} />
-          <Skeleton
-            colorMode="light"
-            width={80}
-            height={12}
-            style={{ marginTop: 4 }}
-          />
+          <View style={{ paddingTop: 15, backgroundColor: "red" }}>
+            <Skeleton colorMode="light" width={80} height={12} />
+          </View>
         </View>
       </View>
-      <Skeleton
-        colorMode="light"
-        width="100%"
-        height={20}
-        style={{ marginTop: 16 }}
-      />
-      <Skeleton
-        colorMode="light"
-        width="100%"
-        height={20}
-        style={{ marginTop: 8 }}
-      />
-      <Skeleton
-        colorMode="light"
-        width="80%"
-        height={20}
-        style={{ marginTop: 8 }}
-      />
+      <View style={{ marginTop: 16 }}>
+        <Skeleton colorMode="light" width="100%" height={20} />
+      </View>
+      <View style={{ marginTop: 8 }}>
+        <Skeleton colorMode="light" width="100%" height={20} />
+      </View>
+      <View style={{ marginTop: 8 }}>
+        <Skeleton colorMode="light" width="80%" height={20} />
+      </View>
       <View style={styles.footer}>
         <Skeleton colorMode="light" width={60} height={16} />
         <Skeleton colorMode="light" width={60} height={16} />

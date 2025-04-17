@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Announcement } from "../types/announcement";
 import { formatDistanceToNow } from "date-fns";
+import { Announcement } from "@/app/(tabs)/announcements";
 
 interface AnnouncementCardProps {
   announcement: Announcement;

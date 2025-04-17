@@ -6,10 +6,10 @@ import {
   Text,
 } from "react-native";
 import { useState, useCallback } from "react";
-import { AnnouncementCard } from "../../components/AnnouncementCard";
-import { AnnouncementSkeleton } from "../../components/AnnouncementSkeleton";
-import { mockAnnouncements, Announcement } from "../../types/announcement";
 import { Ionicons } from "@expo/vector-icons";
+import { AnnouncementCard } from "@/components/announcements/AnnouncementCard";
+import { AnnouncementSkeleton } from "@/components/announcements/AnnouncementSkeleton";
+import { supabase } from "@/lib/supabase";
 
 export default function Announcements() {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +38,39 @@ export default function Announcements() {
   const renderSkeleton = useCallback(() => {
     return <AnnouncementSkeleton />;
   }, []);
+
+  const handleLike = async (announcementId: string) => {
+    try {
+      const { error } = await supabase
+        .from("announcement_likes")
+        .insert({ announcement_id: announcementId });
+
+      if (error) {
+        console.error("Error liking announcement:", error.message);
+      } else {
+        console.log("Announcement liked successfully");
+      }
+    } catch (error) {
+      console.error("Error liking announcement:", error);
+    }
+  };
+
+  const handleUnlike = async (announcementId: string) => {
+    try {
+      const { error } = await supabase
+        .from("announcement_likes")
+        .delete()
+        .match({ announcement_id: announcementId });
+
+      if (error) {
+        console.error("Error unliking announcement:", error.message);
+      } else {
+        console.log("Announcement unliked successfully");
+      }
+    } catch (error) {
+      console.error("Error unliking announcement:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -90,3 +123,16 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
 });
+
+export interface Announcement {
+  id: string;
+  title: string;
+  content: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  createdAt: string;
+  likes: number;
+  comments: number;
+}
