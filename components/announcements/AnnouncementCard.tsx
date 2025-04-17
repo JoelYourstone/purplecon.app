@@ -1,18 +1,24 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { formatDistanceToNow } from "date-fns";
 import { Announcement } from "@/app/(tabs)/announcements";
-
 import { getPublicAvatarUrl } from "@/supabase/index";
 import { sv } from "date-fns/locale";
+import { LikeButton } from "./LikeButton";
 
 interface AnnouncementCardProps {
   announcement: Announcement;
   onPress: () => void;
+  onLike: () => Promise<void>;
+  onUnlike: () => Promise<void>;
+  isLiked: boolean;
 }
 
 export function AnnouncementCard({
   announcement,
   onPress,
+  onLike,
+  onUnlike,
+  isLiked,
 }: AnnouncementCardProps) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -44,11 +50,12 @@ export function AnnouncementCard({
       <Text style={styles.content}>{announcement.content}</Text>
       <View style={styles.footer}>
         <View style={styles.interaction}>
-          {announcement.likes_count > 0 && (
-            <Text style={styles.interactionText}>
-              {announcement.likes_count} likes
-            </Text>
-          )}
+          <LikeButton
+            isLiked={isLiked}
+            likesCount={announcement.likes_count}
+            onLike={onLike}
+            onUnlike={onUnlike}
+          />
         </View>
         <View style={styles.interaction}>
           {announcement.comments_count > 0 && (

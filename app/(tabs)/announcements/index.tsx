@@ -16,22 +16,59 @@ import { Tables } from "@/supabase";
 export default function Announcements() {
   const [isLoading, setIsLoading] = useState(true);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+  const [likedAnnouncements, setLikedAnnouncements] = useState<Set<string>>(
+    new Set(),
+  );
 
   const { session, profile } = useSession();
   const userId = session?.user.id;
   const isAdmin = profile?.is_admin ?? false;
 
-  const renderItem = useCallback(({ item }: { item: Announcement }) => {
+  const renderItem = ({ item }: { item: Announcement }) => {
+    const isLiked = likedAnnouncements.has(item.id);
+
     return (
       <AnnouncementCard
         announcement={item}
+        isLiked={isLiked}
         onPress={() => {
           // Handle announcement press
           console.log("Announcement pressed:", item.id);
         }}
+        onLike={async () => {
+          await handleLike(item.id);
+          setLikedAnnouncements((prev) => new Set(prev).add(item.id));
+          // Update like count
+          setAnnouncements((prev) =>
+            prev.map((announcement) =>
+              announcement.id === item.id
+                ? { ...announcement, likes_count: announcement.likes_count + 1 }
+                : announcement,
+            ),
+          );
+        }}
+        onUnlike={async () => {
+          await handleUnlike(item.id);
+          setLikedAnnouncements((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(item.id);
+            return newSet;
+          });
+          // Update like count
+          setAnnouncements((prev) =>
+            prev.map((announcement) =>
+              announcement.id === item.id
+                ? {
+                    ...announcement,
+                    likes_count: Math.max(0, announcement.likes_count - 1),
+                  }
+                : announcement,
+            ),
+          );
+        }}
       />
     );
-  }, []);
+  };
 
   const renderSkeleton = useCallback(() => {
     return <AnnouncementSkeleton />;
@@ -140,6 +177,16 @@ export default function Announcements() {
       }
 
       setAnnouncements(announcements);
+
+      // Set initial liked announcements
+      if (userId) {
+        const likedIds = announcements
+          .filter((announcement) =>
+            announcement.likes.some((like) => like.user_id === userId),
+          )
+          .map((announcement) => announcement.id);
+        setLikedAnnouncements(new Set(likedIds));
+      }
     } catch (error) {
       console.error("Error fetching announcements:", error);
     } finally {
