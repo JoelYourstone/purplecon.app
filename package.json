@@ -15,7 +15,7 @@
     "lint": "eslint .",
     "update-supabase-types": "npx supabase gen types typescript --project-id ljjhtynzegxittmgmdvd --schema public > supabase.ts && npx eslint --fix supabase.ts",
     "typecheck": "tsc --noEmit",
-    "wsl-build": "nvm use . && npx eas-cli build --profile development --platform android --local --output=./build.apk && mkdir /mnt/c/temp -p && mv ./build.apk /mnt/c/temp/build.apk",
+    "wsl-build": "npx eas-cli build --profile development --platform android --local --output=./build.apk && mkdir /mnt/c/temp -p && mv ./build.apk /mnt/c/temp/build.apk",
     "push-to-prod": "powershell -ExecutionPolicy Bypass -File ./scripts/push-prod.ps1"
   },
   "dependencies": {
