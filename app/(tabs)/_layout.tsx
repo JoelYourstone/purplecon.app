@@ -17,6 +17,7 @@ const TAB_BAR_HEIGHT = 49;
 
 export default function TabLayout() {
   const router = useRouter();
+  const { hasUnreadAnnouncements } = useEvent();
 
   const tabBarBackgroundColor = useThemeColor({
     light: theme.colorWhite,
@@ -127,6 +128,7 @@ export default function TabLayout() {
                 {...props}
                 activeTintColor={tabBarActiveTintColor}
                 inactiveTintColor={tabBarInactiveTintColor}
+                showBadge={hasUnreadAnnouncements}
                 icon={({ color }) => (
                   <MaterialCommunityIcons
                     name="newspaper-variant-outline"

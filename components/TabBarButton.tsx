@@ -5,6 +5,7 @@ import {
   Platform,
   Pressable,
   StyleSheet,
+  View,
 } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -20,6 +21,7 @@ interface TabBarButtonProps {
   accessibilityState?: AccessibilityState;
   activeTintColor: string;
   inactiveTintColor: string;
+  showBadge?: boolean;
 }
 
 export function TabBarButton({
@@ -28,6 +30,7 @@ export function TabBarButton({
   accessibilityState,
   activeTintColor,
   inactiveTintColor,
+  showBadge = false,
 }: TabBarButtonProps) {
   const focused = accessibilityState?.selected;
   const color = focused ? activeTintColor : inactiveTintColor;
@@ -54,6 +57,7 @@ export function TabBarButton({
       style={[styles.pressable, animatedStyle]}
     >
       {icon({ color })}
+      {showBadge && <View style={styles.badge} />}
     </AnimatedPressable>
   );
 }
@@ -63,5 +67,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  badge: {
+    position: "absolute",
+    top: 4,
+    right: 4,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: "red",
   },
 });

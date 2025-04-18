@@ -46,6 +46,7 @@ export default function Account() {
               first_name: firstName,
               last_name: lastName,
               avatar_url: avatarUrl,
+              is_admin: false,
             })
           }
           disabled={loading}
@@ -61,6 +62,7 @@ export default function Account() {
               first_name: firstName,
               last_name: lastName,
               avatar_url: url,
+              is_admin: false,
             });
           }}
           useCamera={useCamera}

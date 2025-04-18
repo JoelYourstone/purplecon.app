@@ -5,9 +5,11 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
 } from "react";
 import { useSplashContext } from "./SplashProvider";
 import { useSession } from "./SessionProvider";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type RsvpStatus = "pending" | "confirmed" | "rejected" | "tentative";
 
@@ -19,12 +21,22 @@ type Rsvp = {
 type EventInfo = {
   id: number;
   rsvps: Rsvp[];
+  announcementIds: string[];
 };
+
+export interface ReadStatus {
+  [announcementId: string]: boolean;
+}
+
+export const READ_STATUS_KEY = "@announcement_read_status";
 
 type EventContextType = {
   currentEventInfo: EventInfo | null;
   userRsvpStatus?: RsvpStatus;
   confirmRsvp: (status: RsvpStatus) => Promise<void>;
+  readStatus: ReadStatus;
+  hasUnreadAnnouncements: boolean;
+  markAllAnnouncementsAsRead: () => Promise<void>;
 };
 
 const EventContext = createContext<EventContextType | null>(null);
@@ -34,6 +46,7 @@ export function EventProvider({ children }: PropsWithChildren) {
     null,
   );
   const [userRsvpStatus, setUserRsvpStatus] = useState<RsvpStatus>();
+  const [readStatus, setReadStatus] = useState<ReadStatus>({});
 
   const { setHasFinishedEventLoading } = useSplashContext();
   const { isLoggedIn, session } = useSession();
@@ -47,7 +60,7 @@ export function EventProvider({ children }: PropsWithChildren) {
     const fetchEventInfo = async () => {
       const eventsWithInvitesQuery = supabase
         .from("events")
-        .select("id, event_invite(rsvp, user_id)")
+        .select("id, event_invite(rsvp, user_id), announcements(id)")
         // TODO multiple events
         .single();
       const { data, error } = await eventsWithInvitesQuery;
@@ -68,12 +81,42 @@ export function EventProvider({ children }: PropsWithChildren) {
           userId: invite.user_id,
           status: rsvpToStatus(invite.rsvp),
         })),
+        announcementIds: data.announcements.map((a) => a.id),
       });
 
       setHasFinishedEventLoading(true);
     };
+
+    const loadReadStatus = async () => {
+      try {
+        const storedStatus = await AsyncStorage.getItem(READ_STATUS_KEY);
+        if (storedStatus) {
+          console.log("storedStatus", storedStatus);
+          const parsedStatus = JSON.parse(storedStatus) as ReadStatus;
+          setReadStatus(parsedStatus);
+        }
+      } catch (error) {
+        console.error("Error loading read status:", error);
+      }
+    };
+
     fetchEventInfo();
+    loadReadStatus();
   }, [setHasFinishedEventLoading, isLoggedIn, session?.user.id]);
+
+  const markAllAnnouncementsAsRead = useCallback(async () => {
+    if (!currentEventInfo) return;
+    try {
+      const newStatus = { ...readStatus };
+      currentEventInfo.announcementIds.forEach((id) => {
+        newStatus[id] = true;
+      });
+      await AsyncStorage.setItem(READ_STATUS_KEY, JSON.stringify(newStatus));
+      setReadStatus(newStatus);
+    } catch (error) {
+      console.error("Error marking all announcements as read:", error);
+    }
+  }, [readStatus, currentEventInfo]);
 
   async function confirmRsvp(status: RsvpStatus) {
     if (!currentEventInfo || !session?.user.id) {
@@ -88,9 +131,19 @@ export function EventProvider({ children }: PropsWithChildren) {
     setUserRsvpStatus(status);
   }
 
+  const hasUnreadAnnouncements =
+    currentEventInfo?.announcementIds.some((id) => !readStatus[id]) ?? false;
+
   return (
     <EventContext.Provider
-      value={{ currentEventInfo, userRsvpStatus, confirmRsvp }}
+      value={{
+        currentEventInfo,
+        userRsvpStatus,
+        confirmRsvp,
+        readStatus,
+        hasUnreadAnnouncements,
+        markAllAnnouncementsAsRead,
+      }}
     >
       {children}
     </EventContext.Provider>

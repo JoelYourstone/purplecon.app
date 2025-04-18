@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "update-supabase-types": "npx supabase gen types typescript --project-id ljjhtynzegxittmgmdvd --schema public > supabase.ts && npx eslint --fix supabase.ts",
     "typecheck": "tsc --noEmit",
-    "wsl-build": "nvm use . && npx eas-cli build --profile development --platform android --local --output=./build.apk && mkdir /mnt/c/temp -p && mv ./build.apk /mnt/c/temp/build.apk",
+    "typewatch": "tsc --watch",
+    "wsl-build": "npx eas-cli build --profile development --platform android --local --output=./build.apk && mkdir /mnt/c/temp -p && mv ./build.apk /mnt/c/temp/build.apk",
     "push-to-prod": "powershell -ExecutionPolicy Bypass -File ./scripts/push-prod.ps1"
   },
   "dependencies": {
@@ -45,6 +46,7 @@
     "expo-haptics": "~14.0.0",
     "expo-image": "~2.0.0",
     "expo-image-picker": "~16.0.6",
+    "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.2",
     "expo-notifications": "~0.29.8",
     "expo-quick-actions": "^2.0.0",
@@ -57,6 +59,7 @@
     "jest-expo": "~52.0.2",
     "libphonenumber-js": "^1.12.6",
     "lottie-react-native": "7.1.0",
+    "moti": "^0.30.0",
     "react": "18.3.1",
     "react-compiler-runtime": "^19.0.0-beta-a7bf2bd-20241110",
     "react-native": "0.76.7",
