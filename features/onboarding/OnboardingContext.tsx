@@ -44,6 +44,8 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
   const { setHasFinishedOnboardingLoading } = useSplashContext();
   const [loginInstead, setLoginInstead] = useState(false);
 
+  console.log("Onboarding status:", onboardingState);
+
   useEffect(() => {
     async function loadInitialStuff() {
       try {
@@ -51,16 +53,21 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
           setHasFinishedOnboardingLoading(true);
         }, 5000);
 
+        console.log(1);
         const granted = await getPermisions();
+        console.log(2);
         setIsNotificationsGranted(granted);
+        console.log(3);
 
         const onboardingCompleted = await AsyncStorage.getItem(
           "onboardingCompleted",
         );
+        console.log(4, onboardingCompleted);
         if (onboardingCompleted) {
+          console.log(4.5);
           setOnboardingState("5.completed");
         }
-
+        console.log(5);
         clearTimeout(timer);
 
         setHasFinishedOnboardingLoading(true);
@@ -97,31 +104,38 @@ export function OnboardingProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (loginInstead && !isLoggedIn) {
+      console.log("Setting onboarding state to 10.login");
       setOnboardingState("10.login");
       return;
     }
 
     if (!invitationCode && !isLoggedIn) {
+      console.log("Setting onboarding state to 1.enterCode");
       setOnboardingState("1.enterCode");
       return;
     }
 
     if (!isLoggedIn) {
+      console.log("Setting onboarding state to 2.createAccount");
       setOnboardingState("2.createAccount");
       return;
     }
 
     if (!profile?.first_name || !profile?.last_name) {
+      console.log("Setting onboarding state to 3.profile");
       setOnboardingState("3.profile");
       return;
     }
 
     if (!isNotificationsGranted) {
+      console.log("Setting onboarding state to 4.notifications");
       setOnboardingState("4.notifications");
       return;
     }
 
+    console.log("Setting onboarding state to 5.completed");
     setOnboardingState("5.completed");
+    AsyncStorage.setItem("onboardingCompleted", "true");
   }, [
     invitationCode,
     isLoggedIn,

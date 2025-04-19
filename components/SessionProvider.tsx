@@ -36,6 +36,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       } = await supabase.auth.getSession();
       setSession(session);
       if (session?.user?.id) {
+        console.log("Getting profile for user:", session.user.id);
         const { data, error, status } = await supabase
           .from("profiles")
           .select(`first_name, last_name, avatar_url, is_admin`)
@@ -45,6 +46,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
           setHasFinishedSupabaseLoading(true);
           throw error;
         }
+        console.log("Setting profile for user:", data);
         setProfile(data);
         setHasFinishedSupabaseLoading(true);
       } else {
@@ -57,6 +59,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
     supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       if (session?.user?.id) {
+        console.log("Getting profile for user:", session.user.id);
         const { data, error, status } = await supabase
           .from("profiles")
           .select(`first_name, last_name, avatar_url, is_admin`)
@@ -66,6 +69,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
           setHasFinishedSupabaseLoading(true);
           throw error;
         }
+        console.log("Setting profile for user:", data);
         setProfile(data);
       }
       setHasFinishedSupabaseLoading(true);
