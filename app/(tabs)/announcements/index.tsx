@@ -219,7 +219,7 @@ export default function Announcements() {
         const timeoutId = setTimeout(() => {
           markAllAnnouncementsAsRead();
           setNewAnnouncements(new Set());
-        }, 10000);
+        }, 3000);
 
         return () => clearTimeout(timeoutId);
       } else {
