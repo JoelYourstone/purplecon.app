@@ -11,4 +11,5 @@ module.exports = {
     "prettier/prettier": "error",
     "react-compiler/react-compiler": "error",
   },
+  ignorePatterns: ["supabase/functions/**/*"],
 };
